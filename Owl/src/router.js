@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Catalog from './views/Catalog.vue'
 import Book from './views/Book.vue'
+import Rankings from './views/Rankings.vue'
+import Suggest from './views/Suggest.vue'
 
 Vue.use(Router)
 
@@ -27,6 +29,16 @@ export default new Router({
       path: '/book',
       name: 'book',
       component: Book
+    },
+    {
+      path: '/rankings',
+      name: 'rankings',
+      component: Rankings
+    },
+    {
+      path: '/suggest',
+      name: 'suggest',
+      component: Suggest
     }
   ]
 })
