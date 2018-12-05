@@ -18,14 +18,14 @@ The use of our app, for the most part, is directed to the school libray and its 
 ## Repository structure 
 
 ```mermaid
-graph LR
-A[Owl] --> B(node_modules)
-Z[readme.md] 
-A --> C(public)
-A --> D(src)
-D --> E(assets)
-D --> F(componets)
-D --> G(views)
+
+Owl  
+--(node_modules) 
+--(public)
+--(src)
+-----(assets)
+-----(componets)
+-----(views)
 ```
 
 # FAQ
