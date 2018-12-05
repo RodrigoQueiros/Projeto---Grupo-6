@@ -1,9 +1,7 @@
 <template>
- <div class="home">
+ <div class="book">
     <Header/>
-   <h1>This the catalog page</h1>
-
-   <router-link to="/book">Book</router-link>
+   <h1>This is the book page</h1>
   </div>
 </template>
 

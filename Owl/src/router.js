@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Catalog from './views/Catalog.vue'
+import Book from './views/Book.vue'
 
 Vue.use(Router)
 
@@ -20,6 +21,12 @@ export default new Router({
     {
       path: '/catalog',
       name: 'catalog',
+      component: Catalog
+    },
+    {
+      path: '/book',
+      name: 'book',
+      component: Book
     }
   ]
 })
