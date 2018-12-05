@@ -26,6 +26,7 @@ A --> D(src)
 D --> E(assets)
 D --> F(componets)
 D --> G(views)
+```
 
 # FAQ
 
