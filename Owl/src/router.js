@@ -6,6 +6,8 @@ import Catalog from './views/Catalog.vue'
 import Book from './views/Book.vue'
 import Rankings from './views/Rankings.vue'
 import Suggest from './views/Suggest.vue'
+import Login from './views/Login.vue'
+import Signup from './views/Signup.vue'
 
 Vue.use(Router)
 
@@ -19,6 +21,17 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
+      component: About
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
     },
     {
       path: '/catalog',
