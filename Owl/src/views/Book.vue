@@ -10,14 +10,24 @@
         </div>
 
       </div>
-      <div class="row ">
-
+      <div class="row ">        
         <div class="col-12 col-md-12 boxContent" id="">
+        <!-- Imagem -->
 
-        <h1>Book title</h1>
-        <button @click="requesition(bookID)" class="btn">Requisição</button>
+        <div class="row ">  
+        <div class="col-12 col-md-4">
+          
+          <img v-bind:src="books[1].cover" alt="" class="img-thumbnail rounded img-fluid">
+          
+        </div >
+        <!-- Info -->
+        <div class="col-12 col-md-4">
+          <h1>Book title</h1>
+          <button @click="requesition(bookID)" class="btn">Requisição</button>
 
+        </div>       
 
+        </div>
         </div>
 
         
