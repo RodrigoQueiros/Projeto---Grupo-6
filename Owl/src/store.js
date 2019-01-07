@@ -94,16 +94,16 @@ export default new Vuex.Store({
 
     tags: [{
       tagId: 1,
-      tagDescription: "Desporto" 
+      tagDescription: "Desporto"
     },
     {
       tagId: 2,
-      tagDescription: "Ciência" 
+      tagDescription: "Ciência"
     }],
 
     bookSuggestions: [{
       suggestionId: 0,
-      suggestionTitle:"",
+      suggestionTitle: "",
       suggestionAuthor: "",
       userId: ""
     }]
@@ -115,5 +115,17 @@ export default new Vuex.Store({
   },
   actions: {
 
+  },
+
+  getters: {
+    Login: (state) => (user) => {
+      let verificacion = false
+      for (let i = 0; i < state.users.length; i++) {
+        if (state.users[i].email == user.email && state.users[i].password == user.password) {
+          verificacion = true
+        }
+      }
+     return verificacion 
+    }
   }
 })

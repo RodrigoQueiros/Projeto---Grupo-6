@@ -81,9 +81,9 @@
     padding-left: 25px !important; 
 }
 
-#right {
+/* #right {
     padding-left: 1350px !important;
-}
+} */
 
 
 

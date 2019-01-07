@@ -98,20 +98,24 @@ export default {
     };
   },
   methods: {
-      login() {
-          for (let i = 0; i < this.users.length; i++) {
-              if (this.users[i].email == this.form.email && this.users[i].password == this.form.password) {
-                  this.userExists = true
-              }
-          }
-          if (this.userExists) {
-              alert("Login efetuado com sucesso")
-          }
-          else {
-              alert("Dados invalidos")
-          }
 
-      }
+   login() {
+
+     let user = {
+       email: this.form.email,
+       password: this.form.password
+     }
+
+     let loginVerified = this.$store.getters.Login(user)
+     if (loginVerified) {
+       alert("logged in")
+     }
+     else {
+       console.log("ABEACH")
+     }
+     
+
+   }
   },
   created() {
     this.users = [{
