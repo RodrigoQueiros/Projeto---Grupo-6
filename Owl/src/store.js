@@ -106,8 +106,9 @@ export default new Vuex.Store({
       suggestionTitle: "",
       suggestionAuthor: "",
       userId: ""
-    }]
+    }],
 
+    ClickedBook: 1, //Id do book clicked, 1 temporary id
 
   },
   mutations: {
@@ -126,6 +127,18 @@ export default new Vuex.Store({
         }
       }
      return verificacion 
+    },
+    //For book page
+    ClickedBook(state){
+      return state.ClickedBook
+
+    },
+    books(state){
+      return state.books
+
+    },
+    requisitions(state){
+      return state.requisitions
     }
   }
 })
