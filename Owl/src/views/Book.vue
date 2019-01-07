@@ -20,7 +20,9 @@ export default {
   method:{
     requesition(bookID){
 
-      
+      //Check book id and user id on requesitions (on load)
+
+      //Requesitions generates a id, saves book id and user id, current date, devliverydate and book status
 
     }
   },
@@ -34,6 +36,9 @@ export default {
     },
     books(){
       return this.$store.getters.books;
+    },
+    requesitions(){
+      return this.$store.getters.requisitions;
     }
 
   }
