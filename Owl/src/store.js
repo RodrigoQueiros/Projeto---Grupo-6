@@ -120,10 +120,10 @@ export default new Vuex.Store({
 
   getters: {
     Login: (state) => (user) => {
-      let verificacion = false
+      let verification = false
       for (let i = 0; i < state.users.length; i++) {
         if (state.users[i].email == user.email && state.users[i].password == user.password) {
-          verificacion = true
+          verification = true
         }
       }
      return verificacion 

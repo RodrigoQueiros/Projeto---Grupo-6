@@ -87,9 +87,6 @@ export default {
   },
   data: function() {
     return {
-        users: [],
-        userExists: false,
-        strError: "",
       form: {
         email: "",
         password: "",
@@ -117,32 +114,6 @@ export default {
 
    }
   },
-  created() {
-    this.users = [{
-      userId: 0,
-      firstName: "Rogério",
-      lastName: "Silva",
-      email: "rs@gmail.com",
-      password: "123456",
-      ableToRequest: true,
-      type: "admin",
-      nRequisitionsNow: 0,
-      photo: ""
-    },
-    {
-      userId: 1,
-      firstName: "Oscar",
-      lastName: "Sousa",
-      email: "os@gmail.com",
-      password: "123456",
-      ableToRequest: true,
-      type: "user",
-      nRequisitionsNow: 0,
-      photo: ""
-    }
-    ]
-
-    
-  },
+  
 };
 </script>
