@@ -33,13 +33,13 @@
 
 
 
-    </div>
+  </div>
 
 
     
     
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
-  </div>  
+   
 </template>
 
 <style>
