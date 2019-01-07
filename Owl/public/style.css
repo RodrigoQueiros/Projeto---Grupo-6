@@ -5,3 +5,23 @@
 .head{
     background-color: #BF6E26
 }
+
+.boxTitle{
+    background-color: #bf6e26 !important;
+    height: 50px;
+    color: white;
+    padding-top: 8px;
+    text-align: left
+}
+
+.boxContent{
+    background-color:#D9B97E;
+    height: 400px
+}
+
+.margin5{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}

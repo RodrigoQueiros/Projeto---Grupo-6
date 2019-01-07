@@ -1,14 +1,49 @@
 <template>
  <div class="book">
     <Header/>
-   <h1>This is the book page</h1>
 
-    <button @click="requesition(bookID)"></button>
+    <!--Book info-->
+    <div class="margin5 mt-4">
+      <div class="row ">
+        <div class="col-12 col-md-12 boxTitle" id="">
+        <h3>Detalhes do livro</h3>
+        </div>
+
+      </div>
+      <div class="row ">
+
+        <div class="col-12 col-md-12 boxContent" id="">
+
+        <h1>Book title</h1>
+        <button @click="requesition(bookID)" class="btn">Requisição</button>
+
+
+        </div>
+
+        
+      </div>
+    </div>   
+
+    <!--Reviews-->
+    <div>
+
+    </div>
+
+
+
+
+
+    </div>
+
+
+    
+    
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
   </div>  
 </template>
 
-<style></style>
+<style>
+</style>
 
 
 <script>
@@ -20,7 +55,7 @@ export default {
   method:{
     requesition(bookID){
 
-      //Check book id and user id on requesitions (on load)
+      //Check book id and user id on requesitions (on load) (change button name to requesitado)
 
       //Requesitions generates a id, saves book id and user id, current date, devliverydate and book status
 
