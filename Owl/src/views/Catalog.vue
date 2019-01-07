@@ -6,7 +6,7 @@
       <div class="col-12 col-md-3" id="filterBar">
         <h3>Filtros</h3>
       </div>
-      <div class="col-12 col-md-8 offset-1" id="catalogBar">
+      <div class="col-12 col-md-8 offset-md-1" id="catalogBar">
         <h3>Catalogo</h3>
       </div>
     </div>
@@ -32,11 +32,11 @@
         </select>
 
       </div>
-      <div class="col-12 col-md-8 offset-1" id="catalogContents">
+      <div class="col-12 col-md-8 offset-md-1" id="catalogContents">
         <div class="row">
-        <div class="col-3 mt-3" v-for="book in books" :key="book">
+        <div class="col-6 col-md-3 mt-3" v-for="book in books" :key="book">
               <router-link to="/book"><img class="owlCovers" v-bind:src="book.cover"/></router-link> 
-              <h6>{{book.title}}</h6>
+              <h6 class="mt-2">{{book.title}}</h6>
               <h6>{{book.author}}</h6>
         </div>
       </div>
