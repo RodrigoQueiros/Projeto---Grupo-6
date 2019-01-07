@@ -126,7 +126,7 @@ export default new Vuex.Store({
           verification = true
         }
       }
-     return verificacion 
+     return verification 
     },
 
 

@@ -4,13 +4,17 @@
    <h1>This the catalog page</h1>
     <router-link to="/book">Book</router-link> 
   <div class="box">
-    <div class="row">
-      <div class="col-4" id="filterBar">Filtros</div>
-      <div class="col-8" id="catalogBar"> Catalogo</div>
+    <div class="row align-items-start">
+      <div class="col-12 col-md-3" id="filterBar">
+        <h3>Filtros</h3>
+      </div>
+      <div class="col-12 col-md-8 offset-1" id="catalogBar">
+        <h3>Catalogo</h3>
+      </div>
     </div>
-    <div class="row">
-      <div class="col-4" id="filterContents">Coiso e tal</div>
-      <div class="col-8" id="catalogContents"> Catalogo</div>
+    <div class="row align-items-start">
+      <div class="col-12 col-md-3" id="filterContents"></div>
+      <div class="col-12 col-md-8 offset-1" id="catalogContents"></div>
     </div>
   </div>
 
@@ -23,17 +27,24 @@
 #filterBar {
   background-color: #bf6e26 !important;
   height: 50px;
-  padding-right: 10px
+  color: white;
+  padding-top: 8px;
+  text-align: left
+
 }
 #filterContents{
     background-color:#D9B97E;
     height: 200px;
-    padding-right: 10px
+    
 }
 #catalogBar {
   background-color: #bf6e26 !important;
   height: 50px;
+  color: white;
+  padding-top: 8px;
+  text-align: left
 }
+
 #catalogContents{
     background-color:#D9B97E;
     height: 200px
@@ -42,6 +53,9 @@
   margin-left: 5%;
   margin-right: 5%
 }
+
+
+
 </style>
 
 <script>
