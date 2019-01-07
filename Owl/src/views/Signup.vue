@@ -11,6 +11,7 @@
           id="inputPassword"
           class="form-control"
           placeholder="Nome"
+          v-model="form.name"
           required
         >
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -19,8 +20,9 @@
           id="inputEmail"
           class="form-control"
           placeholder="Email address"
+          v-model="form.email"
           required
-          autofocus
+         
         >
         <label for="inputPassword" class="sr-only">Password</label>
         <input
@@ -28,18 +30,20 @@
           id="inputPassword"
           class="form-control"
           placeholder="Password"
+          v-model="form.password"
           required
         >
         <label for="inputPassword2" class="sr-only">Repita a Password</label>
         <input
-          type="password2"
+          type="password"
           id="inputPassword2"
           class="form-control"
           placeholder="Repita a Password"
+          v-model="form.password2"
           required
         >
         
-        <button class="btn btn-lg btn-block" id="btnSignup" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-block" id="btnSignup" @click="signup" type="submit">Sign up</button>
       </form>
     </div>
   </div>
@@ -78,21 +82,16 @@ body {
 
 .form-signin input[type="nome"] {
   margin-bottom: 5px;
-  
 }
 .form-signin input[type="email"] {
   margin-bottom: 5px;
-  
 }
 .form-signin input[type="password"] {
   margin-bottom: 5px;
-  
 }
 .form-signin input[type="password2"] {
   margin-bottom: 10px;
-  
 }
-
 
 #btnSignup {
   background-color: #bf6e26;
@@ -107,8 +106,42 @@ body {
 <script>
 import Header from "@/components/Header.vue";
 export default {
+  name: "signup",
   components: {
     Header
+  },
+  data: function() {
+    return {
+      form: {
+        name: "",
+        email: "",
+        password: "",
+        password2: ""
+      }
+    };
+  },
+  methods: {
+    signup() {
+      let user = {
+        userId: this.$store.getters.getLastId,
+        name: this.form.name,
+        email: this.form.email,
+        password: this.form.password,
+        password2: this.form.password2
+      };
+
+      let strError = this.$store.getters.Signup(user);
+
+      if (strError == "") {
+        this.$store.state.users.push(user)
+        alert("Registo efetuado com sucesso")
+      
+      }
+
+      else{
+        alert(strError)
+      }
+    }
   }
 };
 </script>

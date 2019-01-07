@@ -119,13 +119,38 @@ export default new Vuex.Store({
 
   getters: {
     Login: (state) => (user) => {
-      let verificacion = false
+      let verification = false
       for (let i = 0; i < state.users.length; i++) {
         if (state.users[i].email == user.email && state.users[i].password == user.password) {
-          verificacion = true
+          verification = true
         }
       }
-     return verificacion 
-    }
+      return verification
+    },
+
+    Signup: (state) => (user) => {
+      let strError = ""
+      for (let i = 0; i < state.users.length; i++) {
+        if (state.users[i].email == user.email) {
+          strError += "Email já existe /n"
+        }
+
+        if (user.password != user.password2) {
+          strError += "Passwords diferentes /n"
+        }
+      }
+
+      return strError
+    },
+
+    getLastId: (state) => {
+      let lastId = 0
+        if (state.users.length > 0) {
+          lastId = state.users[state.users.length - 1].userId + 1
+        }
+      return lastId
+    },
+
+
   }
 })
