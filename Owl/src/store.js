@@ -8,6 +8,9 @@ export default new Vuex.Store({
     userLoggedin: -1,
     
     loggedIn: false,
+
+    currentBookId: 0,
+
     users: [{
       userId: 0,
       firstName: "Rogério",
@@ -202,5 +205,20 @@ export default new Vuex.Store({
     requisitions(state){
       return state.requisitions
     }
+  },
+
+  mutations: {
+    open_book(state, payload) {
+      
+      state.currentBookId = payload
+      
+    }
+  },
+
+  actions:{
+    open_book(context,payload){
+      context.commit('open_book',payload)
+    }
+
   }
 })
