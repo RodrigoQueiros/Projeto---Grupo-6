@@ -100,15 +100,15 @@ export default {
 
      let user = {
        email: this.form.email,
-       password: this.form.password
+       password: this.form.password,
      }
 
      let loginVerified = this.$store.getters.Login(user)
      if (loginVerified) {
-       alert("logged in")
+       alert("Login efetuado com sucesso.")
      }
      else {
-       console.log("ABEACH")
+       alert("Os seus dados estão incorretos.")
      }
      
 

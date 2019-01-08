@@ -51,6 +51,10 @@
             <li class="nav-item">
                 <router-link class="nav-link" to="/signup">SignUp</router-link>
             </li>
+            <li class="nav-item">
+                <router-link class="nav-link" to="/signup">SignUp</router-link>
+            </li>
+            
         </ul>
     </nav>
   </div>
@@ -85,7 +89,19 @@
     padding-left: 1350px !important;
 } */
 
-
-
-
 </style>
+
+
+<script>
+export default {
+  data: function() {
+    return {
+        
+    };
+  },
+  methods: {
+
+  },
+  
+};
+</script>

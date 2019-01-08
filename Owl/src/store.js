@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    userLoggedin: -1,
+    
+    loggedIn: false,
     users: [{
       userId: 0,
       firstName: "Rogério",
@@ -152,6 +155,8 @@ export default new Vuex.Store({
       for (let i = 0; i < state.users.length; i++) {
         if (state.users[i].email == user.email && state.users[i].password == user.password) {
           verification = true
+          state.userLoggedin = state.users[i].userId
+          localStorage.setItem("userLoggedIn", state.userLoggedin)
         }
       }
      return verification 
@@ -181,7 +186,10 @@ export default new Vuex.Store({
       return lastId
     },
 
+    getUserLoggedIn(state){
+      return state.userLoggedin
 
+    },
     //For book page
     ClickedBook(state){
       return state.ClickedBook

@@ -12,13 +12,13 @@
         <div class="col-12 col-md-12 boxContent" id="">
           <form action="" id="formSugestion">
             <label for="formTitle" class="mt-3">Titulo</label>
-            <input type="text" class="form-control" id="formTitle">
+            <input type="text" class="form-control" id="formTitle" >
             <label for="formCover" class="mt-3">Capa</label>
-            <input type="text" class="form-control" id="formCover">
+            <input type="text" class="form-control" id="formCover" >
             <label for="formAuthor" class="mt-3">Autor</label>
-            <input type="text" class="form-control" id="formAuthor">
+            <input type="text" class="form-control" id="formAuthor" >
             <label for="formTag" class="mt-3">Género</label>
-            <input type="text" class="form-control" id="formTag">
+            <input type="text" class="form-control" id="formTag" >
             <button type="button" id="btnSubmit" class="btn btn-lg mt-3">Submeter</button>
           </form>
         </div>
