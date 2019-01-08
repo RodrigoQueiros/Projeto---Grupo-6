@@ -22,15 +22,22 @@
         </div >
         <!-- Info -->
         <div class="col-12 col-md-9">
+
           <div class="row">
-          <h1 class="margin5 float-left bookInforHeaders">Book title</h1>
+          <h1 class="margin5 float-left bookInforHeaders">{{books[bookID].title}}</h1>
           </div>
+
           <div class="row">
-          <h4 class="margin5 float-left bookInforHeaders">Book author</h4>
+          <h4 class="margin5 float-left bookInforHeaders">{{books[bookID].author}}</h4>
           </div>
-          <div class="row"></div>
+
+          <div class="row">
+
+          </div>
+
           <div class="row">
           <h4 class="margin5 float-left bookInforHeaders">Sinopse</h4>
+          <p>{{books[bookID].description}}</p>
           </div>
           
           
@@ -59,9 +66,19 @@
 import Header from "@/components/Header.vue";
 export default {
   data: function(){
-    return {bookID:ClickedBook} //To give a name to a getter*
+    return {
+      bookID:localStorage.getItem("userLoggedIn")} //To give a name to a getter*
   },
   method:{
+    checkUser(){
+
+    },
+    checkBook(bookID){
+
+    },
+    checkRequesition(bookID, userID){
+
+    },
     requesition(bookID){
 
       //Check book id and user id on requesitions (on load) (change button name to requesitado)
@@ -85,6 +102,10 @@ export default {
       return this.$store.getters.requisitions;
     }
 
+
+  },
+  created:{
+//localStorage.getItem("userLoggedIn")
   }
 };
 

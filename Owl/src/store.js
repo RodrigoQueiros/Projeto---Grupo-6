@@ -52,7 +52,7 @@ export default new Vuex.Store({
       idTag: [1, 2],
       launchDate: "",
       nPages: 100,
-      description: "",
+      description: "ola ola ola",
       nViews: 100,
       availability: true,
       bookStatus: "Good"
