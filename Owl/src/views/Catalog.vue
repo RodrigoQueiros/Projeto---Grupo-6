@@ -33,7 +33,7 @@
         <div class="col-12 col-md-8 ml-md-3" id="catalogContents">
           <div class="row">
             <div class="col-6 col-md-3" v-for="book in books" :key="book">
-              <router-link to="/book">
+              <router-link to="/book" v-on:click.native="clickBook(book.bookId)">
                 <img class="owlCovers mt-3" v-bind:src="book.cover">
               </router-link>
               <h6 class="mt-2">{{book.title}}</h6>
@@ -111,20 +111,22 @@ export default {
   },
 
   created() {
-    getPublishers();
+    for (let i = 0; i < this.books.length; i++) {
+      if (this.publishers.indexOf(this.books[i].publisher) == -1) {
+        this.publishers.push(this.books[i].publisher);
+      }
+    }
+
+    
   },
 
   methods: {
-    
-  },
-  computed: {
-    getPublishers() {
-      for (let i = 0; i < this.books.length; i++) {
-        if (this.publishers.indexOf(this.books[i].publisher) == -1) {
-          this.publishers.push(this.books[i].publisher);
-        }
-      }
+    clickBook(index) {
+      this.$store.dispatch("open_book",index);
+      console.log(index)
+     
     }
-  }
+  },
+  computed: {}
 };
 </script>
