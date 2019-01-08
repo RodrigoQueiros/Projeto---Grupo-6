@@ -1,17 +1,26 @@
 <template>
-  <div class="login">
+  <div class="signup">
     <Header/>
     <div class="form-wrapper text-center">
       <form class="form-signin">
         <img class="mb-4" src="white.png" alt width="100" height="100">
         <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
-        <label for="inputNome" class="sr-only">Nome</label>
+        <label for="inputFirstName" class="sr-only">Nome</label>
         <input
-          type="nome"
-          id="inputPassword"
+          type="firstName"
+          id="inputFirstName"
           class="form-control"
-          placeholder="Nome"
-          v-model="form.name"
+          placeholder="Nome próprio"
+          v-model="form.firstName"
+          required
+        >
+        <label for="inputLastName" class="sr-only">Nome</label>
+        <input
+          type="lastName"
+          id="inputLastName"
+          class="form-control"
+          placeholder="Apelido"
+          v-model="form.lastName"
           required
         >
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -80,7 +89,10 @@ body {
   font-size: 16px;
 }
 
-.form-signin input[type="nome"] {
+.form-signin input[type="firstName"] {
+  margin-bottom: 5px;
+}
+.form-signin input[type="lastName"] {
   margin-bottom: 5px;
 }
 .form-signin input[type="email"] {
@@ -113,7 +125,8 @@ export default {
   data: function() {
     return {
       form: {
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         password2: ""
@@ -124,7 +137,8 @@ export default {
     signup() {
       let user = {
         userId: this.$store.getters.getLastId,
-        name: this.form.name,
+        firstName: this.form.firstName,
+        lastName: this.form.lastName,
         email: this.form.email,
         password: this.form.password,
         password2: this.form.password2

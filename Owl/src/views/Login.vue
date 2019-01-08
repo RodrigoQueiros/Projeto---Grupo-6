@@ -105,7 +105,9 @@ export default {
 
      let loginVerified = this.$store.getters.Login(user)
      if (loginVerified) {
+       this.$router.push("/")
        alert("Login efetuado com sucesso.")
+       
      }
      else {
        alert("Os seus dados estão incorretos.")

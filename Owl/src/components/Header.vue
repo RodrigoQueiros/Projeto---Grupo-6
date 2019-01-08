@@ -28,8 +28,12 @@
         <router-link class="navbar-brand" to="/">
             <img src="../assets/logo.png" alt="" id="logo">
         </router-link>
-        <router-link class="navbar-brand" to="/userProfile">
-            <i class="fas fa-user fa-2x" style="color:white"></i>
+        <router-link class="navbar-brand" to="/Profile">
+            <div v-if="userLoggedIn != -1" style="color:white">
+                <i class="fas fa-user fa-2x"></i>
+                <h3>{{userName}}</h3>
+            </div> 
+            
         </router-link>
 
    </nav>
@@ -49,13 +53,13 @@
                 <router-link class="nav-link" to="/suggest">Sugerir Livro</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" id="right" to="/login">LogIn</router-link>
+                <router-link v-if="userLoggedIn == -1" class="nav-link" id="right" to="/login">LogIn</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" to="/signup">SignUp</router-link>
+                <router-link v-if="userLoggedIn == -1" class="nav-link" to="/signup">SignUp</router-link>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link">Logout</a>
+                <a v-if="userLoggedIn != -1" href="" @click="logout" class="nav-link">Logout</a>
             </li>
             
         </ul>
@@ -99,17 +103,36 @@
 export default {
   data: function() {
     return {
+        userLoggedIn: localStorage.getItem("userLoggedIn"),
+        users: this.$store.state.users,
+        userName: ""
     };
   },
+
   created() {
     if (localStorage.getItem("userLoggedIn") == null) {
-        localStorage.setItem("currentBest", -1)
+        localStorage.setItem("userLoggedIn", -1)
     } 
-          
-      
+
+    this.userName = this.getUser()
+    console.log(this.userName)
+    
+           
   },
   methods: {
+      logout() {
+          localStorage.setItem("userLoggedIn", -1)
+          //this.$router.push("/")
+      },
 
+      getUser() {
+          for (let i = 0; i < this.users.length; i++) {
+              if (this.users[i].userId == this.userLoggedIn) {
+                  this.userName = this.users[i].firstName + " " + this.users[i].lastName[0] + "."
+              }
+          }
+          return this.userName
+      }
   },
   
 };
