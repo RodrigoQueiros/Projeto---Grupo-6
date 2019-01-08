@@ -8,6 +8,7 @@ import Rankings from './views/Rankings.vue'
 import Suggest from './views/Suggest.vue'
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
+import Profile from './views/Profile.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/rankings',
       name: 'rankings',
       component: Rankings
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      //component: Profile
     },
     {
       path: '/suggest',

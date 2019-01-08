@@ -25,16 +25,19 @@
   </nav>-->
   <div>
     <nav class="navbar navbar-light bg-light" id="navbar1">
-        
         <router-link class="navbar-brand" to="/">
             <img src="../assets/logo.png" alt="" id="logo">
         </router-link>
+        <router-link class="navbar-brand" to="/userProfile">
+            <i class="fas fa-user fa-2x" style="color:white"></i>
+        </router-link>
+
    </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarNav">
         
         <ul class="navbar-nav">
             <li class="nav-item " id="navLinks">
-                <router-link class="nav-link" to="/" color="white">Home </router-link>
+                <router-link class="nav-link" to="/" color="white">Home</router-link>
             </li>
             <li class="nav-item">
                 <router-link class="nav-link" to="/catalog">Catalogo</router-link>
@@ -52,7 +55,7 @@
                 <router-link class="nav-link" to="/signup">SignUp</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" to="/signup">SignUp</router-link>
+                <a href="" class="nav-link">Logout</a>
             </li>
             
         </ul>
@@ -96,8 +99,14 @@
 export default {
   data: function() {
     return {
-        
     };
+  },
+  created() {
+    if (localStorage.getItem("userLoggedIn") == null) {
+        localStorage.setItem("currentBest", -1)
+    } 
+          
+      
   },
   methods: {
 
