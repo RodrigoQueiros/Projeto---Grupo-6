@@ -15,15 +15,35 @@
         <!-- Imagem -->
 
         <div class="row ">  
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
           
-          <img v-bind:src="books[1].cover" alt="" class="img-thumbnail rounded img-fluid">
+          <img v-bind:src="books[1].cover" alt="" class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left">
           
         </div >
         <!-- Info -->
-        <div class="col-12 col-md-4">
-          <h1>Book title</h1>
-          <button @click="requesition(bookID)" class="btn">Requisição</button>
+        <div class="col-12 col-md-9">
+
+          <div class="row">
+            <div class="col-12"><h1 class="margin5  bookInforHeaders">{{books[this.clickedBook].title}}</h1>
+          <h4 class="margin5  bookInforHeaders">{{books[this.clickedBook].author}}</h4></div>
+          
+          </div>
+
+          <div class="row">
+          <h4 class="margin5 float-left bookInforHeaders">{{books[this.clickedBook].author}}</h4>
+          </div>
+
+          <div class="row">
+
+          </div>
+
+          <div class="row">
+          <h4 class="margin5 float-left bookInforHeaders">Sinopse</h4>
+          <p>{{books[this.clickedBook].description}}</p>
+          </div>
+          
+          
+          <button @click="requesition(this.clickedBook)" class="btn">Requisição</button>
 
         </div>       
 
@@ -48,9 +68,25 @@
 import Header from "@/components/Header.vue";
 export default {
   data: function(){
-    return {bookID:ClickedBook} //To give a name to a getter*
+    return {
+      userID:0,
+      buttonText:0} 
   },
   method:{
+    checkUser(){
+
+    },
+    checkRequesition(bookID, userID){
+      
+      for (let i = 0; i < requesitions.length; i++) {
+        
+        if(requesitions[i].bookId == bookID && requesitions[i].userId){
+
+          //Se encontrar é pq o book esta requesitado, modificar button, caso nao preciso verifcar disponibilidade do livre se sim posso req se nao posso recebber not
+        }
+
+      }
+    },
     requesition(bookID){
 
       //Check book id and user id on requesitions (on load) (change button name to requesitado)
@@ -73,6 +109,16 @@ export default {
     requesitions(){
       return this.$store.getters.requisitions;
     }
+
+
+  },
+  created() {
+
+    this.loggedUser = localStorage.getItem("userLoggedIn")
+    this.clickedBook = 2 //Alterar para localstorage mais tarde
+
+    checkRequesition(this.clickedBook, this.loggedUser )
+
 
   }
 };

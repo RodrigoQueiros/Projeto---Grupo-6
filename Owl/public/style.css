@@ -25,3 +25,14 @@
     margin-top: 5%;
     margin-bottom: 5%;
 }
+
+.bookCoverBig{
+    height: 330px;
+    width: 250px;  
+
+}
+
+.bookInforHeaders{
+
+    color: #592316;
+}
