@@ -29,25 +29,13 @@
 
         </div>
         </div>
-
-        
+      
       </div>
     </div>   
-
     <!--Reviews-->
     <div>
-
     </div>
-
-
-
-
-
   </div>
-
-
-    
-    
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
    
 </template>

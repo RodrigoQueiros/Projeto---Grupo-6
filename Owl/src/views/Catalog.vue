@@ -7,7 +7,7 @@
         <h3>Filtros</h3>
       </div>
       <div class="col-12 col-md-8 offset-md-1" id="catalogBar">
-        <h3>Catalogo</h3>
+        <h3>Catálogo</h3>
       </div>
     </div>
     <div class="row">
@@ -34,7 +34,7 @@
       </div>
       <div class="col-12 col-md-8 offset-md-1" id="catalogContents">
         <div class="row">
-        <div class="col-6 col-md-3 mt-3" v-for="book in books" :key="book">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2 mt-4" v-for="book in books" :key="book">
               <router-link to="/book"><img class="owlCovers" v-bind:src="book.cover"/></router-link> 
               <h6 class="mt-2">{{book.title}}</h6>
               <h6>{{book.author}}</h6>
@@ -53,15 +53,15 @@
     color: white;
     padding-top: 8px;
     text-align: left
-
   }
+
   #filterContents{
     background-color:#D9B97E;
     height: 300px;
     text-align: left;
     color: #592316;
-      
   }
+
   #catalogBar {
     background-color: #bf6e26 !important;
     height: 50px;
@@ -72,8 +72,10 @@
 
   #catalogContents{
     background-color:#D9B97E;
-    height: 400px
+    height: 400px;
+    color: #592316;
   }
+
   .box {
     margin-left: 5%;
     margin-right: 5%;
@@ -83,9 +85,15 @@
   .owlCovers{
     height: 200px;
     width: 150px;
+    box-sizing: border-box;
+    border: 3px solid white;
+    border-radius: 5px;
   }
 
-
+  .owlCovers:hover {
+    /* border-color: #592316; */
+    opacity: 0.8;
+  }
 </style>
 
 <script>
