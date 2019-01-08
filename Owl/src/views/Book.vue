@@ -15,14 +15,25 @@
         <!-- Imagem -->
 
         <div class="row ">  
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
           
-          <img v-bind:src="books[1].cover" alt="" class="img-thumbnail rounded img-fluid">
+          <img v-bind:src="books[1].cover" alt="" class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left">
           
         </div >
         <!-- Info -->
-        <div class="col-12 col-md-4">
-          <h1>Book title</h1>
+        <div class="col-12 col-md-9">
+          <div class="row">
+          <h1 class="margin5 float-left bookInforHeaders">Book title</h1>
+          </div>
+          <div class="row">
+          <h4 class="margin5 float-left bookInforHeaders">Book author</h4>
+          </div>
+          <div class="row"></div>
+          <div class="row">
+          <h4 class="margin5 float-left bookInforHeaders">Sinopse</h4>
+          </div>
+          
+          
           <button @click="requesition(bookID)" class="btn">Requisição</button>
 
         </div>       
