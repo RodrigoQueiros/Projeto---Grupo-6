@@ -191,6 +191,14 @@ export default new Vuex.Store({
       return lastId
     },
 
+    getLastIdReq: (state) => {
+      let lastId = 0
+        if (state.requisitions.length > 0) {
+          lastId = state.requisitions[state.requisitions.length - 1].requisitionId + 1
+        }
+      return lastId
+    },
+
     getUserLoggedIn(state){
       return state.userLoggedin
 
