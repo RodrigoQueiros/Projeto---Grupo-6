@@ -88,7 +88,7 @@ export default new Vuex.Store({
       nPages: 320,
       description: "",
       nViews: 200,
-      availability: true,
+      availability: false,
       bookStatus: "Worn"
     }],
 
@@ -111,7 +111,7 @@ export default new Vuex.Store({
 
     requisitions: [{
       requisitionId: 0,
-      bookId: 0,
+      bookId: 2,
       userId: 0,
       requisitionDate: "",
       deliveryDate: "",
