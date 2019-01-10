@@ -115,7 +115,8 @@ export default new Vuex.Store({
       userId: 0,
       requisitionDate: "",
       deliveryDate: "",
-      deliveryBookStatus: ""
+      deliveryBookStatus: "",
+      active: true
     },
     {
       requisitionId: 1,
@@ -123,7 +124,8 @@ export default new Vuex.Store({
       userId: 0,
       requisitionDate: "",
       deliveryDate: "",
-      deliveryBookStatus: ""
+      deliveryBookStatus: "",
+      active: false
     }],
 
     tags: [{
