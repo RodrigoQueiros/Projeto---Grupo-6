@@ -10,6 +10,14 @@
       </div>
       <div class="row ">        
         <div class="col-12 col-md-12 boxContent" id="">
+          <div v-for="user in users" :key="user">
+            <div v-if="user.userId == userLoggedIn">
+              <img :src="user.photo" alt="">
+              <p></p>
+              <p>{{user.firstName}} {{user.lastName}}</p>
+              <p>{{user.email}}</p>
+            </div>
+          </div>
             
         </div>
       </div>
@@ -53,11 +61,12 @@ export default {
   data: function() {
     return {
       users: this.$store.state.users,
-      user: {
-          userName: "",
-          email: "",
-          photo: "../assets/perfil.jpg"
-      }
+      userLoggedIn: localStorage.getItem("userLoggedIn")
+      // user: {
+      //     userName: "",
+      //     email: "",
+      //     photo: "../assets/perfil.jpg"
+      // }
     };
   },
 
@@ -66,15 +75,15 @@ export default {
   },
 
   methods: {
-      getUserProfile() {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].userId == this.userLoggedIn) {
-                this.user.userName = this.users[i].firstName + " " + this.users[i].lastName
-                this.user.email = this.users[i].email
-            }
-        }
+      // getUserProfile() {
+      //   for (let i = 0; i < this.users.length; i++) {
+      //       if (this.users[i].userId == this.userLoggedIn) {
+      //           this.user.userName = this.users[i].firstName + " " + this.users[i].lastName
+      //           this.user.email = this.users[i].email
+      //       }
+      //   }
           
-      }
+      // }
   },
   computed: {
     
