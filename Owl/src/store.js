@@ -20,7 +20,7 @@ export default new Vuex.Store({
       ableToRequest: true,
       type: "admin",
       nRequisitionsNow: 0,
-      photo: ""
+      photo: "https://i.imgur.com/6NIOn6z.jpg"
     },
     {
       userId: 1,
@@ -31,7 +31,7 @@ export default new Vuex.Store({
       ableToRequest: true,
       type: "user",
       nRequisitionsNow: 0,
-      photo: ""
+      photo: "https://i.imgur.com/6NIOn6z.jpg"
     }
     ],
 
@@ -88,7 +88,7 @@ export default new Vuex.Store({
       nPages: 320,
       description: "",
       nViews: 200,
-      availability: true,
+      availability: false,
       bookStatus: "Worn"
     }],
 
@@ -111,11 +111,12 @@ export default new Vuex.Store({
 
     requisitions: [{
       requisitionId: 0,
-      bookId: 0,
+      bookId: 2,
       userId: 0,
       requisitionDate: "",
       deliveryDate: "",
-      deliveryBookStatus: ""
+      deliveryBookStatus: "",
+      active: true
     },
     {
       requisitionId: 1,
@@ -123,7 +124,8 @@ export default new Vuex.Store({
       userId: 0,
       requisitionDate: "",
       deliveryDate: "",
-      deliveryBookStatus: ""
+      deliveryBookStatus: "",
+      active: false
     }],
 
     tags: [{
@@ -185,6 +187,14 @@ export default new Vuex.Store({
       let lastId = 0
         if (state.users.length > 0) {
           lastId = state.users[state.users.length - 1].userId + 1
+        }
+      return lastId
+    },
+
+    getLastIdReq: (state) => {
+      let lastId = 0
+        if (state.requisitions.length > 0) {
+          lastId = state.requisitions[state.requisitions.length - 1].requisitionId + 1
         }
       return lastId
     },
