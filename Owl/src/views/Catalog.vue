@@ -13,22 +13,25 @@
       <div class="row">
         <div class="col-12 col-md-3" id="filterContents">
           <label for="filterAuthors" class="mt-2">Por Autor:</label>
-          <select class="form-control" id="filterAuthors">
+          <select class="form-control" id="filterAuthors" v-model="authorFilter">
             <option>Todos</option>
-            <option v-for="book in books" :key="book">{{book.author}}</option>
+            <option v-for="author in authors" :key="author">{{author}}</option>
           </select>
           
           <label for="filterPublisher" class="mt-2">Por Editora:</label>
-          <select class="form-control" id="filterPublisher">
+          <select class="form-control" id="filterPublisher" v-model="publisherFilter">
             <option>Todos</option>
             <option v-for="publisher in publishers" :key="publisher">{{publisher}}</option>
           </select>
           
           <label for="filterTag" class="mt-2">Por Tag:</label>
-          <select class="form-control" id="filterTag">
+          <select class="form-control" id="filterTag" v-model="tagFilter">
             <option>Todos</option>
             <option v-for="tag in tags" :key="tag">{{tag.tagDescription}}</option>
           </select>
+          <br>
+          <button class="btn btn-lg btn-block" id="btnLogin" @click="filterBooks">Filtrar</button>
+
         </div>
         <div class="col-12 col-md-8 ml-md-3" id="catalogContents">
           <div class="row">
@@ -57,7 +60,7 @@
 
 #filterContents {
   background-color: #d9b97e;
-  height: 300px;
+  height: 330px;
   text-align: left;
   color: #592316;
 }
@@ -106,7 +109,12 @@ export default {
     return {
       books: this.$store.state.books,
       tags: this.$store.state.tags,
-      publishers: []
+      publishers: [],
+      authors: [],
+      filteredBooks: this.$store.state.books,
+      authorFilter: "Todos",
+      publisherFilter: "Todos",
+      tagFilter: "Todos"
     };
   },
 
@@ -117,14 +125,34 @@ export default {
       }
     }
 
-    
+    for (let i = 0; i < this.books.length; i++) {
+      if (this.authors.indexOf(this.books[i].author) == -1) {
+        this.authors.push(this.books[i].author);
+      }
+    }
   },
 
   methods: {
     clickBook(index) {
-      this.$store.dispatch("open_book",index);
-      console.log(index)
-     
+      this.$store.dispatch("open_book", index);
+      console.log(index);
+    },
+
+//working on console only
+    filterBooks() {
+      console.log(this.filteredBooks);
+      this.filteredBooks = [];
+      console.log(this.tagFilter);
+
+      this.filteredBooks = this.books.filter(
+        book => book.author === this.authorFilter || this.authorFilter == "Todos"
+      );
+
+      this.filteredBooks = this.filteredBooks.filter(
+        book => book.publisher === this.publisherFilter || this.publisherFilter == "Todos"
+      );
+
+      console.log(this.filteredBooks);
     }
   },
   computed: {}
