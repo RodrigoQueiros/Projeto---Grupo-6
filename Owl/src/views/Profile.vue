@@ -12,16 +12,24 @@
         <div class="col-12 col-md-12 boxContent" id="">
           <div v-for="user in users" :key="user">
             <div v-if="user.userId == userLoggedIn">
-              <img :src="user.photo" alt="">
-              <p></p>
-              <p>{{user.firstName}} {{user.lastName}}</p>
-              <p>{{user.email}}</p>
-            </div>
-          </div>
+              <div class="row" style="text-align:left">
+                <div class="col-3">
+                  <img :src="user.photo" height="250" width="250" alt="" class="mt-4 ml-2"> 
+                </div>
+                <div class="col-9">
             
+                  <h4 class="mt-5" >Nome de Utilizador</h4>
+                  <p>{{user.firstName}} {{user.lastName}}</p>
+                  <h4>Email</h4>
+                  <p>{{user.email}}</p>
+            
+                  <a id="edit" href="#" data-toggle='modal' data-target='#editarPerfilModal' class="btn btn-dark "><i class="fas fa-edit"></i> Editar perfil</a> 
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
-      
     </div>   
   </div>
 </template>
@@ -48,6 +56,11 @@
   #btnSubmit:hover {
     opacity: 0.9;
   }
+
+  .boxContent{
+    background-color:#D9B97E;
+    height: 300px
+}
 
 </style>
 
