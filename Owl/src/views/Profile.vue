@@ -14,16 +14,19 @@
             <div v-if="user.userId == userLoggedIn">
               <div class="row" style="text-align:left">
                 <div class="col-3">
-                  <img :src="user.photo" height="250" width="250" alt="" class="mt-4 ml-2"> 
+                  <img :src="user.photo" height="200" width="250" alt="" id="profilePhoto" class="mt-4 ml-2"> 
                 </div>
                 <div class="col-9">
             
-                  <h4 class="mt-5" >Nome de Utilizador</h4>
-                  <p>{{user.firstName}} {{user.lastName}}</p>
+                  <h4 class="mt-4" >Nome de Utilizador</h4>
+                  <p v-if="clicked == false">{{user.firstName}} {{user.lastName}}</p>
+                  <input v-if="clicked" type="text" class="form-control col-4 mb-1" v-model="user.firstName">
+                  <input v-if="clicked" type="text" class="form-control col-4 mb-1" v-model="user.lastName">
+                  
                   <h4>Email</h4>
-                  <p>{{user.email}}</p>
-            
-                  <a id="edit" href="#" data-toggle='modal' data-target='#editarPerfilModal' class="btn btn-dark "><i class="fas fa-edit"></i> Editar perfil</a> 
+                  <p v-if="clicked == false">{{user.email}}</p>
+                  <input v-if="clicked" type="text" class="form-control col-4 mb-1" v-model="user.email" >
+                  <a id="btnEdit" @click="editProfile" class="btn btn-dark mt-1"><i class="fas fa-edit"></i> Editar perfil</a> 
                   </div>
                 </div>
               </div>
@@ -35,32 +38,32 @@
 </template>
 
 <style>
-  #formSugestion {
-    text-align: left;
-  }
-
-  .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-  }
-
-  #btnSubmit {
-    background-color: #592316;
-    color: white;
-    
-  }
-
-  #btnSubmit:hover {
-    opacity: 0.9;
-  }
 
   .boxContent{
     background-color:#D9B97E;
-    height: 300px
-}
+    height: 260px;
+    color: #592316
+  }
+
+  #profilePhoto {
+    box-sizing: border-box;
+    border: 3px solid white;
+    border-radius: 5px;
+  }
+
+  #btnEdit {
+    color: white;
+    background-color: #592316
+  
+  }  
+
+  .form-control {
+    height: 35px;
+  }
+
+  #btnEdit:hover {
+    opacity: 0.9;
+  }  
 
 </style>
 
@@ -74,12 +77,13 @@ export default {
   data: function() {
     return {
       users: this.$store.state.users,
-      userLoggedIn: localStorage.getItem("userLoggedIn")
-      // user: {
-      //     userName: "",
-      //     email: "",
-      //     photo: "../assets/perfil.jpg"
-      // }
+      userLoggedIn: localStorage.getItem("userLoggedIn"),
+      clicked: false,
+      user: {
+        firstName: "",
+        lastName: "",
+        email: ""
+      }
     };
   },
 
@@ -88,18 +92,22 @@ export default {
   },
 
   methods: {
-      // getUserProfile() {
-      //   for (let i = 0; i < this.users.length; i++) {
-      //       if (this.users[i].userId == this.userLoggedIn) {
-      //           this.user.userName = this.users[i].firstName + " " + this.users[i].lastName
-      //           this.user.email = this.users[i].email
-      //       }
-      //   }
+      editProfile() {
+        if (this.clicked) {
+          this.clicked = false
           
-      // }
+        }
+        else {
+          this.clicked = true
+          this.users[this.userLoggedIn].firstName = this.user.firstName
+          this.users[this.userLoggedIn].lastName = this.user.lastName
+          this.users[this.userLoggedIn].email = this.user.email
+        }
+        
+      }
   },
   computed: {
-    
+
   }
 };
 </script>
