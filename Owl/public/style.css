@@ -52,3 +52,7 @@
 .buttonColor:hover{
     opacity: 0.9;
 }
+
+template{
+    background:#DACEB9;
+}
