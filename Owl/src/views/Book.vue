@@ -208,7 +208,7 @@ export default {
   },
   beforeMount() {
     this.loggedUser = localStorage.getItem("userLoggedIn");
-    this.clickedBook = this.$store.state.currentBookId;
+    this.clickedBook = this.$route.params.id;
  
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
