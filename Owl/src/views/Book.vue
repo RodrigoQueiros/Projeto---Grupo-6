@@ -72,7 +72,17 @@
           <h3>Comentários</h3>
         </div>
         <!--Comentar-->
-        <div class="row"></div>
+        <div class="row ">
+          <div class="form-group boxContent col-12 col-md-12">
+          <div class="margin5">
+          
+            <label for="comment">Comment:</label>
+            <textarea class="form-control" rows="20" id="comment"></textarea>
+          </div>
+          </div>
+          
+
+        </div>
         <!--Comentarios-->
         <div class="row"></div>
       </div>
