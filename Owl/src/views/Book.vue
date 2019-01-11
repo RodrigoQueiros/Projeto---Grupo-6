@@ -7,16 +7,27 @@
 
       <!--Header row-->
     <div class="row">
-        <div class="col-12 col-md-12 boxTitle" id>
+        <div class="col-12 col-md-12 boxTitle" >
           <h3>Detalhes do livro</h3>
         </div>
       </div>
 
       <!--Content row-->
     <div class="row">
-      <div class="col-12 col-md-12 boxContent" id>
+      <div class="col-12 col-md-12 boxContent" >
+       <!--Cover row-->
+        <div class="row">
+            <div class="col-12 col-md-3">
+              <img
+                v-bind:src="books[this.clickedBook].cover"
+                alt
+                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left">
+            </div>
+        </div>
+      <!--Content row-->
+        <div class="row">
 
-
+        </div>
       </div>
     </div>
 

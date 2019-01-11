@@ -16,7 +16,7 @@
 
 .boxContent{
     background-color:#D9B97E;
-    
+    height: auto !important;
 }
 
 .margin5{
