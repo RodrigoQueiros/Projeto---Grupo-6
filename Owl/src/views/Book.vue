@@ -4,50 +4,31 @@
 
     <!--Book info-->
     <div class="margin5 mt-4">
-      <div class="row">
+
+      <!--Header row-->
+    <div class="row">
         <div class="col-12 col-md-12 boxTitle" id>
           <h3>Detalhes do livro</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 col-md-12 boxContent" id>
-          <!-- Imagem -->
-          <div class="row">
-            <div class="col-12 col-md-3">
-              <img
-                v-bind:src="books[1].cover"
-                alt
-                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left"
-              >
-            </div>
-            <!-- Info -->
-            <div class="col-12 col-md-9">
-              <div class="row">
-                <div class="col-12">
-                  <h1 class="margin5 bookInforHeaders">{{books[this.clickedBook].title}}</h1>
-                  <h4 class="margin5 bookInforHeaders">{{books[this.clickedBook].author}}</h4>
-                </div>
-              </div>
 
-              <div class="row">
-                <h4 class="margin5 float-left bookInforHeaders">{{books[this.clickedBook].author}}</h4>
-              </div>
+      <!--Content row-->
+    <div class="row">
+      <div class="col-12 col-md-12 boxContent" id>
 
-              <div class="row"></div>
 
-              <div class="row">
-                <h4 class="margin5 float-left bookInforHeaders">Sinopse</h4>
-                <p>{{books[this.clickedBook].description}}</p>
-              </div>
-
-              <button @click="requesition(clickedBook, loggedUser)" :disabled="buttonActive == false" class="btn">{{buttonText}}</button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
+
+
+
+
+    </div>
     <!--Reviews-->
-    <div></div>
+    <div class="margin5 mt-4">
+      ola
+
+    </div>
   </div>
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
 </template>
