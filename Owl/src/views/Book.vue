@@ -67,12 +67,10 @@
 
     <!--Reviews-->
     <div class="margin5 mt-4">
-      
-
-
-      <div class="row">
+        <div class="row">
         <div class="col-12 col-md-12 boxTitle" >
           <h3>Comentários</h3>
+        </div>
         </div>
         <!--Comentar-->
         <div class="row ">
@@ -115,7 +113,7 @@
       </div>
 
     </div>
-  </div>
+  
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
 </template>
 
