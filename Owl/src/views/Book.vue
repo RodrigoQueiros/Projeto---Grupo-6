@@ -23,21 +23,55 @@
                 alt
                 class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left">
             </div>
-        </div>
-      <!--Content row-->
-        <div class="row">
 
-        </div>
+
+            <!-- Info -->
+            <div class="col-12 col-md-9">
+                <div class="row" style="margin-top:2%">                  
+                  <h1 class="bookInforHeaders alignLeft" >{{books[this.clickedBook].title}}</h1>
+                </div>
+
+
+                <div class="row">
+                  <h4 class="bookInforHeaders alignLeft" >{{books[this.clickedBook].author}}</h4>
+                </div>
+
+
+                <div class="row mt-4">
+                  
+                  <h4 class="alignLeft bookInforHeaders font-weight-bold">Editora: {{books[this.clickedBook].publisher}}     Categoria: {{books[this.clickedBook].idTag}} ...</h4>
+                </div>
+
+                <div class="row mt-4">
+                <h4 class="alignLeft bookInforHeaders font-weight-bold">Sinopse</h4>
+                <p>{{books[this.clickedBook].description}}</p>
+                </div>
+                
+              </div>
+
+
+            
+        </div>   
+        
+                    
+                
+
+        
       </div>
     </div>
-
-
-
-
     </div>
+
     <!--Reviews-->
     <div class="margin5 mt-4">
-      ola
+      <div class="row">
+        <div class="col-12 col-md-12 boxTitle" >
+          <h3>Comentários</h3>
+        </div>
+        <!--Comentar-->
+        <div class="row"></div>
+        <!--Comentarios-->
+        <div class="row"></div>
+      </div>
 
     </div>
   </div>
