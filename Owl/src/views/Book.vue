@@ -21,14 +21,14 @@
               <img
                 v-bind:src="books[this.clickedBook].cover"
                 alt
-                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left">
+                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left ml-4 mt-4">
             </div>
 
 
             <!-- Info -->
             <div class="col-12 col-md-9">
                 <div class="row" style="margin-top:2%">                  
-                  <h1 class="bookInforHeaders alignLeft" >{{books[this.clickedBook].title}}</h1>
+                  <h1 class="bookInforHeaders alignLeft font-weight-bold" >{{books[this.clickedBook].title}}</h1>
                 </div>
 
 
@@ -39,12 +39,16 @@
 
                 <div class="row mt-4">
                   
-                  <h4 class="alignLeft bookInforHeaders font-weight-bold">Editora: {{books[this.clickedBook].publisher}}     Categoria: {{books[this.clickedBook].idTag}} ...</h4>
+                  <h4 class="alignLeft bookInforHeaders "><b>Editora: </b> {{books[this.clickedBook].publisher}}     <b>Categoria: </b>{{books[this.clickedBook].idTag}} ...</h4>
                 </div>
 
                 <div class="row mt-4">
                 <h4 class="alignLeft bookInforHeaders font-weight-bold">Sinopse</h4>
-                <p>{{books[this.clickedBook].description}}</p>
+                <p class="mr-4" style="text-align:left">{{books[this.clickedBook].description}}</p>
+                </div>
+
+                <div class="row">
+                  <button @click="requesition(clickedBook, loggedUser)" :disabled="buttonActive == false" class="btn buttonColor float-right">{{buttonText}}</button>
                 </div>
                 
               </div>
@@ -122,6 +126,7 @@ export default {
           else if (this.books[bookID].availability == false) {
             this.buttonText = "Não disponivel";
             //show button sino
+            //<i class="fas fa-bell"></i>
             this.bookReq = true
             this.buttonActive = false
           }           
@@ -168,6 +173,7 @@ export default {
           }
           this.requisitions.push(req) //Adicionar a store, need mutation
           alert("Livro Requisitado")
+          checkRequesition(bookID,userID)
       }
       else{
         //Passar true para false
