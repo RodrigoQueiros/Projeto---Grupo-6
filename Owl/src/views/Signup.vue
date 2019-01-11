@@ -28,7 +28,7 @@
           type="email"
           id="inputEmail"
           class="form-control"
-          placeholder="Email address"
+          placeholder="Email"
           v-model="form.email"
           required
          
