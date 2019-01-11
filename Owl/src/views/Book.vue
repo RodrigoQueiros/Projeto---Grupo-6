@@ -63,20 +63,23 @@ export default {
     return {
       loggedUser: 0,
       clickedBook: 0,
-      buttonText: "Requisitar0",
+      buttonText: "Requisitar",
       requisitions: [],
       books : [],
       buttonActive : true,
       bookDeliver : false,
+      bookReq : false
     };
   },
   methods: {
     checkRequesition(bookID, userID) {
-      let bookReq = false
+      
 
+      
+      console.log(userID)
+      console.log()
       if (userID != -1) {
-        for (let i = 0; i < this.requisitions.length; i++) {
-          
+        for (let i = 0; i < this.requisitions.length; i++) {          
           if (
             this.requisitions[i].bookId == bookID &&
             this.requisitions[i].userId == userID &&
@@ -84,7 +87,7 @@ export default {
           ) {
             
             this.buttonText = "Entregar";
-            bookReq = true
+            this.bookReq = true
             this.buttonActive = true
             this.bookDeliver = true
 
@@ -92,7 +95,7 @@ export default {
           else if (this.books[bookID].availability == false) {
             this.buttonText = "Não disponivel";
             //show button sino
-            bookReq = true
+            this.bookReq = true
             this.buttonActive = false
           }           
         }
@@ -110,13 +113,32 @@ export default {
     requesition(bookID, userID) {
       //Check book id and user id on requesitions (on load) (change button name to requesitado)
       //Requesitions generates a id, saves book id and user id, current date, devliverydate and book status
-      if(this.bookReq==false)//Devia ser true
+
+      if(userID == -1){
+
+        this.$router.push("login") //Não tem conta, precisa de fazer login
+      }
+      else if(this.bookReq==false)//Devia ser true
       {
 
-
+        //Requisitar
+        let req = {
+            requisitionId: this.$store.getters.getLastIdReq,
+            bookId: bookID,
+            userId: userID,
+            requisitionDate: "",
+            deliveryDate: "",
+            deliveryBookStatus: this.books[bookID].bookStatus,
+            active: true
+          }
+          this.requisitions.push(req) 
+          alert("Livro Requisitado")
       }
       else{
+        //Passar true para false
+        //Verificar data
         
+
         //if(this.bookDeliver = true){
           console.log("ola")
           let req = {
@@ -131,6 +153,7 @@ export default {
           this.requisitions.push(req) 
           alert("Livro entregado")
 
+
       }
 
 
@@ -144,8 +167,8 @@ export default {
   },
   beforeMount() {
     this.loggedUser = localStorage.getItem("userLoggedIn");
-    this.clickedBook = 2; //Alterar para localstorage mais tarde
-
+    this.clickedBook = this.$store.state.currentBookId;
+ 
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
 

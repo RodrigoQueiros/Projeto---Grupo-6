@@ -144,7 +144,7 @@ export default new Vuex.Store({
       userId: ""
     }],
 
-    ClickedBook: 1, //Id do book clicked, 1 temporary id
+    
 
   },
   mutations: {
@@ -222,7 +222,9 @@ export default new Vuex.Store({
       
       state.currentBookId = payload
       
-    }
+    },
+    
+
   },
 
   actions:{
