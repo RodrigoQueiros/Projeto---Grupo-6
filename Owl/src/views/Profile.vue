@@ -20,12 +20,12 @@
 
                   <h4 class="mt-4" >Nome de Utilizador</h4>
                   <p v-if="clicked == false">{{user.firstName}} {{user.lastName}}</p>
-                  <input v-if="clicked" type="text" class="form-control col-4 mb-1" v-model="user.firstName">
-                  <input v-if="clicked" type="text" class="form-control col-4 mb-1" v-model="user.lastName">
+                  <input v-if="clicked" type="text" class="form-control a col-4 mb-1" v-model="user.firstName">
+                  <input v-if="clicked" type="text" class="form-control a col-4 mb-1" v-model="user.lastName">
 
                   <h4>Email</h4>
                   <p v-if="clicked == false">{{user.email}}</p>
-                  <input v-if="clicked" type="text" class="form-control col-4 mb-1" v-model="user.email" >
+                  <input v-if="clicked" type="text" class="form-control a col-4 mb-1" v-model="user.email" >
                   <a id="btnEdit" @click="editProfile" class="btn btn-dark mt-1"><i class="fas fa-edit"></i> Editar perfil</a>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
     background-color: #592316
   }
 
-  .form-control {
+  .a {
     height: 35px;
   }
 
@@ -66,8 +66,8 @@
 
 </style>
 
-
 <script>
+
 import Header from "@/components/Header.vue";
 export default {
   components: {
