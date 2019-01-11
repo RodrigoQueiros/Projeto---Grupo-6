@@ -40,7 +40,7 @@ export default new Router({
       component: Catalog
     },
     {
-      path: '/book',
+      path: '/book/:id',
       name: 'book',
       component: Book
     },

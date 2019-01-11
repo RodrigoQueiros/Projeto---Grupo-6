@@ -67,7 +67,7 @@ export default new Vuex.Store({
       bookId: 2,
       cover: "https://img.bertrand.pt/images/onde-caem-os-anjos-nora-roberts/NDV8MTk3MDA3OTl8MTU1MzEwODN8MTQ5OTM4MjAwMDAwMA==/502x",
       title: "Onde Caem os Anjos",
-      author: "Nora Roberts ",
+      author: "Nora Roberts",
       publisher: "Scholastic",
       idTag: [1, 2],
       launchDate: "",
