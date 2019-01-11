@@ -4,50 +4,80 @@
 
     <!--Book info-->
     <div class="margin5 mt-4">
-      <div class="row">
-        <div class="col-12 col-md-12 boxTitle" id>
+
+      <!--Header row-->
+    <div class="row">
+        <div class="col-12 col-md-12 boxTitle" >
           <h3>Detalhes do livro</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 col-md-12 boxContent" id>
-          <!-- Imagem -->
-          <div class="row">
+
+      <!--Content row-->
+    <div class="row">
+      <div class="col-12 col-md-12 boxContent" >
+       <!--Cover row-->
+        <div class="row">
             <div class="col-12 col-md-3">
               <img
-                v-bind:src="books[1].cover"
+                v-bind:src="books[this.clickedBook].cover"
                 alt
-                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left"
-              >
+                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left ml-4 mt-4">
             </div>
+
+
             <!-- Info -->
             <div class="col-12 col-md-9">
-              <div class="row">
-                <div class="col-12">
-                  <h1 class="margin5 bookInforHeaders">{{books[this.clickedBook].title}}</h1>
-                  <h4 class="margin5 bookInforHeaders">{{books[this.clickedBook].author}}</h4>
+                <div class="row" style="margin-top:2%">                  
+                  <h1 class="bookInforHeaders alignLeft font-weight-bold" >{{books[this.clickedBook].title}}</h1>
                 </div>
+
+
+                <div class="row">
+                  <h4 class="bookInforHeaders alignLeft" >{{books[this.clickedBook].author}}</h4>
+                </div>
+
+
+                <div class="row mt-4">
+                  
+                  <h4 class="alignLeft bookInforHeaders "><b>Editora: </b> {{books[this.clickedBook].publisher}}     <b>Categoria: </b>{{books[this.clickedBook].idTag}} ...</h4>
+                </div>
+
+                <div class="row mt-4">
+                <h4 class="alignLeft bookInforHeaders font-weight-bold">Sinopse</h4>
+                <p class="mr-4" style="text-align:left">{{books[this.clickedBook].description}}</p>
+                </div>
+
+                <div class="row">
+                  <button @click="requesition(clickedBook, loggedUser)" :disabled="buttonActive == false" class="btn buttonColor float-right">{{buttonText}}</button>
+                </div>
+                
               </div>
 
-              <div class="row">
-                <h4 class="margin5 float-left bookInforHeaders">{{books[this.clickedBook].author}}</h4>
-              </div>
 
-              <div class="row"></div>
+            
+        </div>   
+        
+                    
+                
 
-              <div class="row">
-                <h4 class="margin5 float-left bookInforHeaders">Sinopse</h4>
-                <p>{{books[this.clickedBook].description}}</p>
-              </div>
-
-              <button @click="requesition(clickedBook, loggedUser)" :disabled="buttonActive == false" class="btn">{{buttonText}}</button>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
+    </div>
+
     <!--Reviews-->
-    <div></div>
+    <div class="margin5 mt-4">
+      <div class="row">
+        <div class="col-12 col-md-12 boxTitle" >
+          <h3>Comentários</h3>
+        </div>
+        <!--Comentar-->
+        <div class="row"></div>
+        <!--Comentarios-->
+        <div class="row"></div>
+      </div>
+
+    </div>
   </div>
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
 </template>
@@ -63,20 +93,24 @@ export default {
     return {
       loggedUser: 0,
       clickedBook: 0,
-      buttonText: "Requisitar0",
+      buttonText: "Requisitar",
       requisitions: [],
       books : [],
       buttonActive : true,
       bookDeliver : false,
+      bookReq : false,
+      
     };
   },
   methods: {
     checkRequesition(bookID, userID) {
-      let bookReq = false
+      
 
+      
+      console.log(userID)
+      console.log()
       if (userID != -1) {
-        for (let i = 0; i < this.requisitions.length; i++) {
-          
+        for (let i = 0; i < this.requisitions.length; i++) {          
           if (
             this.requisitions[i].bookId == bookID &&
             this.requisitions[i].userId == userID &&
@@ -84,7 +118,7 @@ export default {
           ) {
             
             this.buttonText = "Entregar";
-            bookReq = true
+            this.bookReq = true
             this.buttonActive = true
             this.bookDeliver = true
 
@@ -92,7 +126,8 @@ export default {
           else if (this.books[bookID].availability == false) {
             this.buttonText = "Não disponivel";
             //show button sino
-            bookReq = true
+            //<i class="fas fa-bell"></i>
+            this.bookReq = true
             this.buttonActive = false
           }           
         }
@@ -110,13 +145,41 @@ export default {
     requesition(bookID, userID) {
       //Check book id and user id on requesitions (on load) (change button name to requesitado)
       //Requesitions generates a id, saves book id and user id, current date, devliverydate and book status
-      if(this.bookReq==false)//Devia ser true
+
+      if(userID == -1){
+
+        this.$router.push("login") //Não tem conta, precisa de fazer login
+      }
+      else if(this.bookReq==false)//Devia ser true
       {
-
-
+        let currentDate = new Date();
+        //Requisitar
+        let req = {
+            requisitionId: this.$store.getters.getLastIdReq,
+            bookId: bookID,
+            userId: userID,
+            requisitionDate: currentDate.getDate() + "/"
+                + (currentDate.getMonth()+1)  + "/" 
+                + currentDate.getFullYear() + " @ "
+                + currentDate.getHours() + ":"
+                + currentDate.getMinutes(),
+            deliveryDate: currentDate.getDate()+5 + "/" //Preciso verificar se muda de mes ou não, ou ate de ano
+                + (currentDate.getMonth()+1)  + "/" 
+                + currentDate.getFullYear() + " @ "
+                + currentDate.getHours() + ":"
+                + currentDate.getMinutes(),
+            deliveryBookStatus: this.books[bookID].bookStatus,
+            active: true
+          }
+          this.requisitions.push(req) //Adicionar a store, need mutation
+          alert("Livro Requisitado")
+          checkRequesition(bookID,userID)
       }
       else{
-        
+        //Passar true para false
+        //Verificar data
+
+
         //if(this.bookDeliver = true){
           console.log("ola")
           let req = {
@@ -131,6 +194,7 @@ export default {
           this.requisitions.push(req) 
           alert("Livro entregado")
 
+
       }
 
 
@@ -144,8 +208,8 @@ export default {
   },
   beforeMount() {
     this.loggedUser = localStorage.getItem("userLoggedIn");
-    this.clickedBook = 2; //Alterar para localstorage mais tarde
-
+    this.clickedBook = this.$store.state.currentBookId;
+ 
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
 

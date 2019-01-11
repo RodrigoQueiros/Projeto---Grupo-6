@@ -74,7 +74,7 @@
 }
 #catalogContents {
   background-color: #d9b97e;
-  height: 400px;
+  
   color: #592316;
 }
 .box {

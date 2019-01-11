@@ -16,7 +16,7 @@
 
 .boxContent{
     background-color:#D9B97E;
-    height: 500px
+    height: auto !important;
 }
 
 .margin5{
@@ -35,4 +35,24 @@
 .bookInforHeaders{
 
     color: #592316;
+}
+
+.alignLeft{
+    text-align: left
+}
+.alignRight{
+    text-align: right
+}
+
+.buttonColor{
+    background-color: #592316;
+    color: white
+}
+
+.buttonColor:hover{
+    opacity: 0.9;
+}
+
+template{
+    background:#DACEB9;
 }
