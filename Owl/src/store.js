@@ -44,7 +44,7 @@ export default new Vuex.Store({
       idTag: [1, 2],
       launchDate: "",
       nPages: 100,
-      description: "",
+      description: "O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente. O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente. O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente.",
       nViews: 100,
       availability: true,
       bookStatus: "Good"
@@ -223,7 +223,7 @@ export default new Vuex.Store({
       state.currentBookId = payload
       
     },
-    
+
 
   },
 

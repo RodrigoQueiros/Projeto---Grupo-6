@@ -36,3 +36,23 @@
 
     color: #592316;
 }
+
+.alignLeft{
+    text-align: left
+}
+.alignRight{
+    text-align: right
+}
+
+.buttonColor{
+    background-color: #592316;
+    color: white
+}
+
+.buttonColor:hover{
+    opacity: 0.9;
+}
+
+template{
+    background:#DACEB9;
+}
