@@ -68,7 +68,8 @@ export default {
       books : [],
       buttonActive : true,
       bookDeliver : false,
-      bookReq : false
+      bookReq : false,
+      
     };
   },
   methods: {
@@ -120,24 +121,32 @@ export default {
       }
       else if(this.bookReq==false)//Devia ser true
       {
-
+        let currentDate = new Date();
         //Requisitar
         let req = {
             requisitionId: this.$store.getters.getLastIdReq,
             bookId: bookID,
             userId: userID,
-            requisitionDate: "",
-            deliveryDate: "",
+            requisitionDate: currentDate.getDate() + "/"
+                + (currentDate.getMonth()+1)  + "/" 
+                + currentDate.getFullYear() + " @ "
+                + currentDate.getHours() + ":"
+                + currentDate.getMinutes(),
+            deliveryDate: currentDate.getDate()+5 + "/" //Preciso verificar se muda de mes ou não, ou ate de ano
+                + (currentDate.getMonth()+1)  + "/" 
+                + currentDate.getFullYear() + " @ "
+                + currentDate.getHours() + ":"
+                + currentDate.getMinutes(),
             deliveryBookStatus: this.books[bookID].bookStatus,
             active: true
           }
-          this.requisitions.push(req) 
+          this.requisitions.push(req) //Adicionar a store, need mutation
           alert("Livro Requisitado")
       }
       else{
         //Passar true para false
         //Verificar data
-        
+
 
         //if(this.bookDeliver = true){
           console.log("ola")
