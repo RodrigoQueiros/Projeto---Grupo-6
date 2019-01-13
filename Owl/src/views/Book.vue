@@ -129,7 +129,7 @@
                 </div>
                 <!-- Review Info -->
                 <div class="row">
-                  <p>{{review.comment}}</p>
+                  <p >{{review.comment}}</p>
 
                 </div>
                 <!-- Rating -->
@@ -139,7 +139,7 @@
                   <button class="btn-danger"><i class="fas fa-long-arrow-alt-down"></i>{{review.downVote.length}}</button>
                 </div>
 
-                <div class="row">
+                <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
 
                   <button class="btn-primary"><i class="fas fa-edit"></i></button>
                   <button class="btn-dark"><i class="fas fa-times"></i></button>
