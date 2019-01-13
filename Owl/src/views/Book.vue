@@ -111,8 +111,33 @@
         <!--Comentarios-->
         <div class="row">
 
-          
+          <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId" >
+            <!-- User Image-->
+            <div class="col-3">
+                <img
+                v-bind:src="getInfoFromUser(review.userId).photo"
+                alt
+                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left ml-4 mt-4">
+            </div>
+            <div class="col-9">
+                <!-- Info User -->
+                <div class="row">
+                  <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
+                  <h6>{{review.date}}</h6>
+                  <h5>{{review.rating}} stars</h5>
+                  <!-- Precisa linha -->
+                </div>
+                <!-- Review Info -->
+                <div class="row">
+                  <p>{{review.comment}}</p>
 
+                </div>
+                <!-- Rating -->
+                <div class="row"></div>
+            </div>
+
+
+          </div>
 
 
         </div>
@@ -137,6 +162,8 @@ export default {
       buttonText: "Requisitar",
       requisitions: [],
       books : [],
+      users: [],
+      reviews: [],
       buttonActive : true,
       bookDeliver : false,
       bookReq : false,
@@ -144,6 +171,23 @@ export default {
     };
   },
   methods: {
+
+    getInfoFromUser(userID){
+      let a = true
+      let all = 0
+      for (let i = 0; i < this.users.length; i++) {  
+        
+        if(this.users[i].userId == userID && a == true ){
+          
+          all = this.users[i]
+          a = false
+          
+        }
+        
+      }
+      return all
+      
+    },
     checkRequesition(bookID, userID) {
       
 
@@ -172,7 +216,7 @@ export default {
             this.buttonActive = false
           }           
         }
-        if(bookReq==false){
+        if(this.bookReq==false){
           
           this.buttonText = "Requisitar";
         
@@ -253,7 +297,10 @@ export default {
  
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
-
+    this.users = this.$store.getters.users;
+    this.reviews = this.$store.getters.reviews;
+    console.log(this.users)
+    console.log(this.reviews)
     this.checkRequesition(this.clickedBook, this.loggedUser);
   }
 };

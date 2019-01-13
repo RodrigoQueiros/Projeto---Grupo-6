@@ -97,16 +97,20 @@ export default new Vuex.Store({
       bookId: 0,
       userId: 1,
       rating: 4,
-      date: "",
-      comment: "",
+      date: "2018-07-11",
+      comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test.This is a review test test.",
+      upVote: 0,
+      downVote: 0
     },
     {
-      reviewId: 0,
+      reviewId: 1,
       bookId: 0,
       userId: 0,
       rating: 4,
-      date: "",
-      comment: "",
+      date: "2018-07-11",
+      comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test. This is a review test test. ",
+      upVote: 0,
+      downVote: 0
     }],
 
     requisitions: [{
