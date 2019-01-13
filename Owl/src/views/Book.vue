@@ -133,7 +133,19 @@
 
                 </div>
                 <!-- Rating -->
-                <div class="row"></div>
+                <div class="row">
+
+                  <button class="btn-success"><i class="fas fa-long-arrow-alt-up"></i>{{review.upVote.length}}</button>
+                  <button class="btn-danger"><i class="fas fa-long-arrow-alt-down"></i>{{review.downVote.length}}</button>
+                </div>
+
+                <div class="row">
+
+                  <button class="btn-primary"><i class="fas fa-edit"></i></button>
+                  <button class="btn-dark"><i class="fas fa-times"></i></button>
+                </div>
+
+                <!-- Fazer editar e eliminar -->
             </div>
 
 

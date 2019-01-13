@@ -99,8 +99,8 @@ export default new Vuex.Store({
       rating: 4,
       date: "2018-07-11",
       comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test.This is a review test test.",
-      upVote: 0,
-      downVote: 0
+      upVote: [3,4,5],
+      downVote: [1]
     },
     {
       reviewId: 1,
@@ -109,8 +109,8 @@ export default new Vuex.Store({
       rating: 4,
       date: "2018-07-11",
       comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test. This is a review test test. ",
-      upVote: 0,
-      downVote: 0
+      upVote: [2,5,6,7],
+      downVote: [4,5,6]
     }],
 
     requisitions: [{
