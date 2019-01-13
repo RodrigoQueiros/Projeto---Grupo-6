@@ -63,7 +63,7 @@ template{
 
 
 /* Basic styles */
-.rate {
+/*.rate {
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -94,4 +94,4 @@ label:hover ~ label {
 
 input:checked ~ label {
   color: #fcd000;
-}
+}*/
