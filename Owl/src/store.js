@@ -214,6 +214,12 @@ export default new Vuex.Store({
     },
     requisitions(state){
       return state.requisitions
+    },
+    users(state){
+      return state.users
+    },
+    reviews(state){
+      return state.reviews
     }
   },
 
