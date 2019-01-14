@@ -67,18 +67,96 @@
 
     <!--Reviews-->
     <div class="margin5 mt-4">
-      <div class="row">
+        <div class="row">
         <div class="col-12 col-md-12 boxTitle" >
           <h3>Comentários</h3>
         </div>
+        </div>
         <!--Comentar-->
-        <div class="row"></div>
+        <div class="row ">
+          <div class="form-group boxContent col-12 col-md-12">
+          <div class="margin5">                        
+              <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>            
+                                                       
+
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+
+            <!-- Estrelinhaas-->
+            <div class="row"><p style="font-size:20px" class="font-weight-bold">Classificação:</p>
+
+              <fieldset class="rate">
+              <input id="rate1-star5" type="radio" name="rate1" value="5" />
+              <label for="rate1-star5" title="Excellent">5</label>
+
+              <input id="rate1-star4" type="radio" name="rate1" value="4" />
+              <label for="rate1-star4" title="Good">4</label>
+
+              <input id="rate1-star3" type="radio" name="rate1" value="3" />
+              <label for="rate1-star3" title="Satisfactory">3</label>
+
+              <input id="rate1-star2" type="radio" name="rate1" value="2" />
+              <label for="rate1-star2" title="Bad">2</label>
+
+              <input id="rate1-star1" type="radio" name="rate1" value="1" />
+              <label for="rate1-star1" title="Very bad">1</label>
+              </fieldset>
+              
+              <!-- Send Review -->
+              <button @click="requesition(clickedBook, loggedUser)" :disabled="buttonActive == false" class="btn buttonColor float-right">{{buttonText}}</button>
+              
+              </div>
+          </div>
+          </div> 
+        </div>
         <!--Comentarios-->
-        <div class="row"></div>
+        <div class="row">
+
+          <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId" >
+            <!-- User Image-->
+            <div class="col-3">
+                <img
+                v-bind:src="getInfoFromUser(review.userId).photo"
+                alt
+                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left ml-4 mt-4">
+            </div>
+            <div class="col-9">
+                <!-- Info User -->
+                <div class="row">
+                  <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
+                  <h6>{{review.date}}</h6>
+                  <h5>{{review.rating}} stars</h5>
+                  <!-- Precisa linha -->
+                </div>
+                <!-- Review Info -->
+                <div class="row">
+                  <p >{{review.comment}}</p>
+
+                </div>
+                <!-- Rating -->
+                <div class="row">
+
+                  <button class="btn-success"><i class="fas fa-long-arrow-alt-up"></i>{{review.upVote.length}}</button>
+                  <button class="btn-danger"><i class="fas fa-long-arrow-alt-down"></i>{{review.downVote.length}}</button>
+                </div>
+
+                <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
+
+                  <button class="btn-primary"><i class="fas fa-edit"></i></button>
+                  <button class="btn-dark"><i class="fas fa-times"></i></button>
+                </div>
+
+                <!-- Fazer editar e eliminar -->
+            </div>
+
+
+          </div>
+
+
+        </div>
       </div>
 
     </div>
-  </div>
+  
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
 </template>
 
@@ -96,6 +174,8 @@ export default {
       buttonText: "Requisitar",
       requisitions: [],
       books : [],
+      users: [],
+      reviews: [],
       buttonActive : true,
       bookDeliver : false,
       bookReq : false,
@@ -103,6 +183,23 @@ export default {
     };
   },
   methods: {
+
+    getInfoFromUser(userID){
+      let a = true
+      let all = 0
+      for (let i = 0; i < this.users.length; i++) {  
+        
+        if(this.users[i].userId == userID && a == true ){
+          
+          all = this.users[i]
+          a = false
+          
+        }
+        
+      }
+      return all
+      
+    },
     checkRequesition(bookID, userID) {
       
 
@@ -131,7 +228,7 @@ export default {
             this.buttonActive = false
           }           
         }
-        if(bookReq==false){
+        if(this.bookReq==false){
           
           this.buttonText = "Requisitar";
         
@@ -208,11 +305,14 @@ export default {
   },
   beforeMount() {
     this.loggedUser = localStorage.getItem("userLoggedIn");
-    this.clickedBook = this.$store.state.currentBookId;
+    this.clickedBook = this.$route.params.id;
  
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
-
+    this.users = this.$store.getters.users;
+    this.reviews = this.$store.getters.reviews;
+    console.log(this.users)
+    console.log(this.reviews)
     this.checkRequesition(this.clickedBook, this.loggedUser);
   }
 };
