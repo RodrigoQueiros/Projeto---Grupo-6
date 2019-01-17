@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userLoggedin: -1,
-    
+
     loggedIn: false,
 
     currentBookId: 0,
@@ -99,7 +99,7 @@ export default new Vuex.Store({
       rating: 4,
       date: "2018-07-11",
       comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test.This is a review test test.",
-      upVote: [3,4,5],
+      upVote: [3, 4, 5],
       downVote: [1]
     },
     {
@@ -109,8 +109,8 @@ export default new Vuex.Store({
       rating: 4,
       date: "2018-07-11",
       comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test. This is a review test test. ",
-      upVote: [2,5,6,7],
-      downVote: [4,5,6]
+      upVote: [2, 5, 6, 7],
+      downVote: [4, 5, 6]
     }],
 
     requisitions: [{
@@ -148,7 +148,7 @@ export default new Vuex.Store({
       userId: ""
     }],
 
-    
+
 
   },
 
@@ -162,7 +162,7 @@ export default new Vuex.Store({
           localStorage.setItem("userLoggedIn", state.userLoggedin)
         }
       }
-     return verification 
+      return verification
     },
 
 
@@ -183,58 +183,126 @@ export default new Vuex.Store({
 
     getLastId: (state) => {
       let lastId = 0
-        if (state.users.length > 0) {
-          lastId = state.users[state.users.length - 1].userId + 1
-        }
+      if (state.users.length > 0) {
+        lastId = state.users[state.users.length - 1].userId + 1
+      }
       return lastId
     },
 
     getLastIdReq: (state) => {
       let lastId = 0
-        if (state.requisitions.length > 0) {
-          lastId = state.requisitions[state.requisitions.length - 1].requisitionId + 1
-        }
+      if (state.requisitions.length > 0) {
+        lastId = state.requisitions[state.requisitions.length - 1].requisitionId + 1
+      }
       return lastId
     },
 
-    getUserLoggedIn(state){
+    getUserLoggedIn(state) {
       return state.userLoggedin
 
     },
     //For book page
-    ClickedBook(state){
+    ClickedBook(state) {
       return state.ClickedBook
 
     },
-    books(state){
+    books(state) {
       return state.books
 
     },
-    requisitions(state){
+    requisitions(state) {
       return state.requisitions
     },
-    users(state){
+    users(state) {
       return state.users
     },
-    reviews(state){
+    reviews(state) {
       return state.reviews
     }
   },
 
   mutations: {
     open_book(state, payload) {
-      
+
       state.currentBookId = payload
-      
+
+    },
+    UP_VOTE(state, payload) {
+
+      for (let i = 0; i < state.reviews.length; i++) {
+
+        if (state.reviews[i].reviewId == payload[0]) {
+          if (payload[2]) {
+            state.reviews[i].upVote.push(payload[1]);
+            if(payload[3]==false){
+              for (let j = 0; j < state.reviews[i].downVote.length; j++) {
+
+                if (state.reviews[i].downVote[j] == payload[1]) {
+                  state.reviews[i].downVote.splice(j, 1);
+                }
+  
+              }
+            }
+            
+          }
+          else {
+            for (let j = 0; j < state.reviews[i].upVote.length; j++) {
+
+              if (state.reviews[i].upVote[j] == payload[1]) {
+                state.reviews[i].upVote.splice(j, 1);
+              }
+
+            }
+          }
+        }
+      }
+
+    },
+    DOWN_VOTE(state, payload) {
+      console.log("Ola")
+      for (let i = 0; i < state.reviews.length; i++) {
+
+        if (state.reviews[i].reviewId == payload[0]) {
+          if (payload[2]) {
+            state.reviews[i].downVote.push(payload[1]);
+
+            if(payload[3]==false){
+              
+              for (let j = 0; j < state.reviews[i].upVote.length; j++) {
+
+                if (state.reviews[i].upVote[j] == payload[1]) {
+                  state.reviews[i].upVote.splice(j, 1);
+                }
+  
+              }
+            }
+          }
+          else {
+            for (let j = 0; j < state.reviews[i].downVote.length; j++) {
+
+              if (state.reviews[i].downVote[j] == payload[1]) {
+                state.reviews[i].downVote.splice(j, 1);
+              }
+
+            }
+          }
+        }
+      }
     },
 
 
   },
 
-  actions:{
-    open_book(context,payload){
-      context.commit('open_book',payload)
-    }
+  actions: {
+    open_book(context, payload) {
+      context.commit('open_book', payload)
+    },
+    up_vote(context, payload) {
+      context.commit("UP_VOTE", payload);
+    },
+    down_vote(context, payload) {
+      context.commit("DOWN_VOTE", payload);
+    },
 
   }
 })
