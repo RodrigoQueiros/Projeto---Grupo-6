@@ -10,6 +10,11 @@ import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
 import Profile from './views/Profile.vue'
 
+import Users from './views/backoffice/Users.vue'
+import Books from './views/backoffice/Books.vue'
+import Tags from './views/backoffice/Tags.vue'
+import Suggestions from './views/backoffice/Suggestions.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -58,6 +63,26 @@ export default new Router({
       path: '/suggest',
       name: 'suggest',
       component: Suggest
-    }
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: Users
+    },
+    {
+      path: '/books',
+      name: 'books',
+      component: Books
+    },
+    {
+      path: '/tags',
+      name: 'tags',
+      component: Tags
+    },
+    {
+      path: '/suggestions',
+      name: 'suggestions',
+      component: Suggestions
+    },
   ]
 })

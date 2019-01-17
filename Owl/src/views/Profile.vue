@@ -13,21 +13,21 @@
           <div v-for="user in users" :key="user">
             <div v-if="user.userId == userLoggedIn">
               <div class="row" style="text-align:left">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="col-12 col-md-6 col-lg-3">
                   <img :src="user.photo" height="200" width="250" alt="" id="profilePhoto" class="mt-4 ml-2 mb-4">
                 </div>
-                <div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-10">
+                <div class="col-12 col-md-6 col-lg-9">
 
                   <h4 class="mt-4" >Nome de Utilizador</h4>
                   <p v-if="clicked == false">{{user.firstName}} {{user.lastName}}</p>
                   <div class="row">
-                    <input v-if="clicked" type="text" class="form-control editInput col-4 col-lg-1 mb-1 ml-3" v-model="user.firstName">
-                    <input v-if="clicked" type="text" class="form-control editInput col-4 col-lg-1 ml-1 mb-2" v-model="user.lastName">
+                    <input v-if="clicked" type="text" class="form-control editInput col-4 col-lg-3 mb-1 ml-3" v-model="user.firstName">
+                    <input v-if="clicked" type="text" class="form-control editInput col-4 col-lg-3 ml-1 mb-2" v-model="user.lastName">
                   </div>
                   
                   <h4>Email</h4>
                   <p v-if="clicked == false">{{user.email}}</p>
-                  <input v-if="clicked" type="text" class="form-control editInput col-9 col-lg-3 mb-2" v-model="user.email">
+                  <input v-if="clicked" type="text" class="form-control editInput col-9 col-lg-7 mb-2" v-model="user.email">
                   <a id="btnEdit" @click="editProfile" class="btn btn-dark mt-1"><i class="fas fa-edit"></i> Editar perfil</a>
                   </div>
                 </div>
@@ -107,7 +107,8 @@ export default {
           this.clicked = true
           this.users[this.userLoggedIn].firstName = this.user.firstName
           this.users[this.userLoggedIn].lastName = this.user.lastName
-          this.users[this.userLoggedIn].email = this.user.email
+          this.users[this.userLoggedIn].email = 
+          this.user.email
         }
 
       }
