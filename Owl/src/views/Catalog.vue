@@ -8,6 +8,7 @@
         </div>
         <div class="col-12 col-md-8 ml-md-3" id="catalogBar">
           <h3>Catálogo</h3>
+          <p>teste</p>
         </div>
       </div>
       <div class="row">
@@ -74,7 +75,7 @@
 }
 #catalogContents {
   background-color: #d9b97e;
-  
+
   color: #592316;
 }
 .box {
@@ -111,7 +112,6 @@ export default {
       authorFilter: "Todos",
       publisherFilter: "Todos",
       tagFilter: "Todos",
-      temp: [],
       clickedBook: 0
     };
   },
@@ -130,16 +130,15 @@ export default {
   methods: {
     clickBook(index) {
       this.$store.dispatch("open_book", index);
-      this.clickedBook = index      
+      this.clickedBook = index;
       console.log(index);
     },
-   
 
     filterBooks() {
       console.log(this.filteredBooks);
       this.filteredBooks = [];
+      let temp = [];
 
-      console.log(this.tagFilter);
       this.filteredBooks = this.books.filter(
         book =>
           book.author === this.authorFilter || this.authorFilter == "Todos"
@@ -150,21 +149,29 @@ export default {
           this.publisherFilter == "Todos"
       );
 
-
-      //tag filter not working
+      //tag filter 
       if (this.tagFilter != "Todos") {
+      
         for (let i = 0; i < this.filteredBooks.length; i++) {
+        
           for (let j = 0; j < this.filteredBooks[i].idTag.length; j++) {
+            
             for (let z = 0; z < this.tags.length; z++) {
-              if (this.filteredBooks[i].idTag[j] == this.tags[z].tagID) {
-                this.temp.push(this.filteredBooks[i]);
+          
+
+              if (this.filteredBooks[i].idTag[j] == this.tags[z].tagId) {
+                if (this.tags[z].tagDescription == this.tagFilter) {
+                  temp.push(this.filteredBooks[i]);
+                }
               }
             }
           }
         }
+
+        this.filteredBooks = temp;
       }
 
-      console.log(this.temp);
+   
       console.log(this.filteredBooks);
     }
   },
