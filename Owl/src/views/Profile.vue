@@ -96,20 +96,7 @@ export default {
 
   methods: {
       editProfile() {
-        if (this.clicked) {
-          this.clicked = false
-          this.user.firstName = this.users[this.userLoggedIn].firstName
-          this.user.lastName =  this.users[this.userLoggedIn].lastName
-          this.user.email = this.users[this.userLoggedIn].email
-
-        }
-        else {
-          this.clicked = true
-          this.users[this.userLoggedIn].firstName = this.user.firstName
-          this.users[this.userLoggedIn].lastName = this.user.lastName
-          this.users[this.userLoggedIn].email = 
-          this.user.email
-        }
+        this.$store.dispatch("delete_book", this.user)
 
       }
   },

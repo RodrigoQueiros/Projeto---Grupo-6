@@ -145,6 +145,7 @@ export default new Vuex.Store({
       suggestionId: 0,
       suggestionTitle: "",
       suggestionAuthor: "",
+      suggestionCover: "",
       userId: ""
     }],
 
@@ -193,6 +194,22 @@ export default new Vuex.Store({
       let lastId = 0
       if (state.requisitions.length > 0) {
         lastId = state.requisitions[state.requisitions.length - 1].requisitionId + 1
+      }
+      return lastId
+    },
+
+    getLastIdBooks: (state) => {
+      let lastId = 0
+      if (state.books.length > 0) {
+        lastId = state.books[state.books.length - 1].bookId + 1
+      }
+      return lastId
+    },
+
+    getLastIdSuggestions: (state) => {
+      let lastId = 0
+      if (state.bookSuggestions.length > 0) {
+        lastId = state.bookSuggestions[state.bookSuggestions.length - 1].suggestionId + 1
       }
       return lastId
     },
@@ -290,6 +307,29 @@ export default new Vuex.Store({
       }
     },
 
+    DELETE_BOOK(state, payload) {
+      state.books.splice(payload,1)
+    },
+    
+    ADD_BOOK(state, payload) {
+      state.books.push(payload)
+    },
+
+    DELETE_USER(state, payload) {
+      state.users.splice(payload,1)
+    },
+
+    ADD_ADMIN(state, payload) {
+      state.users[payload].type = "admin"
+    },
+
+    DELETE_ADMIN(state, payload) {
+      state.users[payload].type = "user"
+    },
+
+    ADD_SUGGESTION(state, payload) {
+      state.bookSuggestions.push(payload)
+    },
 
   },
 
@@ -303,6 +343,23 @@ export default new Vuex.Store({
     down_vote(context, payload) {
       context.commit("DOWN_VOTE", payload);
     },
-
+    delete_book(context, payload) {
+      context.commit("DELETE_BOOK", payload);
+    },
+    add_book(context, payload) {
+      context.commit("ADD_BOOK", payload);
+    },
+    delete_user(context, payload) {
+      context.commit("DELETE_USER", payload);
+    },
+    add_admin(context, payload) {
+      context.commit("ADD_ADMIN", payload);
+    },
+    delete_admin(context, payload) {
+      context.commit("DELETE_ADMIN", payload);
+    },
+    add_suggestion(context, payload) {
+      context.commit("ADD_SUGGESTION", payload);
+    },
   }
 })

@@ -80,8 +80,10 @@ body {
 
 <script>
 import Header from "@/components/Header.vue";
+import swal from "sweetalert2";
+
 export default {
-    name: "login",
+  name: "login",
   components: {
     Header
   },
@@ -89,33 +91,31 @@ export default {
     return {
       form: {
         email: "",
-        password: "",
-        
+        password: ""
       }
     };
   },
   methods: {
+    login() {
+      let user = {
+        email: this.form.email,
+        password: this.form.password
+      };
 
-   login() {
-
-     let user = {
-       email: this.form.email,
-       password: this.form.password,
-     }
-
-     let loginVerified = this.$store.getters.Login(user)
-     if (loginVerified) {
-       this.$router.push("/")
-       alert("Login efetuado com sucesso.")
-       
-     }
-     else {
-       alert("Os seus dados estão incorretos.")
-     }
-     
-
-   }
-  },
-  
+      let loginVerified = this.$store.getters.Login(user);
+      if (loginVerified) {
+        this.$router.push("/");
+        swal({
+          type: "success",
+          title: "Login efetuado com sucesso.",
+        });
+      } else {
+        swal({
+          type: "error",
+          title: "Os seus dados estão incorretos.",
+        });
+      }
+    }
+  }
 };
 </script>

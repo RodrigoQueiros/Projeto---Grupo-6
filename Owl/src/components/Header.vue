@@ -129,6 +129,8 @@ export default {
       logout() {
           localStorage.setItem("userLoggedIn", -1)
           //this.$router.push("/")
+          //por sweetalert
+          
       },
 
       getUser() {
