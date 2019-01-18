@@ -331,6 +331,18 @@ export default new Vuex.Store({
       state.bookSuggestions.push(payload)
     },
 
+    EDIT_BOOK(state, payload) {
+      state.books[payload.bookId].author = payload.author
+      state.books[payload.bookId].title = payload.title
+      state.books[payload.bookId].publisher = payload.publisher
+    },
+
+    EDIT_PROFILE(state, payload) {
+      state.users[payload.userId].firstName = payload.firstName
+      state.users[payload.userId].lastName = payload.lastName
+      state.users[payload.userId].email = payload.email
+    },
+
   },
 
   actions: {
@@ -360,6 +372,12 @@ export default new Vuex.Store({
     },
     add_suggestion(context, payload) {
       context.commit("ADD_SUGGESTION", payload);
+    },
+    edit_book(context, payload) {
+      context.commit("EDIT_BOOK", payload);
+    },
+    edit_profile(context, payload) {
+      context.commit("EDIT_PROFILE", payload);
     },
   }
 })

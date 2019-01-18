@@ -10,7 +10,7 @@
       </div>
       <div class="row ">
         <div class="col-12 col-md-12 boxContent" id="">
-          <div v-for="user in users" :key="user">
+          <div v-for="user in users" :key="user.userId">
             <div v-if="user.userId == userLoggedIn">
               <div class="row" style="text-align:left">
                 <div class="col-12 col-md-6 col-lg-3">
@@ -96,7 +96,20 @@ export default {
 
   methods: {
       editProfile() {
-        this.$store.dispatch("delete_book", this.user)
+        if (this.clicked) {
+          this.clicked = false
+          this.user.firstName = this.users[this.userLoggedIn].firstName
+          this.user.lastName =  this.users[this.userLoggedIn].lastName
+          this.user.email = this.users[this.userLoggedIn].email
+          this.$store.dispatch("edit_profile", {userId: this.userLoggedIn, firstName: this.user.firstName, lastName: this.user.lastName, email: this.user.email});
+        }
+        else {
+          this.clicked = true
+          // this.users[this.userLoggedIn].firstName = this.user.firstName
+          // this.users[this.userLoggedIn].lastName = this.user.lastName
+          // this.users[this.userLoggedIn].email = this.user.email
+          
+        }
 
       }
   },

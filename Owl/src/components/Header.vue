@@ -142,6 +142,9 @@ export default {
           return this.userName
       }
   },
+  computed: {
+      
+  }
   
 };
 </script>

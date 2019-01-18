@@ -61,13 +61,13 @@
     </div>
     <div class="margin5 mt-4">
       <div class="row">
-        <div class="col-12 col-md-12 boxTitle" id>
+        <div class="col-12 col-md-12 boxTitle " id>
           <h3>Livros</h3>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-md-12 boxContent">
-          <table class="table mt-4">
+          <table class="table mt-4 table-responsive">
             <thead>
               <tr>
                 <th scope="col">Id</th>
@@ -231,7 +231,6 @@ export default {
         this.edit.title = this.books[id].title;
         this.edit.author = this.books[id].author;
         this.edit.publisher = this.books[id].publisher;
-        console.log("entrou aqui");
         this.created = true;
       }
 
@@ -240,19 +239,14 @@ export default {
         this.edit.title = this.books[id].title;
         this.edit.author = this.books[id].author;
         this.edit.publisher = this.books[id].publisher;
-        console.log("entrou aqui2");
-        console.log(this.edit.title);
-        console.log(this.edit.author);
-        console.log(this.edit.publisher);
-        console.log(this.editID);
         this.editBool = false;
       } else {
-        console.log("entrou aqui3");
         this.editBool = true;
         this.editID = id;
-        this.books[id].title = this.edit.title;
-        this.books[id].author = this.edit.author;
-        this.books[id].publisher = this.edit.publisher;
+        // this.books[id].title = this.edit.title;
+        // this.books[id].author = this.edit.author;
+        // this.books[id].publisher = this.edit.publisher;
+        this.$store.dispatch("edit_book", {bookId: this.editID, title: this.edit.title, author: this.edit.author, publisher: this.edit.publisher});
       }
     },
 
