@@ -145,6 +145,10 @@ export default {
           tagId: storeEditId,
           tagDescription: this.edit.tagDescription
         });
+        swal({
+          type: "success",
+          title: "Tag editada com sucesso."
+        });
       }
     },
 

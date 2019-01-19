@@ -38,9 +38,21 @@
                   >
                     <i class="fas fa-trash-alt"></i>
                   </button>
-                  <button v-if="user.type != 'admin'" type="button" style="color:white" @click="addAdmin(user.userId)" class="btn btn-dark">Tornar Admin</button>
-                  <button v-if="user.type == 'admin'" type="button" style="color:white" @click="deleteAdmin(user.userId)" class="btn btn-dark">Retirar Admin</button>
-                </td>                          
+                  <button
+                    v-if="user.type != 'admin'"
+                    type="button"
+                    style="color:white"
+                    @click="addAdmin(user.userId)"
+                    class="btn btn-dark"
+                  >Tornar Admin</button>
+                  <button
+                    v-if="user.type == 'admin'"
+                    type="button"
+                    style="color:white"
+                    @click="deleteAdmin(user.userId)"
+                    class="btn btn-dark"
+                  >Retirar Admin</button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -67,9 +79,7 @@ export default {
     };
   },
 
-  created() {
-
-  },
+  created() {},
 
   methods: {
     deleteUser(id) {
@@ -90,11 +100,27 @@ export default {
     },
 
     addAdmin(id) {
-      this.$store.dispatch("add_admin", id);
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].userId === id) {
+          this.$store.dispatch("add_admin", i);
+          swal({
+            type: "success",
+            title: "Admin adicionado com sucesso."
+          });
+        }
+      }
     },
 
     deleteAdmin(id) {
-      this.$store.dispatch("delete_admin", id);
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].userId === id) {
+          this.$store.dispatch("delete_admin", i);
+          swal({
+            type: "success",
+            title: "Admin retirado com sucesso."
+          });
+        }
+      }
     }
   }
 };

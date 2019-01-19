@@ -9,7 +9,7 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-12 boxContent">
-          <form action="" id="formBooks">
+          <form action id="formBooks">
             <div class="row alignLeft mt-2">
               <div class="col-4">
                 <label for="inputTitle">Titulo</label>
@@ -45,14 +45,24 @@
               </div>
               <div class="col-4">
                 <label for="inputCover">Disponibilidade</label>
-                <input type="text" id="inputCover" class="form-control" v-model="form.disponibility">
+                <input
+                  type="text"
+                  id="inputCover"
+                  class="form-control"
+                  v-model="form.disponibility"
+                >
               </div>
               <div class="col-4">
                 <label for="inputAuthor">Estado do livro</label>
                 <input type="text" id="inputAuthor" class="form-control" v-model="form.bookStatus">
               </div>
               <div class="col-4">
-                <button type="button" id="btnSubmit" @click="addBook" class="btn btn-lg mt-3 mb-3">Adicionar Livro</button>
+                <button
+                  type="button"
+                  id="btnSubmit"
+                  @click="addBook"
+                  class="btn btn-lg mt-3 mb-3"
+                >Adicionar Livro</button>
               </div>
             </div>
           </form>
@@ -61,7 +71,7 @@
     </div>
     <div class="margin5 mt-4">
       <div class="row">
-        <div class="col-12 col-md-12 boxTitle " id>
+        <div class="col-12 col-md-12 boxTitle" id>
           <h3>Livros</h3>
         </div>
       </div>
@@ -227,26 +237,39 @@ export default {
     },
 
     editInformation(id) {
-      if (this.created == false) {
-        this.edit.title = this.books[id].title;
-        this.edit.author = this.books[id].author;
-        this.edit.publisher = this.books[id].publisher;
-        this.created = true;
-      }
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === id) {
+          if (this.created == false) {
+            this.edit.title = this.books[i].title;
+            this.edit.author = this.books[i].author;
+            this.edit.publisher = this.books[i].publisher;
+            this.created = true;
+          }
 
-      if (this.editBool && this.created) {
-        this.editID = id;
-        this.edit.title = this.books[id].title;
-        this.edit.author = this.books[id].author;
-        this.edit.publisher = this.books[id].publisher;
-        this.editBool = false;
-      } else {
-        this.editBool = true;
-        this.editID = id;
-        // this.books[id].title = this.edit.title;
-        // this.books[id].author = this.edit.author;
-        // this.books[id].publisher = this.edit.publisher;
-        this.$store.dispatch("edit_book", {bookId: this.editID, title: this.edit.title, author: this.edit.author, publisher: this.edit.publisher});
+          if (this.editBool && this.created) {
+            this.editID = id;
+            this.edit.title = this.books[i].title;
+            this.edit.author = this.books[i].author;
+            this.edit.publisher = this.books[i].publisher;
+            this.editBool = false;
+          } else {
+            this.editBool = true;
+            this.editID = i;
+            // this.books[id].title = this.edit.title;
+            // this.books[id].author = this.edit.author;
+            // this.books[id].publisher = this.edit.publisher;
+            this.$store.dispatch("edit_book", {
+              bookId: this.editID,
+              title: this.edit.title,
+              author: this.edit.author,
+              publisher: this.edit.publisher
+            });
+            swal({
+              type: "success",
+              title: "Tag editada com sucesso."
+            });
+          }
+        }
       }
     },
 
@@ -279,14 +302,13 @@ export default {
         description: this.form.description,
         availability: this.form.disponibility,
         bookStatus: this.form.bookStatus
-      })
+      });
       swal({
         type: "success",
         title: "Livro adicionado com sucesso."
       });
       document.getElementById("formBooks").reset();
     }
-
   },
 
   created() {}
