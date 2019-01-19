@@ -40,7 +40,7 @@
             <thead>
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Titulo</th>
+                <th scope="col">Tag</th>
                 <th scope="col">Ações</th>
                 <th scope="col"></th>
               </tr>

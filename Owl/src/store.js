@@ -143,9 +143,9 @@ export default new Vuex.Store({
 
     bookSuggestions: [{
       suggestionId: 0,
-      suggestionTitle: "",
-      suggestionAuthor: "",
-      suggestionCover: "",
+      suggestionTitle: "Foi Sem Querer Que Te Quis",
+      suggestionAuthor: "Raul Minh'alma",
+      suggestionCover: "https://img.wook.pt/images/foi-sem-querer-que-te-quis-raul-minhalma/MXwyMjM1ODA1OXwxODI0MDkxN3wxNTQwMTYyODAwMDAw/502x",
       userId: ""
     }],
 

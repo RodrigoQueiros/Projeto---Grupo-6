@@ -132,7 +132,7 @@
                   <button
                     type="button"
                     style="color:white"
-                    @click="editInformation(book.bookId)"
+                    @click="editBook(book.bookId)"
                     class="btn btn-dark"
                   >
                     <i class="fas fa-edit"></i>
@@ -142,7 +142,7 @@
                   <button
                     type="button"
                     style="color:white"
-                    @click="deleteInformation(book.bookId)"
+                    @click="deleteBook(book.bookId)"
                     class="btn btn-danger"
                   >
                     <i class="fas fa-trash-alt"></i>
@@ -236,28 +236,25 @@ export default {
       });
     },
 
-    editInformation(id) {
+    editBook(id) {
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === id) {
           if (this.created == false) {
-            this.edit.title = this.books[i].title;
-            this.edit.author = this.books[i].author;
-            this.edit.publisher = this.books[i].publisher;
-            this.created = true;
+            this.edit.title = this.books[i].title
+            this.edit.author = this.books[i].author
+            this.edit.publisher = this.books[i].publisher
+            this.created = true
           }
 
           if (this.editBool && this.created) {
             this.editID = id;
-            this.edit.title = this.books[i].title;
-            this.edit.author = this.books[i].author;
-            this.edit.publisher = this.books[i].publisher;
-            this.editBool = false;
+            this.edit.title = this.books[i].title
+            this.edit.author = this.books[i].author
+            this.edit.publisher = this.books[i].publisher
+            this.editBool = false
           } else {
-            this.editBool = true;
-            this.editID = i;
-            // this.books[id].title = this.edit.title;
-            // this.books[id].author = this.edit.author;
-            // this.books[id].publisher = this.edit.publisher;
+            this.editBool = true
+            this.editID = i
             this.$store.dispatch("edit_book", {
               bookId: this.editID,
               title: this.edit.title,
@@ -273,7 +270,7 @@ export default {
       }
     },
 
-    deleteInformation(id) {
+    deleteBook(id) {
       swal({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -307,7 +304,7 @@ export default {
         type: "success",
         title: "Livro adicionado com sucesso."
       });
-      document.getElementById("formBooks").reset();
+      document.getElementById("formBooks").reset()
     }
   },
 
