@@ -85,7 +85,7 @@ export default {
         type: "success",
         title: "Livro sugerido com sucesso."
       });
-      document.getElementById("formSugestion").reset();
+      document.getElementById("formSuggestion").reset();
     }
   }
 };

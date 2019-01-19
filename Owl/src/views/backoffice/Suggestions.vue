@@ -29,6 +29,7 @@
                   <input type="button" @click="seeCover(bookSuggestion.suggestionCover)" value="+">
                 </td>
                 <td>{{bookSuggestion.suggestionAuthor}}</td>
+                <td>{{username}}</td>
                 <td>
                   <button type="button" style="color:white" class="btn btn-dark">
                     <i class="fas fa-edit"></i>
@@ -61,24 +62,36 @@ export default {
   },
   data: function() {
     return {
-      bookSuggestions: this.$store.state.bookSuggestions
+      bookSuggestions: this.$store.state.bookSuggestions,
+      users: this.$store.state.users,
+      username: ""
     };
+  },
+
+  created() {
+    this.username = this.getUsername()
   },
 
   methods: {
     seeCover(cover) {
       swal({
         title: "Capa",
-        
-        html:
-          '<img src="' +
-          cover +
-          '" alt="" class="coverSize">' +
-          
-          "</p>",
-        showConfirmButton: true,
-        
-      })
+
+        html: '<img src="' + cover + '" alt="" class="coverSize">' + "</p>",
+        showConfirmButton: true
+      });
+    },
+
+    getUsername() {
+      for (let i = 0; i < this.users.length; i++) {
+        for (let j = 0; j < this.bookSuggestions.length; j++) {
+          if (this.users[i].userId == this.bookSuggestions[j].userId) {
+            this.username =
+              this.users[i].firstName + " " + this.users[i].lastName;
+          }
+        }
+      }
+      return this.username;
     }
   }
 };

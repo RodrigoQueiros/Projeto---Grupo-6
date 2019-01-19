@@ -164,7 +164,14 @@ export default {
       let strError = this.$store.getters.Signup(user);
 
       if (strError == "") {
-        this.$store.state.users.push(user);
+        this.$store.dispatch("add_user", {
+          userId: this.$store.getters.getLastId,
+          firstName: this.form.firstName,
+          lastName: this.form.lastName,
+          email: this.form.email,
+          password: this.form.password,
+          password2: this.form.password2
+        });
         this.$router.push("/login");
         swal({
           type: "success",

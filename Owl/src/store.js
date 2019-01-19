@@ -146,7 +146,7 @@ export default new Vuex.Store({
       suggestionTitle: "Foi Sem Querer Que Te Quis",
       suggestionAuthor: "Raul Minh'alma",
       suggestionCover: "https://img.wook.pt/images/foi-sem-querer-que-te-quis-raul-minhalma/MXwyMjM1ODA1OXwxODI0MDkxN3wxNTQwMTYyODAwMDAw/502x",
-      userId: ""
+      userId: 1
     }],
 
 
@@ -247,11 +247,11 @@ export default new Vuex.Store({
   },
 
   mutations: {
+
     open_book(state, payload) {
-
       state.currentBookId = payload
-
     },
+
     UP_VOTE(state, payload) {
 
       for (let i = 0; i < state.reviews.length; i++) {
@@ -283,6 +283,7 @@ export default new Vuex.Store({
       }
 
     },
+
     DOWN_VOTE(state, payload) {
       console.log("Ola")
       for (let i = 0; i < state.reviews.length; i++) {
@@ -313,6 +314,10 @@ export default new Vuex.Store({
           }
         }
       }
+    },
+
+    ADD_USER(state, payload) {
+      state.users.push(payload)
     },
 
     DELETE_BOOK(state, payload) {
@@ -368,6 +373,9 @@ export default new Vuex.Store({
   actions: {
     open_book(context, payload) {
       context.commit('open_book', payload)
+    },
+    add_user(context, payload) {
+      context.commit("ADD_USER", payload);
     },
     up_vote(context, payload) {
       context.commit("UP_VOTE", payload);
