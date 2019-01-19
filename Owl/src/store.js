@@ -133,11 +133,11 @@ export default new Vuex.Store({
     }],
 
     tags: [{
-      tagId: 1,
+      tagId: 0,
       tagDescription: "Desporto"
     },
     {
-      tagId: 2,
+      tagId: 1,
       tagDescription: "Ciência"
     }],
 
@@ -210,6 +210,14 @@ export default new Vuex.Store({
       let lastId = 0
       if (state.bookSuggestions.length > 0) {
         lastId = state.bookSuggestions[state.bookSuggestions.length - 1].suggestionId + 1
+      }
+      return lastId
+    },
+
+    getLastIdTags: (state) => {
+      let lastId = 0
+      if (state.tags.length > 0) {
+        lastId = state.tags[state.tags.length - 1].tagId + 1
       }
       return lastId
     },
@@ -343,6 +351,18 @@ export default new Vuex.Store({
       state.users[payload.userId].email = payload.email
     },
 
+    EDIT_TAG(state, payload) {
+      state.tags[payload.tagId].tagDescription = payload.tagDescription
+    },
+
+    DELETE_TAG(state, payload) {
+      state.tags.splice(payload,1)
+    },
+
+    ADD_TAG(state, payload) {
+      state.tags.push(payload)
+    },
+
   },
 
   actions: {
@@ -378,6 +398,15 @@ export default new Vuex.Store({
     },
     edit_profile(context, payload) {
       context.commit("EDIT_PROFILE", payload);
+    },
+    edit_tag(context, payload) {
+      context.commit("EDIT_TAG", payload);
+    },
+    delete_tag(context, payload) {
+      context.commit("DELETE_TAG", payload);
+    },
+    add_tag(context, payload) {
+      context.commit("ADD_TAG", payload);
     },
   }
 })

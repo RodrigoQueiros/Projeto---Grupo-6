@@ -11,7 +11,7 @@
         <div class="col-12 col-md-4 offset-md-4 boxContent">
           <div class="form-wrapper text-center">
             <form class="form-signin">
-              <img class="mb-4" src="../assets/logo.png" alt width="200" height="120">
+              <!-- <img class="mb-4" src="../assets/logo.png" alt width="200" height="120"> -->
               <!-- <h1 class="h3 mb-3 font-weight-normal">Log in</h1> -->
               <label for="inputEmail" class="sr-only">Email address</label>
               <input
