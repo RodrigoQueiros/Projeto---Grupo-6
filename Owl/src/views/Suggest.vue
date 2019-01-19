@@ -68,24 +68,46 @@ export default {
         title: "",
         cover: "",
         author: ""
-      }
+      },
+      bookSuggestions: this.$store.state.bookSuggestions
     };
   },
 
   methods: {
     addSuggestion() {
-      this.$store.dispatch("add_suggestion", {
-        suggestionId: this.$store.getters.getLastIdSuggestions,
-        suggestionTitle: this.form.title,
-        suggestionAuthor: this.form.cover,
-        suggestionCover: this.form.author,
-        userId: this.userLoggedIn
-      });
-      swal({
-        type: "success",
-        title: "Livro sugerido com sucesso."
-      });
-      document.getElementById("formSuggestion").reset();
+      let suggestionExists = false;
+      for (let i = 0; i < this.bookSuggestions.length; i++) {
+        if (this.bookSuggestions[i].suggestionTitle == this.form.title) {
+          suggestionExists = true;
+          this.$store.dispatch(
+            "add_suggestion_number",
+            this.bookSuggestions[i].suggestionId
+          );
+          swal({
+            type: "success",
+            title: "Livro sugerido com sucesso."
+          });
+          document.getElementById("formSugestion").reset();
+        }
+      }
+      console.log(suggestionExists);
+      if ((suggestionExists == false)) {
+        console.log("entrou");
+        this.$store.dispatch("add_suggestion", {
+          suggestionId: this.$store.getters.getLastIdSuggestions,
+          suggestionTitle: this.form.title,
+          suggestionAuthor: this.form.author,
+          suggestionCover: this.form.cover,
+          userId: this.userLoggedIn,
+          suggestionDate: new Date().toLocaleString(),
+          suggestNumber: 1
+        });
+        swal({
+          type: "success",
+          title: "Livro sugerido com sucesso."
+        });
+        document.getElementById("formSugestion").reset();
+      }
     }
   }
 };

@@ -146,7 +146,9 @@ export default new Vuex.Store({
       suggestionTitle: "Foi Sem Querer Que Te Quis",
       suggestionAuthor: "Raul Minh'alma",
       suggestionCover: "https://img.wook.pt/images/foi-sem-querer-que-te-quis-raul-minhalma/MXwyMjM1ODA1OXwxODI0MDkxN3wxNTQwMTYyODAwMDAw/502x",
-      userId: 1
+      userId: 1,
+      suggestionDate: new Date().toLocaleString(),
+      suggestNumber: 1
     }],
 
 
@@ -344,6 +346,10 @@ export default new Vuex.Store({
       state.bookSuggestions.push(payload)
     },
 
+    ADD_SUGGESTION_NUMBER(state, payload) {
+      state.bookSuggestions[payload].suggestNumber += 1
+    },
+
     EDIT_BOOK(state, payload) {
       state.books[payload.bookId].author = payload.author
       state.books[payload.bookId].title = payload.title
@@ -400,6 +406,9 @@ export default new Vuex.Store({
     },
     add_suggestion(context, payload) {
       context.commit("ADD_SUGGESTION", payload);
+    }, 
+    add_suggestion_number(context, payload) {
+      context.commit("ADD_SUGGESTION_NUMBER", payload);
     },
     edit_book(context, payload) {
       context.commit("EDIT_BOOK", payload);
