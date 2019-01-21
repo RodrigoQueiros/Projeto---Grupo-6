@@ -7,8 +7,14 @@
           <h3>Filtros</h3>
         </div>
         <div class="col-12 col-md-8 ml-md-3" id="catalogBar">
-          <h3>Catálogo</h3>
-          <p>teste</p>
+    
+          <div class="row">
+            
+            <h3 id="catalogTitle">Catálogo</h3>
+          <p id="catalogOrder" v-on:click="sortBooks">OrderBy: &nbsp</p>
+          <select class="" v-model="orderTab">
+            <option>Alfabetico</option>
+            </select></div>
         </div>
       </div>
       <div class="row">
@@ -78,6 +84,15 @@
 
   color: #592316;
 }
+
+#catalogTitle{
+  padding-left: 15px;
+}
+
+#catalogOrder{
+  padding-left: 460px;
+}
+
 .box {
   margin-left: 5%;
   margin-right: 5%;
@@ -112,7 +127,8 @@ export default {
       authorFilter: "Todos",
       publisherFilter: "Todos",
       tagFilter: "Todos",
-      clickedBook: 0
+      clickedBook: 0,
+      orderTab: ""
     };
   },
   created() {
@@ -132,6 +148,18 @@ export default {
       this.$store.dispatch("open_book", index);
       this.clickedBook = index;
       console.log(index);
+    },
+
+
+    sortBooks(){
+
+      if(this.orderTab == "Alfabetico"){
+        this.filteredBooks.sort()
+        console.log("yamanuh")
+      }
+
+      
+
     },
 
     filterBooks() {
