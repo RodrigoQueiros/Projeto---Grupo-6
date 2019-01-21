@@ -14,6 +14,7 @@ The use of our app, for the most part, is directed to the school libray and its 
 * Vue CLI.
 * Vue Router.
 * Vuex.
+* SweetAlert2
 
 ## Repository structure 
 
@@ -45,6 +46,7 @@ git clone https://github.com/RodrigoQueiros/Owl---PW1-Project.git
 ### NPM
 ```
 npm install
+npm install sweetalert2
 ```
 
 ### Compiles and hot-reloads for development
