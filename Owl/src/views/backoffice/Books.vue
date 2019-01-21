@@ -240,21 +240,21 @@ export default {
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === id) {
           if (this.created == false) {
-            this.edit.title = this.books[i].title
-            this.edit.author = this.books[i].author
-            this.edit.publisher = this.books[i].publisher
-            this.created = true
+            this.edit.title = this.books[i].title;
+            this.edit.author = this.books[i].author;
+            this.edit.publisher = this.books[i].publisher;
+            this.created = true;
           }
 
           if (this.editBool && this.created) {
             this.editID = id;
-            this.edit.title = this.books[i].title
-            this.edit.author = this.books[i].author
-            this.edit.publisher = this.books[i].publisher
-            this.editBool = false
+            this.edit.title = this.books[i].title;
+            this.edit.author = this.books[i].author;
+            this.edit.publisher = this.books[i].publisher;
+            this.editBool = false;
           } else {
-            this.editBool = true
-            this.editID = i
+            this.editBool = true;
+            this.editID = i;
             this.$store.dispatch("edit_book", {
               bookId: this.editID,
               title: this.edit.title,
@@ -263,7 +263,7 @@ export default {
             });
             swal({
               type: "success",
-              title: "Tag editada com sucesso."
+              title: "Livro editado com sucesso."
             });
           }
         }
@@ -281,8 +281,12 @@ export default {
         confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
-          this.$store.dispatch("delete_book", id);
-          swal("Deleted!", "Book has been deleted.", "success");
+          for (let i = 0; i < this.books.length; i++) {
+            if (this.books[i].bookId === id) {
+              this.$store.dispatch("delete_book", i);
+              swal("Deleted!", "Book has been deleted.", "success"); 
+            }
+          }
         }
       });
     },
@@ -304,7 +308,7 @@ export default {
         type: "success",
         title: "Livro adicionado com sucesso."
       });
-      document.getElementById("formBooks").reset()
+      document.getElementById("formBooks").reset();
     }
   },
 

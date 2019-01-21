@@ -374,6 +374,14 @@ export default new Vuex.Store({
       state.tags.push(payload)
     },
 
+    ADD_VIEW(state, payload) {
+      state.books[payload].nViews +=1
+    },
+
+    DELETE_SUGGESTION(state, payload) {
+      state.bookSuggestions.splice(payload,1)
+    },
+
   },
 
   actions: {
@@ -425,5 +433,11 @@ export default new Vuex.Store({
     add_tag(context, payload) {
       context.commit("ADD_TAG", payload);
     },
+    add_view(context, payload) {
+      context.commit("ADD_VIEW", payload);
+    },
+    delete_suggestion(context, payload) {
+      context.commit("DELETE_SUGGESTION", payload);
+    }
   }
 })

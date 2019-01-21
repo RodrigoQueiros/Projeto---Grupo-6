@@ -33,12 +33,19 @@
                 </td>
                 <td>{{bookSuggestion.suggestionAuthor}}</td>
                 <div v-for="user in users" :key="user.userID">
-                  <td v-if="user.userId == bookSuggestion.userId">{{user.firstName}} {{user.lastName}}</td>
+                  <td
+                    v-if="user.userId == bookSuggestion.userId"
+                  >{{user.firstName}} {{user.lastName}}</td>
                 </div>
                 <td>{{bookSuggestion.suggestionDate}}</td>
                 <td>{{bookSuggestion.suggestNumber}}</td>
                 <td>
-                  <button type="button" style="color:white" class="btn btn-success">
+                  <button
+                    type="button"
+                    style="color:white"
+                    @click="confirmSuggestion(bookSuggestion.suggestionId)"
+                    class="btn btn-success"
+                  >
                     <i class="fas fa-check"></i>
                   </button>
                 </td>
@@ -48,10 +55,15 @@
                   </button>
                 </td>
                 <td>
-                  <button type="button" style="color:white" class="btn btn-danger">
+                  <button
+                    type="button"
+                    style="color:white"
+                    @click="deleteSuggestion(bookSuggestion.suggestionId)"
+                    class="btn btn-danger"
+                  >
                     <i class="fas fa-trash-alt"></i>
                   </button>
-                </td> 
+                </td>
               </tr>
             </tbody>
           </table>
@@ -76,6 +88,7 @@ export default {
     return {
       bookSuggestions: this.$store.state.bookSuggestions,
       users: this.$store.state.users,
+      books: this.$store.state.books,
       username: ""
     };
   },
@@ -93,17 +106,71 @@ export default {
       });
     },
 
-    // getUsername() {
-    //   for (let i = 0; i < this.users.length; i++) {
-    //     for (let j = 0; j < this.bookSuggestions.length; j++) {
-    //       if (this.users[i].userId == this.bookSuggestions[j].userId) {
-    //         this.username =
-    //           this.users[i].firstName + " " + this.users[i].lastName;
-    //       }
-    //     }
-    //   }
-    //   return this.username;
-    // }
+    deleteSuggestion(id) {
+      swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          for (let i = 0; i < this.bookSuggestions.length; i++) {
+            if (this.bookSuggestions[i].suggestionId === id) {
+              this.$store.dispatch("delete_suggestion", i);
+              swal("Deleted!", "Suggestion has been deleted.", "success");
+            }
+          }
+        }
+      });
+    },
+
+    confirmSuggestion(id) {
+      let bookExists = false;
+      for (let i = 0; i < this.bookSuggestions.length; i++) {
+        if (this.bookSuggestions[i].suggestionId === id) {
+          for (let j = 0; j < this.books.length; j++) {
+            if (
+              this.bookSuggestions[i].suggestionTitle == this.books[j].title
+            ) {
+              bookExists = true;
+            }
+          }
+        }
+      }
+      if (bookExists) {
+        swal({
+          type: "error",
+          title: "Livro existente no catalálogo."
+        }).then(result => {
+          swal({
+            title: "Quer eliminar a sugestão?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, eliminar!"
+          }).then(result => {
+            if (result.value) {
+              for (let i = 0; i < this.bookSuggestions.length; i++) {
+                if (this.bookSuggestions[i].suggestionId === id) {
+                  this.$store.dispatch("delete_suggestion", i);
+                  swal("Deleted!", "Suggestion has been deleted.", "success");
+                }
+              }
+            }
+          });
+        });
+      } else {
+        swal({
+          type: "success",
+          title: "Livro não existe no catalálogo."
+        });
+      }
+    }
   }
 };
 </script>

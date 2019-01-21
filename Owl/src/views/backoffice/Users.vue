@@ -93,8 +93,13 @@ export default {
         confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
-          this.$store.dispatch("delete_user", id);
-          swal("Deleted!", "User has been deleted.", "success");
+          for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].userId === id) {
+              this.$store.dispatch("delete_user", i);
+              swal("Deleted!", "User has been deleted.", "success");
+            }
+          }
+          
         }
       });
     },
