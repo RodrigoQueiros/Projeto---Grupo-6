@@ -43,7 +43,7 @@
         <div class="col-12 col-md-8 ml-md-3" id="catalogContents">
           <div class="row">
             <div class="col-6 col-md-3" v-for="book in filteredBooks" :key="book.bookId" >
-              <router-link v-on:mouseover.native="clickBook(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
+              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
                 <img class="owlCovers mt-3" v-bind:src="book.cover">
               </router-link>
               <h6 class="mt-2">{{book.title}}</h6>
@@ -145,9 +145,22 @@ export default {
   },
   methods: {
     clickBook(index) {
-      this.$store.dispatch("open_book", index);
-      this.clickedBook = index;
-      console.log(index);
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === index) {
+          this.$store.dispatch("open_book", i);
+          this.clickedBook = i;
+        }
+      }   
+    },
+
+    addView(id) {
+      console.log("entrou")
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === id) {
+          this.$store.dispatch("add_view", i);
+          console.log("oi")
+        }
+      }   
     },
 
 
