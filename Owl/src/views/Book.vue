@@ -130,34 +130,30 @@
             </div>
             <!-- Review Info -->
             <div class="row">
-              <p>{{review.comment}}</p>
+              <p v-if="verifyEdit==false">{{review.comment}}</p>
+              <textarea name="" id="" cols="30" rows="10" v-if="verifyEdit" v-modal="review.comment"></textarea>
+              
             </div>
             <!-- Rating -->
             <div class="row">
-              <button class="btn-success">
-                <i
-                  class="fas fa-long-arrow-alt-up"
-                  @click="upVote(review.reviewId, loggedUser,clickedBook)"
-                ></i>
+              <button class="btn-success" @click="upVote(review.reviewId, loggedUser,clickedBook)">
+                <i class="fas fa-long-arrow-alt-up" ></i>
                 {{review.upVote.length}}
               </button>
               <!-- upVote -->
-              <button class="btn-danger">
-                <i
-                  class="fas fa-long-arrow-alt-down"
-                  @click="downVote(review.reviewId, loggedUser,clickedBook)"
-                ></i>
+              <button class="btn-danger" @click="downVote(review.reviewId, loggedUser,clickedBook)">
+                <i class="fas fa-long-arrow-alt-down"></i>
                 {{review.downVote.length}}
               </button>
               <!-- downVote -->
             </div>
 
             <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
-              <button class="btn-primary">
+              <button class="btn-primary" @click="editReview(review.reviewId)">
                 <i class="fas fa-edit"></i>
               </button>
               <!-- Edit -->
-              <button class="btn-dark">
+              <button class="btn-dark" @click="deleteReview(review.reviewId)" >
                 <i class="fas fa-times"></i>
               </button>
               <!-- Trash -->
@@ -192,10 +188,31 @@ export default {
       reviews: [],
       buttonActive: true,
       bookDeliver: false,
-      bookReq: false
+      bookReq: false,
+      verifyEdit:false,
     };
   },
   methods: {
+    editReview(reviewID){
+      
+      if(this.verifyEdit == false){
+        this.verifyEdit=true
+      }
+      else{
+        this.verifyEdit=false
+      }
+    },
+    deleteReview(reviewID){
+
+      for (let i = 0; i < this.reviews.length; i++) {
+        console.table(this.reviews)
+        if (this.reviews[i].reviewId == reviewID){
+          this.$store.dispatch("delete_review", i);
+        }
+
+      }
+    },
+
     upVote(reviewID, userID, bookID) {
       let verify = true;
       let checkUp = true;
