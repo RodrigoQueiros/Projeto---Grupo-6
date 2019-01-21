@@ -7,8 +7,14 @@
           <h3>Filtros</h3>
         </div>
         <div class="col-12 col-md-8 ml-md-3" id="catalogBar">
-          <h3>Catálogo</h3>
-          <p>teste</p>
+    
+          <div class="row">
+            
+            <h3 id="catalogTitle">Catálogo</h3>
+          <p id="catalogOrder" v-on:click="sortBooks">OrderBy: &nbsp</p>
+          <select class="" v-model="orderTab">
+            <option>Alfabetico</option>
+            </select></div>
         </div>
       </div>
       <div class="row">
@@ -36,8 +42,8 @@
         </div>
         <div class="col-12 col-md-8 ml-md-3" id="catalogContents">
           <div class="row">
-            <div class="col-6 col-md-3" v-for="book in filteredBooks" :key="book" >
-              <router-link v-on:mouseover.native="clickBook(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
+            <div class="col-6 col-md-3" v-for="book in filteredBooks" :key="book.bookId" >
+              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
                 <img class="owlCovers mt-3" v-bind:src="book.cover">
               </router-link>
               <h6 class="mt-2">{{book.title}}</h6>
@@ -78,6 +84,15 @@
 
   color: #592316;
 }
+
+#catalogTitle{
+  padding-left: 15px;
+}
+
+#catalogOrder{
+  padding-left: 460px;
+}
+
 .box {
   margin-left: 5%;
   margin-right: 5%;
@@ -112,7 +127,8 @@ export default {
       authorFilter: "Todos",
       publisherFilter: "Todos",
       tagFilter: "Todos",
-      clickedBook: 0
+      clickedBook: 0,
+      orderTab: ""
     };
   },
   created() {
@@ -129,9 +145,34 @@ export default {
   },
   methods: {
     clickBook(index) {
-      this.$store.dispatch("open_book", index);
-      this.clickedBook = index;
-      console.log(index);
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === index) {
+          this.$store.dispatch("open_book", i);
+          this.clickedBook = i;
+        }
+      }   
+    },
+
+    addView(id) {
+      console.log("entrou")
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === id) {
+          this.$store.dispatch("add_view", i);
+          console.log("oi")
+        }
+      }   
+    },
+
+
+    sortBooks(){
+
+      if(this.orderTab == "Alfabetico"){
+        this.filteredBooks.sort()
+        console.log("yamanuh")
+      }
+
+      
+
     },
 
     filterBooks() {

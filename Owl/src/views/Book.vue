@@ -83,20 +83,20 @@
               <p style="font-size:20px" class="font-weight-bold">Classificação:</p>
 
               <fieldset class="rate">
-                <input id="rate1-star5" type="radio" name="rate1" value="5">
-                <label for="rate1-star5" title="Excellent">5</label>
+                <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
+                <label class="star" for="rate1-star5" title="Excellent">5</label>
                 
-                <input id="rate1-star4" type="radio" name="rate1" value="4">
-                <label for="rate1-star4" title="Good">4</label>
+                <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4">
+                <label class="star" for="rate1-star4" title="Good">4</label>
                 
-                <input id="rate1-star3" type="radio" name="rate1" value="3">
-                <label for="rate1-star3" title="Satisfactory">3</label>
+                <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3">
+                <label class="star" for="rate1-star3" title="Satisfactory">3</label>
                 
-                <input id="rate1-star2" type="radio" name="rate1" value="2">
-                <label for="rate1-star2" title="Bad">2</label>
+                <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2">
+                <label class="star" for="rate1-star2" title="Bad">2</label>
                 
-                <input id="rate1-star1" type="radio" name="rate1" value="1">
-                <label for="rate1-star1" title="Very bad">1</label>
+                <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
+                <label class="star" for="rate1-star1" title="Very bad">1</label>
               </fieldset>
 
               <!-- Send Review -->
@@ -170,6 +170,38 @@
 </template>
 
 <style>
+.rate {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.starInput {
+  display: none;
+}
+
+.star {
+  float: right;
+  font-size: 0;
+  color: #d9d9d9;
+}
+
+.star:before {
+  content: "\f005";
+  font-family: FontAwesome;
+  font-size: 40px;
+}
+
+.star:hover,
+.star:hover ~ .star {
+  color: #fcd000;
+  transition: 0.2s;
+}
+
+.starInput:checked ~ .star {
+  color: #fcd000;
+}
 </style>
 
 
@@ -216,35 +248,27 @@ export default {
     upVote(reviewID, userID, bookID) {
       let verify = true;
       let checkUp = true;
-      
-      
+
       for (let i = 0; i < this.reviews.length; i++) {
         if (this.reviews[i].reviewId == reviewID) {
           for (let j = 0; j < this.reviews[i].upVote.length; j++) {
-            
             if (this.reviews[i].upVote[j] == userID) {
               verify = false;
             }
-          }          
+          }
         }
         for (let k = 0; k < this.reviews[i].downVote.length; k++) {
-            if (this.reviews[i].downVote[k] == userID) {
-              checkUp = false;
-            }
-            
+          if (this.reviews[i].downVote[k] == userID) {
+            checkUp = false;
           }
+        }
       }
 
-
-      
       if (verify == true) {
-        this.$store.dispatch("up_vote", [reviewID, userID,true,checkUp]);
+        this.$store.dispatch("up_vote", [reviewID, userID, true, checkUp]);
+      } else {
+        this.$store.dispatch("up_vote", [reviewID, userID, false, checkUp]);
       }
-      else{
-        this.$store.dispatch("up_vote", [reviewID, userID,false,checkUp]);
-
-      }
-
     },
     downVote(reviewID, userID, bookID) {
       let verify = true;
@@ -253,30 +277,23 @@ export default {
       for (let i = 0; i < this.reviews.length; i++) {
         if (this.reviews[i].reviewId == reviewID) {
           for (let j = 0; j < this.reviews[i].downVote.length; j++) {
-            
             if (this.reviews[i].downVote[j] == userID) {
               verify = false;
             }
           }
         }
         for (let k = 0; k < this.reviews[i].upVote.length; k++) {
-            if (this.reviews[i].upVote[k] == userID) {
-              checkDown = false;
-            }
-            
+          if (this.reviews[i].upVote[k] == userID) {
+            checkDown = false;
           }
+        }
       }
 
-      
       if (verify == true) {
-        this.$store.dispatch("down_vote", [reviewID, userID,true,checkDown]);
+        this.$store.dispatch("down_vote", [reviewID, userID, true, checkDown]);
+      } else {
+        this.$store.dispatch("down_vote", [reviewID, userID, false, checkDown]);
       }
-      else{
-        this.$store.dispatch("down_vote", [reviewID, userID,false,checkDown]);
-
-      }
-
-
     },
 
     getInfoFromUser(userID) {

@@ -133,19 +133,22 @@ export default new Vuex.Store({
     }],
 
     tags: [{
-      tagId: 1,
+      tagId: 0,
       tagDescription: "Desporto"
     },
     {
-      tagId: 2,
+      tagId: 1,
       tagDescription: "Ciência"
     }],
 
     bookSuggestions: [{
       suggestionId: 0,
-      suggestionTitle: "",
-      suggestionAuthor: "",
-      userId: ""
+      suggestionTitle: "Foi Sem Querer Que Te Quis",
+      suggestionAuthor: "Raul Minh'alma",
+      suggestionCover: "https://img.wook.pt/images/foi-sem-querer-que-te-quis-raul-minhalma/MXwyMjM1ODA1OXwxODI0MDkxN3wxNTQwMTYyODAwMDAw/502x",
+      userId: 1,
+      suggestionDate: new Date().toLocaleString(),
+      suggestNumber: 1
     }],
 
 
@@ -197,6 +200,30 @@ export default new Vuex.Store({
       return lastId
     },
 
+    getLastIdBooks: (state) => {
+      let lastId = 0
+      if (state.books.length > 0) {
+        lastId = state.books[state.books.length - 1].bookId + 1
+      }
+      return lastId
+    },
+
+    getLastIdSuggestions: (state) => {
+      let lastId = 0
+      if (state.bookSuggestions.length > 0) {
+        lastId = state.bookSuggestions[state.bookSuggestions.length - 1].suggestionId + 1
+      }
+      return lastId
+    },
+
+    getLastIdTags: (state) => {
+      let lastId = 0
+      if (state.tags.length > 0) {
+        lastId = state.tags[state.tags.length - 1].tagId + 1
+      }
+      return lastId
+    },
+
     getUserLoggedIn(state) {
       return state.userLoggedin
 
@@ -222,11 +249,11 @@ export default new Vuex.Store({
   },
 
   mutations: {
+
     open_book(state, payload) {
-
       state.currentBookId = payload
-
     },
+
     UP_VOTE(state, payload) {
 
       for (let i = 0; i < state.reviews.length; i++) {
@@ -258,6 +285,7 @@ export default new Vuex.Store({
       }
 
     },
+
     DOWN_VOTE(state, payload) {
       console.log("Ola")
       for (let i = 0; i < state.reviews.length; i++) {
@@ -290,6 +318,69 @@ export default new Vuex.Store({
       }
     },
 
+    ADD_USER(state, payload) {
+      state.users.push(payload)
+    },
+
+    DELETE_BOOK(state, payload) {
+      state.books.splice(payload,1)
+    },
+    
+    ADD_BOOK(state, payload) {
+      state.books.push(payload)
+    },
+
+    DELETE_USER(state, payload) {
+      state.users.splice(payload,1)
+    },
+
+    ADD_ADMIN(state, payload) {
+      state.users[payload].type = "admin"
+    },
+
+    DELETE_ADMIN(state, payload) {
+      state.users[payload].type = "user"
+    },
+
+    ADD_SUGGESTION(state, payload) {
+      state.bookSuggestions.push(payload)
+    },
+
+    ADD_SUGGESTION_NUMBER(state, payload) {
+      state.bookSuggestions[payload].suggestNumber += 1
+    },
+
+    EDIT_BOOK(state, payload) {
+      state.books[payload.bookId].author = payload.author
+      state.books[payload.bookId].title = payload.title
+      state.books[payload.bookId].publisher = payload.publisher
+    },
+
+    EDIT_PROFILE(state, payload) {
+      state.users[payload.userId].firstName = payload.firstName
+      state.users[payload.userId].lastName = payload.lastName
+      state.users[payload.userId].email = payload.email
+    },
+
+    EDIT_TAG(state, payload) {
+      state.tags[payload.tagId].tagDescription = payload.tagDescription
+    },
+
+    DELETE_TAG(state, payload) {
+      state.tags.splice(payload,1)
+    },
+
+    ADD_TAG(state, payload) {
+      state.tags.push(payload)
+    },
+
+    ADD_VIEW(state, payload) {
+      state.books[payload].nViews +=1
+    },
+
+    DELETE_SUGGESTION(state, payload) {
+      state.bookSuggestions.splice(payload,1)
+    },
 
   },
 
@@ -297,12 +388,56 @@ export default new Vuex.Store({
     open_book(context, payload) {
       context.commit('open_book', payload)
     },
+    add_user(context, payload) {
+      context.commit("ADD_USER", payload);
+    },
     up_vote(context, payload) {
       context.commit("UP_VOTE", payload);
     },
     down_vote(context, payload) {
       context.commit("DOWN_VOTE", payload);
     },
-
+    delete_book(context, payload) {
+      context.commit("DELETE_BOOK", payload);
+    },
+    add_book(context, payload) {
+      context.commit("ADD_BOOK", payload);
+    },
+    delete_user(context, payload) {
+      context.commit("DELETE_USER", payload);
+    },
+    add_admin(context, payload) {
+      context.commit("ADD_ADMIN", payload);
+    },
+    delete_admin(context, payload) {
+      context.commit("DELETE_ADMIN", payload);
+    },
+    add_suggestion(context, payload) {
+      context.commit("ADD_SUGGESTION", payload);
+    }, 
+    add_suggestion_number(context, payload) {
+      context.commit("ADD_SUGGESTION_NUMBER", payload);
+    },
+    edit_book(context, payload) {
+      context.commit("EDIT_BOOK", payload);
+    },
+    edit_profile(context, payload) {
+      context.commit("EDIT_PROFILE", payload);
+    },
+    edit_tag(context, payload) {
+      context.commit("EDIT_TAG", payload);
+    },
+    delete_tag(context, payload) {
+      context.commit("DELETE_TAG", payload);
+    },
+    add_tag(context, payload) {
+      context.commit("ADD_TAG", payload);
+    },
+    add_view(context, payload) {
+      context.commit("ADD_VIEW", payload);
+    },
+    delete_suggestion(context, payload) {
+      context.commit("DELETE_SUGGESTION", payload);
+    }
   }
 })

@@ -1,59 +1,74 @@
 <template>
   <div class="signup">
     <Header/>
-    <div class="form-wrapper text-center">
-      <form class="form-signin">
-        <img class="mb-4" src="white.png" alt width="100" height="100">
-        <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
-        <label for="inputFirstName" class="sr-only">Nome</label>
-        <input
-          type="firstName"
-          id="inputFirstName"
-          class="form-control"
-          placeholder="Nome próprio"
-          v-model="form.firstName"
-          required
-        >
-        <label for="inputLastName" class="sr-only">Nome</label>
-        <input
-          type="lastName"
-          id="inputLastName"
-          class="form-control"
-          placeholder="Apelido"
-          v-model="form.lastName"
-          required
-        >
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input
-          type="email"
-          id="inputEmail"
-          class="form-control"
-          placeholder="Email"
-          v-model="form.email"
-          required
-         
-        >
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input
-          type="password"
-          id="inputPassword"
-          class="form-control"
-          placeholder="Password"
-          v-model="form.password"
-          required
-        >
-        <label for="inputPassword2" class="sr-only">Repita a Password</label>
-        <input
-          type="password"
-          id="inputPassword2"
-          class="form-control"
-          placeholder="Repita a Password"
-          v-model="form.password2"
-          required
-        >
-        
-        <button class="btn btn-lg btn-block" id="btnSignup" @click="signup" type="submit">Sign up</button>
-      </form>
+    <div class="margin5 mt-4">
+      <div class="row">
+        <div class="col-12 col-md-4 offset-md-4 boxTitle">
+          <h3>Signup</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4 offset-md-4 boxContent">
+          <div class="form-wrapper text-center">
+            <form class="form-signin">
+              <!-- <img class="mb-4" src="../assets/logo.png" alt width="200" height="110"> -->
+              <!-- <h1 class="h3 mb-3 font-weight-normal">Sign up</h1> -->
+              <label for="inputFirstName" class="sr-only">Nome</label>
+              <input
+                type="firstName"
+                id="inputFirstName"
+                class="form-control"
+                placeholder="Nome próprio"
+                v-model="form.firstName"
+                required
+              >
+              <label for="inputLastName" class="sr-only">Nome</label>
+              <input
+                type="lastName"
+                id="inputLastName"
+                class="form-control"
+                placeholder="Apelido"
+                v-model="form.lastName"
+                required
+              >
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input
+                type="email"
+                id="inputEmail"
+                class="form-control"
+                placeholder="Email"
+                v-model="form.email"
+                required
+              >
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input
+                type="password"
+                id="inputPassword"
+                class="form-control"
+                placeholder="Password"
+                v-model="form.password"
+                required
+              >
+              <label for="inputPassword2" class="sr-only">Repita a Password</label>
+              <input
+                type="password"
+                id="inputPassword2"
+                class="form-control"
+                placeholder="Repita a Password"
+                v-model="form.password2"
+                required
+              >
+              
+              <button
+                class="btn btn-lg btn-block"
+                id="btnSignup"
+                @click="signup"
+                type="submit"
+              >Sign up</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,8 +84,8 @@ body {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   /*background-color: #f5f5f5;*/
 }
 
@@ -117,6 +132,8 @@ body {
 
 <script>
 import Header from "@/components/Header.vue";
+import swal from "sweetalert2";
+
 export default {
   name: "signup",
   components: {
@@ -147,13 +164,24 @@ export default {
       let strError = this.$store.getters.Signup(user);
 
       if (strError == "") {
-        this.$store.state.users.push(user)
-        alert("Registo efetuado com sucesso")
-      
-      }
-
-      else{
-        alert(strError)
+        this.$store.dispatch("add_user", {
+          userId: this.$store.getters.getLastId,
+          firstName: this.form.firstName,
+          lastName: this.form.lastName,
+          email: this.form.email,
+          password: this.form.password,
+          password2: this.form.password2
+        });
+        this.$router.push("/login");
+        swal({
+          type: "success",
+          title: "Registo efetuado com sucesso"
+        });
+      } else {
+        swal({
+          type: "error",
+          title: strError
+        });
       }
     }
   }

@@ -33,8 +33,14 @@
                 <i class="fas fa-user fa-2x"></i>
                 <h3>{{userName}}</h3>
             </div> 
-            
         </router-link>
+        <router-link class="navbar-brand" to="/Users">
+            <div v-if="userLoggedIn != -1" style="color:white">
+                <i class="fas fa-cog fa-2x"></i>
+                <h3>BackOffice</h3>
+            </div> 
+        </router-link>
+        
 
    </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarNav">
@@ -123,6 +129,8 @@ export default {
       logout() {
           localStorage.setItem("userLoggedIn", -1)
           //this.$router.push("/")
+          //por sweetalert
+          
       },
 
       getUser() {
@@ -134,6 +142,9 @@ export default {
           return this.userName
       }
   },
+  computed: {
+      
+  }
   
 };
 </script>

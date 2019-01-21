@@ -1,31 +1,42 @@
 <template>
   <div class="login">
     <Header/>
-    <div class="form-wrapper text-center">
-      <form class="form-signin">
-        <img class="mb-4" src="white.png" alt width="100" height="100">
-        <h1 class="h3 mb-3 font-weight-normal">Log in</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input
-          type="email"
-          id="inputEmail"
-          class="form-control"
-          placeholder="Email address"
-          v-model="form.email"
-          required
-          autofocus
-        >
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input
-          type="password"
-          id="inputPassword"
-          class="form-control"
-          placeholder="Password"
-          v-model="form.password"
-          required
-        >
-        <button class="btn btn-lg btn-block" id="btnLogin" @click="login" type="submit">Log in</button>
-      </form>
+    <div class="margin5 mt-4">
+      <div class="row">
+        <div class="col-12 col-md-4 offset-md-4 boxTitle">
+          <h3>Login</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4 offset-md-4 boxContent">
+          <div class="form-wrapper text-center">
+            <form class="form-signin">
+              <!-- <img class="mb-4" src="../assets/logo.png" alt width="200" height="120"> -->
+              <!-- <h1 class="h3 mb-3 font-weight-normal">Log in</h1> -->
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input
+                type="email"
+                id="inputEmail"
+                class="form-control"
+                placeholder="Email address"
+                v-model="form.email"
+                required
+                autofocus
+              >
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input
+                type="password"
+                id="inputPassword"
+                class="form-control"
+                placeholder="Password"
+                v-model="form.password"
+                required
+              >
+              <button class="btn btn-lg btn-block" id="btnLogin" @click="login" type="submit">Log in</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -80,8 +91,10 @@ body {
 
 <script>
 import Header from "@/components/Header.vue";
+import swal from "sweetalert2";
+
 export default {
-    name: "login",
+  name: "login",
   components: {
     Header
   },
@@ -89,33 +102,31 @@ export default {
     return {
       form: {
         email: "",
-        password: "",
-        
+        password: ""
       }
     };
   },
   methods: {
+    login() {
+      let user = {
+        email: this.form.email,
+        password: this.form.password
+      };
 
-   login() {
-
-     let user = {
-       email: this.form.email,
-       password: this.form.password,
-     }
-
-     let loginVerified = this.$store.getters.Login(user)
-     if (loginVerified) {
-       this.$router.push("/")
-       alert("Login efetuado com sucesso.")
-       
-     }
-     else {
-       alert("Os seus dados estão incorretos.")
-     }
-     
-
-   }
-  },
-  
+      let loginVerified = this.$store.getters.Login(user);
+      if (loginVerified) {
+        this.$router.push("/");
+        swal({
+          type: "success",
+          title: "Login efetuado com sucesso."
+        });
+      } else {
+        swal({
+          type: "error",
+          title: "Os seus dados estão incorretos."
+        });
+      }
+    }
+  }
 };
 </script>
