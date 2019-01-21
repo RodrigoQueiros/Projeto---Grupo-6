@@ -74,15 +74,13 @@
       <div class="row">
         <div class="form-group boxContent col-12 col-md-12">
           <div class="margin5">
-            <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
-            
-            <textarea class="form-control" rows="5" id="comment"></textarea>
-
-            <!-- Estrelinhaas-->
             <div class="row">
-              <p style="font-size:20px" class="font-weight-bold">Classificação:</p>
+              <!-- Estrelinhaas-->
+            <div class="row">
+              <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
+              
 
-              <fieldset class="rate">
+              <fieldset class="rate" >
                 <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
                 <label class="star" for="rate1-star5" title="Excellent">5</label>
                 
@@ -98,19 +96,24 @@
                 <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
                 <label class="star" for="rate1-star1" title="Very bad">1</label>
               </fieldset>
-
+            </div>
+            
+            
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+       
+            
               <!-- Send Review -->
-              <button
+              <button style="margin:auto"
                 @click="requesition(clickedBook, loggedUser)"
                 :disabled="buttonActive == false"
-                class="btn buttonColor float-right"
-              >{{buttonText}}</button>
+                class="btn buttonColor col-6"
+              >Publicar</button>
             </div>
           </div>
         </div>
       </div>
       <!--Comentarios-->
-      <div class="row">
+      <div class="row boxContent">
         <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId">
           <!-- User Image-->
           <div class="col-3">
