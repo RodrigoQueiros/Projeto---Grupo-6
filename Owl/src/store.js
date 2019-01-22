@@ -11,6 +11,18 @@ export default new Vuex.Store({
 
     currentBookId: 0,
 
+    form: {
+      title: "",
+      cover: "",
+      author: "",
+      publisher: "",
+      tags: "",
+      launchDate: "",
+      description: "",
+      disponibility: "",
+      bookStatus: ""
+    },
+
     users: [{
       userId: 0,
       firstName: "Rogério",
