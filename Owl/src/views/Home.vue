@@ -12,10 +12,16 @@
               <div class="row">
         <div class="col-md-12" id="topBooks">
           <br>
-        <img class="owlCovers" src="https://images-na.ssl-images-amazon.com/images/I/51HSkTKlauL._SX346_BO1,204,203,200_.jpg">      
+        <img class="owlCoversTop" src="https://images-na.ssl-images-amazon.com/images/I/51HSkTKlauL._SX346_BO1,204,203,200_.jpg">   
+          <div class="top">
+    <h4>1</h4>
+  </div>
         <br>
         <br>
-          <img class="owlCovers" src="https://images-na.ssl-images-amazon.com/images/I/51HSkTKlauL._SX346_BO1,204,203,200_.jpg">       
+          <img class="owlCoversTop" src="https://images-na.ssl-images-amazon.com/images/I/51HSkTKlauL._SX346_BO1,204,203,200_.jpg"> 
+                <div class="top">
+    <h4>2</h4>
+  </div>      
         <br>
         <br>
        
@@ -41,13 +47,26 @@
   height: 552px;
 }
 
-.owlCovers {
+.owlCoversTop {
   height: 200px;
   width: 150px;
   box-sizing: border-box;
   border: 3px solid white;
   border-radius: 5px;
 }
+
+.top {
+  position: relative;
+  height: 30px;
+  width: 10px;
+  bottom: 30px;
+  right: 5px;
+  background-color: #bf6e26;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 </style>
 
 <script>
@@ -70,14 +89,14 @@ export default {
     };
   },
   created() {
-  if (localStorage.getItem('reloaded')) {
-        // The page was just reloaded. Clear the value from local storage
-        // so that it will reload the next time this page is visited.
-        localStorage.removeItem('reloaded');
+    if (localStorage.getItem("reloaded")) {
+      // The page was just reloaded. Clear the value from local storage
+      // so that it will reload the next time this page is visited.
+      localStorage.removeItem("reloaded");
     } else {
-        // Set a flag so that we know not to reload the page twice.
-        localStorage.setItem('reloaded', '1');
-        location.reload();
+      // Set a flag so that we know not to reload the page twice.
+      localStorage.setItem("reloaded", "1");
+      location.reload();
     }
   }
 };
