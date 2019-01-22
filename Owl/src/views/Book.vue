@@ -74,15 +74,13 @@
       <div class="row">
         <div class="form-group boxContent col-12 col-md-12">
           <div class="margin5">
-            <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
-            
-            <textarea class="form-control" rows="5" id="comment"></textarea>
-
-            <!-- Estrelinhaas-->
             <div class="row">
-              <p style="font-size:20px" class="font-weight-bold">Classificação:</p>
+              <!-- Estrelinhaas-->
+            <div class="row">
+              <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
+              
 
-              <fieldset class="rate">
+              <fieldset class="rate" >
                 <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
                 <label class="star" for="rate1-star5" title="Excellent">5</label>
                 
@@ -98,19 +96,24 @@
                 <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
                 <label class="star" for="rate1-star1" title="Very bad">1</label>
               </fieldset>
-
+            </div>
+            
+            
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+       
+            
               <!-- Send Review -->
-              <button
+              <button style="margin:auto"
                 @click="requesition(clickedBook, loggedUser)"
                 :disabled="buttonActive == false"
-                class="btn buttonColor float-right"
-              >{{buttonText}}</button>
+                class="btn buttonColor col-6"
+              >Publicar</button>
             </div>
           </div>
         </div>
       </div>
       <!--Comentarios-->
-      <div class="row">
+      <div class="row boxContent">
         <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId">
           <!-- User Image-->
           <div class="col-3">
@@ -130,34 +133,30 @@
             </div>
             <!-- Review Info -->
             <div class="row">
-              <p>{{review.comment}}</p>
+              <p v-if="verifyEdit==false">{{review.comment}}</p>
+              <textarea name="" id="" cols="30" rows="10" v-if="verifyEdit" v-modal="review.comment"></textarea>
+              
             </div>
             <!-- Rating -->
             <div class="row">
-              <button class="btn-success">
-                <i
-                  class="fas fa-long-arrow-alt-up"
-                  @click="upVote(review.reviewId, loggedUser,clickedBook)"
-                ></i>
+              <button class="btn-success" @click="upVote(review.reviewId, loggedUser,clickedBook)">
+                <i class="fas fa-long-arrow-alt-up" ></i>
                 {{review.upVote.length}}
               </button>
               <!-- upVote -->
-              <button class="btn-danger">
-                <i
-                  class="fas fa-long-arrow-alt-down"
-                  @click="downVote(review.reviewId, loggedUser,clickedBook)"
-                ></i>
+              <button class="btn-danger" @click="downVote(review.reviewId, loggedUser,clickedBook)">
+                <i class="fas fa-long-arrow-alt-down"></i>
                 {{review.downVote.length}}
               </button>
               <!-- downVote -->
             </div>
 
             <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
-              <button class="btn-primary">
+              <button class="btn-primary" @click="editReview(review.reviewId)">
                 <i class="fas fa-edit"></i>
               </button>
               <!-- Edit -->
-              <button class="btn-dark">
+              <button class="btn-dark" @click="deleteReview(review.reviewId)" >
                 <i class="fas fa-times"></i>
               </button>
               <!-- Trash -->
@@ -224,10 +223,31 @@ export default {
       reviews: [],
       buttonActive: true,
       bookDeliver: false,
-      bookReq: false
+      bookReq: false,
+      verifyEdit:false,
     };
   },
   methods: {
+    editReview(reviewID){
+      
+      if(this.verifyEdit == false){
+        this.verifyEdit=true
+      }
+      else{
+        this.verifyEdit=false
+      }
+    },
+    deleteReview(reviewID){
+
+      for (let i = 0; i < this.reviews.length; i++) {
+        console.table(this.reviews)
+        if (this.reviews[i].reviewId == reviewID){
+          this.$store.dispatch("delete_review", i);
+        }
+
+      }
+    },
+
     upVote(reviewID, userID, bookID) {
       let verify = true;
       let checkUp = true;

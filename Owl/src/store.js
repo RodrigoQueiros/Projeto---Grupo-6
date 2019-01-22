@@ -317,6 +317,9 @@ export default new Vuex.Store({
         }
       }
     },
+    DELETE_REVIEW(state, payload) {
+      state.reviews.splice(payload, 1);
+    },
 
     ADD_USER(state, payload) {
       state.users.push(payload)
@@ -385,6 +388,9 @@ export default new Vuex.Store({
   },
 
   actions: {
+    delete_review(context, payload) {
+      context.commit("DELETE_REVIEW", payload);
+    },
     open_book(context, payload) {
       context.commit('open_book', payload)
     },
