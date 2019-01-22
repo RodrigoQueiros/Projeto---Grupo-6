@@ -396,7 +396,7 @@ export default {
         //Verificar data
 
         //if(this.bookDeliver = true){
-        console.log("ola");
+        
         let req = {
           requisitionId: this.$store.getters.getLastIdReq,
           bookId: bookID,
