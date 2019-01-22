@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="bookSuggestion in bookSuggestions" :key="bookSuggestion.bookSuggestionId">
+              <tr v-for="bookSuggestion in tempSuggestions" :key="bookSuggestion.bookSuggestionId">
                 <td>{{bookSuggestion.suggestionId}}</td>
                 <td>{{bookSuggestion.suggestionTitle}}</td>
                 <td>
@@ -95,12 +95,13 @@ export default {
       users: this.$store.state.users,
       books: this.$store.state.books,
       form: this.$store.state.form,
-      username: ""
+      username: "",
+      tempSuggestions: []
     };
   },
 
   created() {
-    // this.username = this.getUsername()
+    this.filterSuggestions();
   },
 
   methods: {
@@ -181,13 +182,28 @@ export default {
     addSuggestion(id) {
       for (let i = 0; i < this.bookSuggestions.length; i++) {
         if (this.bookSuggestions[i].suggestionId === id) {
-          this.form.title = this.bookSuggestions[i].suggestionTitle
-          this.form.cover = this.bookSuggestions[i].suggestionCover
-          this.form.author = this.bookSuggestions[i].suggestionAuthor
+          this.form.title = this.bookSuggestions[i].suggestionTitle;
+          this.form.cover = this.bookSuggestions[i].suggestionCover;
+          this.form.author = this.bookSuggestions[i].suggestionAuthor;
         }
-
       }
-      this.$router.push("/books")
+      this.$router.push("/books");
+    },
+
+    filterSuggestions() {
+      for (let i = 0; i < this.bookSuggestions.length; i++) {
+        if (
+          this.tempSuggestions.indexOf(
+            this.bookSuggestions[i].suggestionTitle
+          ) == -1
+        ) {
+          console.log(i);
+          this.tempSuggestions.push(this.bookSuggestions[i]);
+          break;
+        }
+      }
+      return this.tempSuggestions;
+      console.log(tempSuggestions);
     }
   }
 };
