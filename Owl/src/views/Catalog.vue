@@ -11,9 +11,13 @@
           <div class="row">
             
             <h3 id="catalogTitle">Catálogo</h3>
-          <p id="catalogOrder" v-on:click="sortBooks">OrderBy: &nbsp</p>
-          <select class="" v-model="orderTab">
-            <option>Alfabetico</option>
+          <p id="catalogOrder" >Ordenar por: &nbsp</p>
+          <select v-on:change="sortBooks" class="float-right" v-model="orderTab">
+            <option>Mais Populares</option>
+            <option>Menos Populares</option>
+            <option>Alfabetico (Por Titulo)</option>
+            <option>Alfabetico (Por Autor)</option>
+            
             </select></div>
         </div>
       </div>
@@ -86,11 +90,11 @@
   color: #592316;
 }
 
-#catalogTitle{
+#catalogTitle {
   padding-left: 15px;
 }
 
-#catalogOrder{
+#catalogOrder {
   padding-left: 460px;
 }
 
@@ -153,28 +157,74 @@ export default {
           this.$store.dispatch("open_book", i);
           this.clickedBook = i;
         }
-      }   
+      }
     },
 
     addView(id) {
-      console.log("entrou")
+      console.log("entrou");
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === id) {
           this.$store.dispatch("add_view", i);
-          console.log("oi")
+          console.log("oi");
         }
-      }   
+      }
     },
 
+    sortBooks() {
 
-    sortBooks(){
-
-      if(this.orderTab == "Alfabetico"){
-        this.filteredBooks.sort()
-        console.log("yamanuh")
+      //Ordenar alfabeticamente
+      if (this.orderTab == "Alfabetico (Por Titulo)") {
+        this.filteredBooks.sort(function(a, b) {
+          if (a.title < b.title) {
+            return -1;
+          }
+          if (a.title > b.title) {
+            return 1;
+          }
+          return 0;
+        });
+        
       }
 
-      
+    //Ordenar por autor
+       if (this.orderTab == "Alfabetico (Por Autor)") {
+        this.filteredBooks.sort(function(a, b) {
+          if (a.author < b.author) {
+            return -1;
+          }
+          if (a.author > b.author) {
+            return 1;
+          }
+          return 0;
+        });
+        
+      }
+
+       if (this.orderTab == "Mais Populares") {
+        this.filteredBooks.sort(function(a, b) {
+          if (a.nViews > b.nViews) {
+            return -1;
+          }
+          if (a.nViews < b.nViews) {
+            return 1;
+          }
+          return 0;
+        });
+        
+      }
+
+   if (this.orderTab == "Menos Populares") {
+        this.filteredBooks.sort(function(a, b) {
+          if (a.nViews < b.nViews) {
+            return -1;
+          }
+          if (a.nViews > b.nViews) {
+            return 1;
+          }
+          return 0;
+        });
+        
+      }
 
     },
 
@@ -193,16 +243,11 @@ export default {
           this.publisherFilter == "Todos"
       );
 
-      //tag filter 
+      //tag filter
       if (this.tagFilter != "Todos") {
-      
         for (let i = 0; i < this.filteredBooks.length; i++) {
-        
           for (let j = 0; j < this.filteredBooks[i].idTag.length; j++) {
-            
             for (let z = 0; z < this.tags.length; z++) {
-          
-
               if (this.filteredBooks[i].idTag[j] == this.tags[z].tagId) {
                 if (this.tags[z].tagDescription == this.tagFilter) {
                   temp.push(this.filteredBooks[i]);
@@ -215,7 +260,6 @@ export default {
         this.filteredBooks = temp;
       }
 
-   
       console.log(this.filteredBooks);
     }
   },
