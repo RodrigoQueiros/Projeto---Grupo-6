@@ -80,19 +80,19 @@
                 <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
 
                 <fieldset class="rate">
-                  <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
+                  <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5" v-model="picked">
                   <label class="star" for="rate1-star5" title="Excellent">5</label>
                   
-                  <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4">
+                  <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4" v-model="picked">
                   <label class="star" for="rate1-star4" title="Good">4</label>
                   
-                  <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3">
+                  <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3" v-model="picked">
                   <label class="star" for="rate1-star3" title="Satisfactory">3</label>
                   
-                  <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2">
+                  <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2" v-model="picked">
                   <label class="star" for="rate1-star2" title="Bad">2</label>
                   
-                  <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
+                  <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1" v-model="picked">
                   <label class="star" for="rate1-star1" title="Very bad">1</label>
                 </fieldset>
               </div>
@@ -231,11 +231,16 @@ export default {
       bookReq: false,
       verifyEdit: false,
       editThatOne: -1,
+      picked: 0,
     };
   },
   methods: {
     doReview(bookID, userID){
+      console.log(this.picked)
+      if(this.picked == 0){
 
+      }
+      
     },
 
     editReview(reviewID,comment) {

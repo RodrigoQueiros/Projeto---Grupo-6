@@ -173,7 +173,8 @@ export default {
           lastName: this.form.lastName,
           email: this.form.email,
           password: this.form.password,
-          password2: this.form.password2
+          password2: this.form.password2,
+          points: 0
         });
         this.$router.push("/login");
         swal({
