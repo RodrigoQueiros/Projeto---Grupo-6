@@ -114,7 +114,7 @@
       </div>
       <!--Comentarios-->
       <div class="row boxContent">
-        <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId">
+        <div class="col-12 col-md-12" v-for="review in filtredReviews" :key="review.reviewId">
           <!-- User Image-->
           <div class="col-3">
             <img
@@ -193,7 +193,7 @@
 .star:before {
   content: "\f005";
   font-family: FontAwesome;
-  font-size: 40px;
+  font-size: 20px;
 }
 
 .star:hover,
@@ -228,6 +228,19 @@ export default {
     };
   },
   methods: {
+    filtredReviews(){
+      let filtred = this.reviews.filter(review =>{
+        if(this.clickedBook == this.reviews.bookID){
+          return true
+        }
+        else{
+          return false
+        }
+      }
+      )
+      
+      return filtred
+    },
     editReview(reviewID){
       
       if(this.verifyEdit == false){
@@ -417,6 +430,7 @@ export default {
     console.log(this.users);
     console.log(this.reviews);
     this.checkRequesition(this.clickedBook, this.loggedUser);
-  }
+  },
+
 };
 </script>
