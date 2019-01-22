@@ -245,7 +245,7 @@ export default {
       } else {
         this.verifyEdit = false;
         let rev = [reviewID,comment]
-        this.$store.dispatch("edit_review", red);
+        this.$store.dispatch("edit_review", rev);
       }
     },
     deleteReview(reviewID) {
