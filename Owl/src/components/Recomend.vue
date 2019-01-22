@@ -1,12 +1,15 @@
 <template>
 
-<canvas id="myCanvas">noice</canvas>
+
+<router-link to="/book/0">
+<canvas id="myCanvas">Your browser does not support canvas</canvas>
+</router-link>
   
 </template>
 
 <style>
 #myCanvas {
-  width: 800px;
+  width: 729px;
   height: 600px;
   border: 1px solid #000;
 }
