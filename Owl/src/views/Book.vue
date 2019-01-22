@@ -114,9 +114,10 @@
       </div>
       <!--Comentarios-->
       <div class="row boxContent">
-        <div class="col-12 col-md-12" v-for="review in filtredReviews" :key="review.reviewId">
+        <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId">
           <!-- User Image-->
-          <div class="col-3">
+          <template v-if="review.bookId == clickedBook">
+            <div class="col-3">
             <img
               v-bind:src="getInfoFromUser(review.userId).photo"
               alt
@@ -164,6 +165,8 @@
 
             <!-- Fazer editar e eliminar -->
           </div>
+          </template>
+          
         </div>
       </div>
     </div>
@@ -225,22 +228,11 @@ export default {
       bookDeliver: false,
       bookReq: false,
       verifyEdit:false,
+      
     };
   },
   methods: {
-    filtredReviews(){
-      let filtred = this.reviews.filter(review =>{
-        if(this.clickedBook == this.reviews.bookID){
-          return true
-        }
-        else{
-          return false
-        }
-      }
-      )
-      
-      return filtred
-    },
+    
     editReview(reviewID){
       
       if(this.verifyEdit == false){
@@ -364,6 +356,7 @@ export default {
         //Devia ser true
         let currentDate = new Date();
         //Requisitar
+        
         let req = {
           requisitionId: this.$store.getters.getLastIdReq,
           bookId: bookID,
@@ -381,7 +374,7 @@ export default {
           deliveryDate:
             currentDate.getDate() +
             5 +
-            "/" + //Preciso verificar se muda de mes ou não, ou ate de ano
+            "/" + 
             (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
@@ -392,9 +385,12 @@ export default {
           deliveryBookStatus: this.books[bookID].bookStatus,
           active: true
         };
-        this.requisitions.push(req); //Adicionar a store, need mutation
+        console.table(this.requisitions)
+        this.$store.dispatch("add_req", req);
+        console.table(this.requisitions)
         alert("Livro Requisitado");
-        checkRequesition(bookID, userID);
+        console.log(req)
+        this.checkRequesition(bookID, userID);
       } else {
         //Passar true para false
         //Verificar data
@@ -422,13 +418,15 @@ export default {
   beforeMount() {
     this.loggedUser = localStorage.getItem("userLoggedIn");
     this.clickedBook = this.$route.params.id;
-
+    console.log("clickedbook: "+this.clickedBook
+    );
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
-    console.log(this.users);
-    console.log(this.reviews);
+    
+    console.log(this.requisitions.length);
+    console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
   },
 
