@@ -32,7 +32,8 @@ export default new Vuex.Store({
       ableToRequest: true,
       type: "admin",
       nRequisitionsNow: 0,
-      photo: "https://i.imgur.com/6NIOn6z.jpg"
+      photo: "https://i.imgur.com/6NIOn6z.jpg",
+      points: 500,
     },
     {
       userId: 1,
@@ -43,7 +44,8 @@ export default new Vuex.Store({
       ableToRequest: true,
       type: "user",
       nRequisitionsNow: 0,
-      photo: "https://i.imgur.com/6NIOn6z.jpg"
+      photo: "https://i.imgur.com/6NIOn6z.jpg",
+      points: 500,
     }
     ],
 
@@ -396,10 +398,25 @@ export default new Vuex.Store({
     DELETE_SUGGESTION(state, payload) {
       state.bookSuggestions.splice(payload,1)
     },
+    ADD_REQ(state, payload) {
+      state.requisitions.push(payload[0])
+      state.requisitions[payload[1]].availability = false
+    },
+    DELIVERY_BOOK(state, payload) {
+      state.requisitions[payload[0]].active = false
+      state.users[payload[1]].points += payload[2]
+      state.requisitions[payload[3]].availability = true
+    },
 
   },
 
   actions: {
+    delivery_book(context, payload) {
+      context.commit("DELIVERY_BOOK", payload);
+    },
+    add_req(context, payload) {
+      context.commit("ADD_REQ", payload);
+    },
     delete_review(context, payload) {
       context.commit("DELETE_REVIEW", payload);
     },
