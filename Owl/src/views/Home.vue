@@ -4,7 +4,7 @@
    <br>
    <div class="box mt-4">
      <div class="row">
-     <div class="col-12 col-md-6 ml-md-3">
+     <div class="col-12 col-md-6 ml-md-5">
      <Recomend/> 
      </div>
         <div class="col-12 col-md-4 ml-md-3" id="filterBar">
@@ -28,12 +28,10 @@
      </div>
        
    </div>
-   
-    
+   <Footer/>
+   </div>
 
 
-
-  </div>
 </template>
 <style>
 #topBooks {
@@ -56,13 +54,31 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Recomend from "@/components/Recomend.vue";
+import Footer from "@/components/Footer.vue";
 //import Mainbar from '@/components/Mainbar.vue'
 export default {
   name: "home",
   components: {
     Header,
-    Recomend
+    Recomend,
+    Footer
     //Mainbar
+  },
+  data: function() {
+    return {
+      canvasControl: false
+    };
+  },
+  created() {
+  if (localStorage.getItem('reloaded')) {
+        // The page was just reloaded. Clear the value from local storage
+        // so that it will reload the next time this page is visited.
+        localStorage.removeItem('reloaded');
+    } else {
+        // Set a flag so that we know not to reload the page twice.
+        localStorage.setItem('reloaded', '1');
+        location.reload();
+    }
   }
 };
 </script>

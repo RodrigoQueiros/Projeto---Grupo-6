@@ -38,6 +38,7 @@
         </div>
       </div>
     </div>
+    <Footer/>
   </div>
 </template>
 
@@ -92,11 +93,13 @@ body {
 <script>
 import Header from "@/components/Header.vue";
 import swal from "sweetalert2";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "login",
   components: {
-    Header
+    Header,
+    Footer
   },
   data: function() {
     return {
