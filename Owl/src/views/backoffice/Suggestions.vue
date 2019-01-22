@@ -50,7 +50,12 @@
                   </button>
                 </td>
                 <td>
-                  <button type="button" style="color:white" class="btn btn-dark">
+                  <button
+                    type="button"
+                    @click="addSuggestion(bookSuggestion.suggestionId)"
+                    style="color:white"
+                    class="btn btn-dark"
+                  >
                     <i class="fas fa-plus"></i>
                   </button>
                 </td>
@@ -89,6 +94,7 @@ export default {
       bookSuggestions: this.$store.state.bookSuggestions,
       users: this.$store.state.users,
       books: this.$store.state.books,
+      form: this.$store.state.form,
       username: ""
     };
   },
@@ -170,6 +176,18 @@ export default {
           title: "Livro não existe no catalálogo."
         });
       }
+    },
+
+    addSuggestion(id) {
+      for (let i = 0; i < this.bookSuggestions.length; i++) {
+        if (this.bookSuggestions[i].suggestionId === id) {
+          this.form.title = this.bookSuggestions[i].suggestionTitle
+          this.form.cover = this.bookSuggestions[i].suggestionCover
+          this.form.author = this.bookSuggestions[i].suggestionAuthor
+        }
+
+      }
+      this.$router.push("/books")
     }
   }
 };

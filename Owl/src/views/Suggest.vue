@@ -11,7 +11,7 @@
         <div class="col-12 col-md-12 boxContent" id>
           <form action id="formSugestion">
             <label for="formTitle" class="mt-3">Titulo</label>
-            <input type="text" class="form-control" id="formTitle" v-model="form.title">
+            <input type="text" class="form-control" id="formTitle" v-model="form.title" required>
             <label for="formCover" class="mt-3">Capa</label>
             <input type="text" class="form-control" id="formCover" v-model="form.cover">
             <label for="formAuthor" class="mt-3">Autor</label>

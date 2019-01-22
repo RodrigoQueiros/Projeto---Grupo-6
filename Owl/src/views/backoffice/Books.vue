@@ -190,17 +190,18 @@ export default {
         launchDate: "",
         bookStatus: ""
       },
-      form: {
-        title: "",
-        cover: "",
-        author: "",
-        publisher: "",
-        tags: "",
-        launchDate: "",
-        description: "",
-        disponibility: "",
-        bookStatus: ""
-      }
+      // form: {
+      //   title: "",
+      //   cover: "",
+      //   author: "",
+      //   publisher: "",
+      //   tags: "",
+      //   launchDate: "",
+      //   description: "",
+      //   disponibility: "",
+      //   bookStatus: ""
+      // }
+      form: this.$store.state.form
     };
   },
 
@@ -284,7 +285,7 @@ export default {
           for (let i = 0; i < this.books.length; i++) {
             if (this.books[i].bookId === id) {
               this.$store.dispatch("delete_book", i);
-              swal("Deleted!", "Book has been deleted.", "success"); 
+              swal("Deleted!", "Book has been deleted.", "success");
             }
           }
         }
@@ -308,7 +309,18 @@ export default {
         type: "success",
         title: "Livro adicionado com sucesso."
       });
-      document.getElementById("formBooks").reset();
+      this.form = {}
+      this.$store.dispatch("clear_form", {
+        title: "",
+        cover: "",
+        author: "",
+        publisher: "",
+        tags: "",
+        launchDate: "",
+        description: "",
+        disponibility: "",
+        bookStatus: ""
+      });
     }
   },
 
