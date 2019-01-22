@@ -76,34 +76,32 @@
           <div class="margin5">
             <div class="row">
               <!-- Estrelinhaas-->
-            <div class="row">
-              <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
-              
+              <div class="row">
+                <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
 
-              <fieldset class="rate" >
-                <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
-                <label class="star" for="rate1-star5" title="Excellent">5</label>
-                
-                <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4">
-                <label class="star" for="rate1-star4" title="Good">4</label>
-                
-                <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3">
-                <label class="star" for="rate1-star3" title="Satisfactory">3</label>
-                
-                <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2">
-                <label class="star" for="rate1-star2" title="Bad">2</label>
-                
-                <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
-                <label class="star" for="rate1-star1" title="Very bad">1</label>
-              </fieldset>
-            </div>
-            
-            
-            <textarea class="form-control" rows="5" id="comment"></textarea>
-       
-            
+                <fieldset class="rate">
+                  <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
+                  <label class="star" for="rate1-star5" title="Excellent">5</label>
+                  
+                  <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4">
+                  <label class="star" for="rate1-star4" title="Good">4</label>
+                  
+                  <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3">
+                  <label class="star" for="rate1-star3" title="Satisfactory">3</label>
+                  
+                  <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2">
+                  <label class="star" for="rate1-star2" title="Bad">2</label>
+                  
+                  <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
+                  <label class="star" for="rate1-star1" title="Very bad">1</label>
+                </fieldset>
+              </div>
+
+              <textarea class="form-control" rows="5" id="comment"></textarea>
+
               <!-- Send Review -->
-              <button style="margin:auto"
+              <button
+                style="margin:auto"
                 @click="requesition(clickedBook, loggedUser)"
                 :disabled="buttonActive == false"
                 class="btn buttonColor col-6"
@@ -118,55 +116,59 @@
           <!-- User Image-->
           <template v-if="review.bookId == clickedBook">
             <div class="col-3">
-            <img
-              v-bind:src="getInfoFromUser(review.userId).photo"
-              alt
-              class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left ml-4 mt-4"
-            >
-          </div>
-          <div class="col-9">
-            <!-- Info User -->
-            <div class="row">
-              <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
-              <h6>{{review.date}}</h6>
-              <h5>{{review.rating}} stars</h5>
-              <!-- Precisa linha -->
+              <img
+                v-bind:src="getInfoFromUser(review.userId).photo"
+                alt
+                class="img-thumbnail rounded img-fluid margin5 bookCoverBig float-left ml-4 mt-4"
+              >
             </div>
-            <!-- Review Info -->
-            <div class="row">
-              <p v-if="verifyEdit==false">{{review.comment}}</p>
-              <textarea name="" id="" cols="30" rows="10" v-if="verifyEdit" v-modal="review.comment"></textarea>
-              
-            </div>
-            <!-- Rating -->
-            <div class="row">
-              <button class="btn-success" @click="upVote(review.reviewId, loggedUser,clickedBook)">
-                <i class="fas fa-long-arrow-alt-up" ></i>
-                {{review.upVote.length}}
-              </button>
-              <!-- upVote -->
-              <button class="btn-danger" @click="downVote(review.reviewId, loggedUser,clickedBook)">
-                <i class="fas fa-long-arrow-alt-down"></i>
-                {{review.downVote.length}}
-              </button>
-              <!-- downVote -->
-            </div>
+            <div class="col-9">
+              <!-- Info User -->
+              <div class="row">
+                <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
+                <h6>{{review.date}}</h6>
+                <h5>{{review.rating}} stars</h5>
+                <!-- Precisa linha -->
+              </div>
+              <!-- Review Info -->
+              <div class="row">
+                <p v-if="verifyEdit==false">{{review.comment}}</p>
+                <textarea name id cols="30" rows="10" v-if="verifyEdit" v-modal="review.comment"></textarea>
+              </div>
+              <!-- Rating -->
+              <div class="row">
+                <button
+                  class="btn-success"
+                  @click="upVote(review.reviewId, loggedUser,clickedBook)"
+                >
+                  <i class="fas fa-long-arrow-alt-up"></i>
+                  {{review.upVote.length}}
+                </button>
+                <!-- upVote -->
+                <button
+                  class="btn-danger"
+                  @click="downVote(review.reviewId, loggedUser,clickedBook)"
+                >
+                  <i class="fas fa-long-arrow-alt-down"></i>
+                  {{review.downVote.length}}
+                </button>
+                <!-- downVote -->
+              </div>
 
-            <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
-              <button class="btn-primary" @click="editReview(review.reviewId)">
-                <i class="fas fa-edit"></i>
-              </button>
-              <!-- Edit -->
-              <button class="btn-dark" @click="deleteReview(review.reviewId)" >
-                <i class="fas fa-times"></i>
-              </button>
-              <!-- Trash -->
-            </div>
+              <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
+                <button class="btn-primary" @click="editReview(review.reviewId)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <!-- Edit -->
+                <button class="btn-dark" @click="deleteReview(review.reviewId)">
+                  <i class="fas fa-times"></i>
+                </button>
+                <!-- Trash -->
+              </div>
 
-            <!-- Fazer editar e eliminar -->
-          </div>
+              <!-- Fazer editar e eliminar -->
+            </div>
           </template>
-          
         </div>
       </div>
     </div>
@@ -227,29 +229,23 @@ export default {
       buttonActive: true,
       bookDeliver: false,
       bookReq: false,
-      verifyEdit:false,
-      
+      verifyEdit: false
     };
   },
   methods: {
-    
-    editReview(reviewID){
-      
-      if(this.verifyEdit == false){
-        this.verifyEdit=true
-      }
-      else{
-        this.verifyEdit=false
+    editReview(reviewID) {
+      if (this.verifyEdit == false) {
+        this.verifyEdit = true;
+      } else {
+        this.verifyEdit = false;
       }
     },
-    deleteReview(reviewID){
-
+    deleteReview(reviewID) {
       for (let i = 0; i < this.reviews.length; i++) {
-        console.table(this.reviews)
-        if (this.reviews[i].reviewId == reviewID){
+        console.table(this.reviews);
+        if (this.reviews[i].reviewId == reviewID) {
           this.$store.dispatch("delete_review", i);
         }
-
       }
     },
 
@@ -318,6 +314,7 @@ export default {
     checkRequesition(bookID, userID) {
       console.log(userID);
       console.log();
+      this.bookReq = false
       if (userID != -1) {
         for (let i = 0; i < this.requisitions.length; i++) {
           if (
@@ -356,7 +353,7 @@ export default {
         //Devia ser true
         let currentDate = new Date();
         //Requisitar
-        
+
         let req = {
           requisitionId: this.$store.getters.getLastIdReq,
           bookId: bookID,
@@ -374,7 +371,7 @@ export default {
           deliveryDate:
             currentDate.getDate() +
             5 +
-            "/" + 
+            "/" +
             (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
@@ -385,29 +382,38 @@ export default {
           deliveryBookStatus: this.books[bookID].bookStatus,
           active: true
         };
-        console.table(this.requisitions)
-        this.$store.dispatch("add_req", req);
-        console.table(this.requisitions)
+        let reqs = [req,bookID]
+        console.table(this.requisitions);
+        this.$store.dispatch("add_req", reqs);
+        console.table(this.requisitions);
         alert("Livro Requisitado");
-        console.log(req)
+        console.log(req);
         this.checkRequesition(bookID, userID);
       } else {
-        //Passar true para false
-        //Verificar data
-
-        //if(this.bookDeliver = true){
         
-        let req = {
-          requisitionId: this.$store.getters.getLastIdReq,
-          bookId: bookID,
-          userId: userID,
-          requisitionDate: "",
-          deliveryDate: "",
-          deliveryBookStatus: this.books[bookID].bookStatus,
-          active: true
-        };
-        this.requisitions.push(req);
-        alert("Livro entregado");
+
+        for (let i = 0; i < this.requisitions.length; i++) {
+          if (this.requisitions[i].bookId == bookID &&
+              this.requisitions[i].userId == userID &&
+              this.requisitions[i].active == true)
+           {
+             /*if(this.requisitions.deliveryDate < currDate){
+               let del = [i,this.loggedUser,-100] //Saber a posição e pontos para o user
+              this.$store.dispatch("delivery_book", del);
+             }
+             else
+             {*/
+              let del = [i,userID,50,bookID] //Saber a posição e pontos para o user
+              this.$store.dispatch("delivery_book", del);
+              alert("Livro entregado");
+             //}
+            this.checkRequesition(bookID, userID);
+            console.table(this.users)
+            console.table(this.requisitions)
+            console.table(this.books)
+            
+          }
+        }
       }
     }
   },
@@ -418,17 +424,15 @@ export default {
   beforeMount() {
     this.loggedUser = localStorage.getItem("userLoggedIn");
     this.clickedBook = this.$route.params.id;
-    console.log("clickedbook: "+this.clickedBook
-    );
+    console.log("clickedbook: " + this.clickedBook);
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
-    
+
     console.log(this.requisitions.length);
     console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
-  },
-
+  }
 };
 </script>
