@@ -407,10 +407,15 @@ export default new Vuex.Store({
       state.users[payload[1]].points += payload[2]
       state.requisitions[payload[3]].availability = true
     },
-
+    EDIT_REVIEW(state, payload) {
+      state.reviews[payload[0]].comment = payload[1]
+    },
   },
 
   actions: {
+    edit_review(context, payload) {
+      context.commit("EDIT_REVIEW", payload);
+    },
     delivery_book(context, payload) {
       context.commit("DELIVERY_BOOK", payload);
     },
