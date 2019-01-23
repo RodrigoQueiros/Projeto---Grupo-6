@@ -453,7 +453,7 @@ export default {
             "/" +
             (currentDate.getMonth() + 1) +
             "/" +
-            currentDate.getFullYear() +
+            currentDate.getFullYear() + " " +
             currentDate.getHours() +
             ":" +
             currentDate.getMinutes(),
