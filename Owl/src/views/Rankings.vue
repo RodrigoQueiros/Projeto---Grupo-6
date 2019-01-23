@@ -21,13 +21,13 @@
             <div class="col-7"><h4>Nome</h4></div>
             <div class="col-3"><h4>Pontos</h4></div>
           </div>
-          <div v-for="users in filtredUsers" :key="users.userId">
+          <div v-for="(users,i) in filtredUsers" :key="users.userId">
             <div class="row">
-              <div class="col-2"><p>{{users.userId+1}}</p></div>
+              <div class="col-2"><p>{{i+1}}</p></div>
               <div class="col-1">
-                <i class="fas fa-trophy" style="color:gold" v-if="users.userId+1==1"></i>
-                <i class="fas fa-trophy" style="color:silver" v-if="users.userId+1==2"></i>
-                <i class="fas fa-trophy" style="color:bronze" v-if="users.userId+1==3"></i>
+                <i class="fas fa-trophy" style="color:gold" v-if="i+1==1"></i>
+                <i class="fas fa-trophy" style="color:silver" v-if="i+1==2"></i>
+                <i class="fas fa-trophy" style="color:bronze" v-if="i+1==3"></i>
                 </div>
               <div class="col-6"><p style="text-align: left">{{users.firstName}} {{users.lastName}}</p></div>
               <div class="col-3"><p>{{users.points}}</p></div>           
@@ -45,13 +45,14 @@
             <div class="col-7"><h4>Livro</h4></div>
             <div class="col-3"><h4>Views</h4></div>
           </div>
-          <div v-for="book in filtredBooks" :key="book.bookId">
+          <div v-for="(book, i) in filtredBooks" :key="book.bookId">
             <div class="row">
-              <div class="col-2"><p>{{book.bookId+1}}</p></div>
+              
+              <div class="col-2"><p>{{i+1}}</p></div>
               <div class="col-1">
-                <i class="fas fa-trophy" style="color:gold" v-if="book.bookId+1==1"></i>
-                <i class="fas fa-trophy" style="color:silver" v-if="book.bookId+1==2"></i>
-                <i class="fas fa-trophy" style="color:bronze" v-if="book.bookId+1==3"></i>
+                <i class="fas fa-trophy" style="color:gold" v-if="i+1==1"></i>
+                <i class="fas fa-trophy" style="color:silver" v-if="i+1==2"></i>
+                <i class="fas fa-trophy" style="color:DarkGoldenRod" v-if="i+1==3"></i>
                 </div>
               <div class="col-6"><p style="text-align: left">{{book.firstName}} {{book.title}}</p></div>
               <div class="col-3"><p>{{book.nViews}}</p></div>           
@@ -85,6 +86,7 @@ export default {
       reviews: [], 
       filtredUsers: [],
       filtredBooks:[],
+      count:[1,2,3,4,5,6,7,8,9,10],
     }
   },
     methods: {

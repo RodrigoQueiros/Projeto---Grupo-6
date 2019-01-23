@@ -454,7 +454,6 @@ export default {
             (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
-            " @ " +
             currentDate.getHours() +
             ":" +
             currentDate.getMinutes(),
@@ -483,7 +482,16 @@ export default {
              }
              else
              {*/
-              let del = [i,userID,50,bookID] //Saber a posição e pontos para o user
+             let currentDate = new Date();
+             let date = (currentDate.getDate() +
+            "/" +
+            (currentDate.getMonth() + 1) +
+            "/" +
+            currentDate.getFullYear() +
+            currentDate.getHours() +
+            ":" +
+            currentDate.getMinutes())
+              let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
               this.$store.dispatch("delivery_book", del);
               alert("Livro entregado");
              //}

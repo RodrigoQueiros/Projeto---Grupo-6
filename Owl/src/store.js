@@ -419,6 +419,7 @@ export default new Vuex.Store({
       state.requisitions[payload[0]].active = false
       state.users[payload[1]].points += payload[2]
       state.requisitions[payload[3]].availability = true
+      state.requisitions[payload[3]].deliveryDate = payload[4]
     },
     EDIT_REVIEW(state, payload) {
       state.reviews[payload[0]].comment = payload[1]
