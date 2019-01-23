@@ -9,7 +9,7 @@
 
       </div>
       <div class="row ">
-        <div class="col-12 col-md-12 boxContent" id="">
+        <div class="col-9 col-md-9 boxContent" id="">
           <div v-for="user in users" :key="user.userId">
             <div v-if="user.userId == userLoggedIn">
               <div class="row" style="text-align:left">
@@ -34,6 +34,21 @@
               </div>
           </div>
         </div>
+        
+        <div class="col-3 col-md-3 boxContent" id="" v-if="clicked == false">
+          <h4 class="mt-4" >Tags Favoritas</h4>
+          <ul>
+              <li class="text-left" v-for="teste in testes" :key="teste">
+              {{teste}}
+             </li>
+          </ul>
+        </div>
+        <div class="col-3 col-md-3 boxContent" id="" v-if="clicked">
+          <h4 class="mt-4" >Tags Favoritas</h4>
+         <div class="scrollbox">
+           <p v-for="(tag,index) in tags" :key="tag"><input :id="index" type="checkbox" :value="index">{{tag.tagDescription}}</p>
+          </div>
+        </div>
       </div>
     </div>
     <Footer/>
@@ -41,36 +56,38 @@
 </template>
 
 <style>
+.boxContent {
+  background-color: #d9b97e;
+  height: 260px;
+  color: #592316;
+}
 
-  .boxContent{
-    background-color:#D9B97E;
-    height: 260px;
-    color: #592316
-  }
+#profilePhoto {
+  box-sizing: border-box;
+  border: 3px solid white;
+  border-radius: 5px;
+}
 
-  #profilePhoto {
-    box-sizing: border-box;
-    border: 3px solid white;
-    border-radius: 5px;
-  }
+#btnEdit {
+  color: white;
+  background-color: #592316;
+}
 
-  #btnEdit {
-    color: white;
-    background-color: #592316
-  }
+.editInput {
+  height: 35px;
+}
 
-  .editInput {
-    height: 35px;
-  }
+#btnEdit:hover {
+  opacity: 0.9;
+}
 
-  #btnEdit:hover {
-    opacity: 0.9;
-  }
-
+.scrollbox {
+  height: 200px;
+  overflow-x: scroll;
+}
 </style>
 
 <script>
-
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 export default {
@@ -86,38 +103,74 @@ export default {
       user: {
         firstName: "",
         lastName: "",
-        email: ""
-      }
+        email: "",
+        favTags: []
+      },
+      tags: this.$store.state.tags,
+      testes: []
     };
   },
 
   created() {
-    this.user.firstName = this.users[this.userLoggedIn].firstName
-    this.user.lastName =  this.users[this.userLoggedIn].lastName
-    this.user.email = this.users[this.userLoggedIn].email
+    this.user.firstName = this.users[this.userLoggedIn].firstName;
+    this.user.lastName = this.users[this.userLoggedIn].lastName;
+    this.user.email = this.users[this.userLoggedIn].email;
+    this.user.favTags = this.users[this.userLoggedIn].favTags;
+
+    for (let i = 0; i < this.user.favTags.length; i++) {
+      for (let j = 0; j < this.tags.length; j++) {
+        if (this.user.favTags[i] == this.tags[j].tagId) {
+          this.testes.push(this.tags[i].tagDescription);
+        }
+      }
+    }
+  },
+  updated() {
+    this.checkCheckboxes();
   },
 
   methods: {
-      editProfile() {
-        if (this.clicked) {
-          this.clicked = false
-          this.user.firstName = this.users[this.userLoggedIn].firstName
-          this.user.lastName =  this.users[this.userLoggedIn].lastName
-          this.user.email = this.users[this.userLoggedIn].email
-          this.$store.dispatch("edit_profile", {userId: this.userLoggedIn, firstName: this.user.firstName, lastName: this.user.lastName, email: this.user.email});
-        }
-        else {
-          this.clicked = true
-          // this.users[this.userLoggedIn].firstName = this.user.firstName
-          // this.users[this.userLoggedIn].lastName = this.user.lastName
-          // this.users[this.userLoggedIn].email = this.user.email
-          
-        }
+    editProfile() {
+      if (this.clicked) {
+        this.clicked = false;
+        this.user.firstName = this.users[this.userLoggedIn].firstName;
+        this.user.lastName = this.users[this.userLoggedIn].lastName;
+        this.user.email = this.users[this.userLoggedIn].email;
+        this.$store.dispatch("edit_profile", {
+          userId: this.userLoggedIn,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          email: this.user.email
+        });
 
+        this.testes = [];
+        this.user.favTags = [];
+        for (let i = 0; i < this.tags.length; i++) {
+          console.log("entrou no for do coiso");
+          if (document.getElementById(i.toString()).checked) {
+            console.log("entrou no if do coiso");
+            this.testes.push(this.tags[i].tagDescription);
+            this.user.favTags.push(this.tags[i].tagId);
+            console.log(this.user.favTags);
+          }
+        }
+      } else {
+        this.clicked = true;
+        // this.users[this.userLoggedIn].firstName = this.user.firstName
+        // this.users[this.userLoggedIn].lastName = this.user.lastName
+        // this.users[this.userLoggedIn].email = this.user.email
       }
+    },
+    checkCheckboxes() {
+      for (let i = 0; i < this.tags.length; i++) {
+        for (let j = 0; j < this.user.favTags.length; j++) {
+          if (i == this.user.favTags[j]) {
+            document.getElementById(i.toString()).checked = true;
+          }
+        }
+      }
+    }
   },
-  computed: {
-
-  }
+  computed: {}
 };
 </script>
