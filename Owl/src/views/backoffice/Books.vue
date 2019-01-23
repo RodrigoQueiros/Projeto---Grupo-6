@@ -101,8 +101,11 @@
                 <td v-if="editBool == false && book.bookId == editID">
                   <input type="text" class="form-control editInput" v-model="edit.title">
                 </td>
-                <td>
-                  <input type="button" @click="seeCover(book.cover)" value="+">
+                <td v-if="editBool  || book.bookId != editID">
+                  <input  type="button" @click="seeCover(book.cover)" value="+">
+                </td>
+                <td v-if="editBool == false && book.bookId == editID">
+                  <input type="text" class="form-control editInput" v-model="edit.cover">
                 </td>
                 <td v-if="editBool || book.bookId != editID">{{book.author}}</td>
                 <td v-if="editBool == false && book.bookId == editID">
@@ -120,8 +123,11 @@
                 <td v-if="editBool == false && book.bookId == editID">
                   <input type="text" class="form-control editInput" v-model="edit.launchDate">
                 </td>
-                <td>
+                <td v-if="editBool  || book.bookId != editID">
                   <input type="button" @click="seeDescription(book.description)" value="+">
+                </td>
+                <td v-if="editBool == false && book.bookId == editID">
+                  <textarea type="text" class="form-control editInput" rows="5" v-model="edit.description"></textarea>
                 </td>
                 <td>{{book.disponibility}}</td>
                 <td v-if="editBool || book.bookId != editID">{{book.bookStatus}}</td>
@@ -244,6 +250,8 @@ export default {
             this.edit.title = this.books[i].title;
             this.edit.author = this.books[i].author;
             this.edit.publisher = this.books[i].publisher;
+            this.edit.cover = this.books[i].cover
+            this.edit.description = this.books[i].description
             this.created = true;
           }
 
@@ -252,6 +260,8 @@ export default {
             this.edit.title = this.books[i].title;
             this.edit.author = this.books[i].author;
             this.edit.publisher = this.books[i].publisher;
+            this.edit.cover = this.books[i].cover
+            this.edit.description = this.books[i].description
             this.editBool = false;
           } else {
             this.editBool = true;
@@ -260,7 +270,9 @@ export default {
               bookId: this.editID,
               title: this.edit.title,
               author: this.edit.author,
-              publisher: this.edit.publisher
+              publisher: this.edit.publisher,
+              cover: this.edit.cover,
+              description: this.edit.description,
             });
             swal({
               type: "success",

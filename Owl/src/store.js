@@ -164,12 +164,21 @@ export default new Vuex.Store({
       suggestionDate: new Date().toLocaleString(),
       suggestNumber: 1
     }],
-
+    notifications: [{
+      notificationId: 0,
+      userId: 0,
+      type: "bookAvailable",
+      bookId:3,
+      show: false
+    }],
+    
 
 
   },
 
   getters: {
+
+
     Login: (state) => (user) => {
       let verification = false
       for (let i = 0; i < state.users.length; i++) {
@@ -371,6 +380,8 @@ export default new Vuex.Store({
       state.books[payload.bookId].author = payload.author
       state.books[payload.bookId].title = payload.title
       state.books[payload.bookId].publisher = payload.publisher
+      state.books[payload.bookId].cover = payload.cover
+      state.books[payload.bookId].description = payload.description
     },
 
     EDIT_PROFILE(state, payload) {
@@ -407,10 +418,33 @@ export default new Vuex.Store({
       state.users[payload[1]].points += payload[2]
       state.requisitions[payload[3]].availability = true
     },
-
+    EDIT_REVIEW(state, payload) {
+      state.reviews[payload[0]].comment = payload[1]
+    },
+    DO_REVIEW(state, payload) {
+      state.reviews.push(payload)
+    },
+    ADD_NOTIFICATION(state, payload) {
+      state.notifications.push(payload)
+    },
+    NOTF_SHOW(state, payload) {
+      state.notifications[payload].show = true
+    },
   },
 
   actions: {
+    notf_show(context, payload) {
+      context.commit("NOTF_SHOW", payload);
+    },
+    add_notification(context, payload) {
+      context.commit("ADD_NOTIFICATION", payload);
+    },
+    do_review(context, payload) {
+      context.commit("DO_REVIEW", payload);
+    },
+    edit_review(context, payload) {
+      context.commit("EDIT_REVIEW", payload);
+    },
     delivery_book(context, payload) {
       context.commit("DELIVERY_BOOK", payload);
     },

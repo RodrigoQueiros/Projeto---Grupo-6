@@ -43,6 +43,18 @@
                   <b>Categoria:</b>
                   {{books[this.clickedBook].idTag}} ...
                 </h4>
+
+
+                <i class="fas fa-star" style="color:gold"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 1"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 2"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 2"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 3"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 3"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 4"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 4"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 5"></i>
+
               </div>
 
               <div class="row mt-4">
@@ -56,6 +68,7 @@
                   :disabled="buttonActive == false"
                   class="btn buttonColor float-right"
                 >{{buttonText}}</button>
+                <button class="btn-primary rounded" v-if="this.buttonActive==false" @click="notification(clickedBook, loggedUser)"><i class="fas fa-bell"></i></button>
               </div>
             </div>
           </div>
@@ -71,7 +84,7 @@
         </div>
       </div>
       <!--Comentar-->
-      <div class="row">
+      <div class="row" v-if="loggedUser!=-1">
         <div class="form-group boxContent col-12 col-md-12">
           <div class="margin5">
             <div class="row">
@@ -80,29 +93,29 @@
                 <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
 
                 <fieldset class="rate">
-                  <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5">
+                  <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5" v-model="picked">
                   <label class="star" for="rate1-star5" title="Excellent">5</label>
                   
-                  <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4">
+                  <input class="starInput" id="rate1-star4" type="radio" name="rate1" value="4" v-model="picked">
                   <label class="star" for="rate1-star4" title="Good">4</label>
                   
-                  <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3">
+                  <input class="starInput" id="rate1-star3" type="radio" name="rate1" value="3" v-model="picked">
                   <label class="star" for="rate1-star3" title="Satisfactory">3</label>
                   
-                  <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2">
+                  <input class="starInput" id="rate1-star2" type="radio" name="rate1" value="2" v-model="picked">
                   <label class="star" for="rate1-star2" title="Bad">2</label>
                   
-                  <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1">
+                  <input class="starInput" id="rate1-star1" type="radio" name="rate1" value="1" v-model="picked">
                   <label class="star" for="rate1-star1" title="Very bad">1</label>
                 </fieldset>
               </div>
 
-              <textarea class="form-control" rows="5" id="comment"></textarea>
+              <textarea class="form-control" rows="5" id="comment" v-model="reviewArea"></textarea>
 
               <!-- Send Review -->
               <button
                 style="margin:auto"
-                @click="requesition(clickedBook, loggedUser)"
+                @click="doReview(clickedBook, loggedUser)"
                 :disabled="buttonActive == false"
                 class="btn buttonColor col-6"
               >Publicar</button>
@@ -128,12 +141,23 @@
                 <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
                 <h6>{{review.date}}</h6>
                 <h5>{{review.rating}} stars</h5>
+                
+
+                <i class="fas fa-star" style="color:gold"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 1"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 2"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 2"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 3"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 3"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 4"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 4"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 5"></i>
                 <!-- Precisa linha -->
               </div>
               <!-- Review Info -->
               <div class="row">
-                <p v-if="verifyEdit==false">{{review.comment}}</p>
-                <textarea name id cols="30" rows="10" v-if="verifyEdit" v-modal="review.comment"></textarea>
+                <p v-if="verifyEdit==false || review.reviewId != editThatOne">{{review.comment}}</p>
+                <textarea name id cols="30" rows="10" v-if="verifyEdit== true && review.reviewId == editThatOne" v-model="review.comment"></textarea>
               </div>
               <!-- Rating -->
               <div class="row">
@@ -156,7 +180,7 @@
               </div>
 
               <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
-                <button class="btn-primary" @click="editReview(review.reviewId)">
+                <button class="btn-primary" @click="editReview(review.reviewId,review.comment)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <!-- Edit -->
@@ -229,15 +253,79 @@ export default {
       buttonActive: true,
       bookDeliver: false,
       bookReq: false,
-      verifyEdit: false
+      verifyEdit: false,
+      editThatOne: -1,
+      picked: 0,
+      reviewArea: "",
+      bookRating: 0,
     };
   },
   methods: {
-    editReview(reviewID) {
+      notification(bookID, userID){
+      //Do notifications here
+      let notf = {
+      notificationId: this.$store.state.notifications.length,
+      userId: userID,
+      type: "bookAvailable",
+      bookId:bookID,
+      show: false
+      }
+      this.$store.dispatch("add_notification", notf );
+      console.log(notf)
+    },
+    calculateRating(){
+      let all = 0
+      
+      for (let i = 0; i < this.reviews.length; i++) {
+        all += this.reviews[i].rating
+      }
+
+      
+      let total = Math.round(all/(this.reviews.length))
+      
+      return total
+      
+    },
+    doReview(bookID, userID){
+      console.log(this.picked)
+      if(this.picked == 0){
+        alert("Nao classificou")
+      }
+      else{
+        let currentDate = new Date()
+        let newR = {
+        reviewId: this.reviews.length,
+        bookId: bookID,
+        userId: userID,
+        rating: this.picked,
+        date: currentDate.getDate() +
+            "/" +
+            (currentDate.getMonth() + 1) +
+            "/" +
+            currentDate.getFullYear() +
+            " " +
+            currentDate.getHours() +
+            ":" +
+            currentDate.getMinutes(),
+        comment: this.reviewArea,
+        upVote: [],
+        downVote: []
+        }
+        console.table(newR)
+        this.$store.dispatch("do_review", newR );
+        this.picked = 0;
+        this.reviewArea = "";
+      }
+    },
+
+    editReview(reviewID,comment) {
       if (this.verifyEdit == false) {
         this.verifyEdit = true;
+        this.editThatOne = reviewID
       } else {
         this.verifyEdit = false;
+        let rev = [reviewID,comment]
+        this.$store.dispatch("edit_review", rev);
       }
     },
     deleteReview(reviewID) {
@@ -422,14 +510,16 @@ export default {
   },
   computed: {},
   beforeMount() {
+    
+    
     this.loggedUser = localStorage.getItem("userLoggedIn");
     this.clickedBook = this.$route.params.id;
-    console.log("clickedbook: " + this.clickedBook);
+    
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
-
+    this.bookRating = this.calculateRating()
     console.log(this.requisitions.length);
     console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
