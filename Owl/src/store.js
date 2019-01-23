@@ -178,7 +178,7 @@ export default new Vuex.Store({
 
   getters: {
 
-    
+
     Login: (state) => (user) => {
       let verification = false
       for (let i = 0; i < state.users.length; i++) {
@@ -427,9 +427,15 @@ export default new Vuex.Store({
     ADD_NOTIFICATION(state, payload) {
       state.notifications.push(payload)
     },
+    NOTF_SHOW(state, payload) {
+      state.notifications[payload].show = true
+    },
   },
 
   actions: {
+    notf_show(context, payload) {
+      context.commit("NOTF_SHOW", payload);
+    },
     add_notification(context, payload) {
       context.commit("ADD_NOTIFICATION", payload);
     },

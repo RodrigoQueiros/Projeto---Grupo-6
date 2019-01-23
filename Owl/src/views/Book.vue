@@ -261,6 +261,28 @@ export default {
     };
   },
   methods: {
+    getNotifications(){
+
+      for (let i = 0; i <this.notifications.length; i++) {
+
+        for (let j = 0; j < this.books.length; j++) {
+          
+          if(this.notifications[i].bookId == this.books[j].bookId ){
+            if(this.books[j].availability == true){
+              this.$store.dispatch("notf_show", this.notifications[i].notificationId ); //Muda o show para true
+              this.notifications[i].show = true 
+            }            
+          }
+        }
+
+        //usa a tua var do loggedUser em *loggedUser
+        if(this.notifications[i].userId == *loggedUser && this.notifications[i].show == true){
+          return this.notifications[i] //Podes fazer um mini card com a notificação
+        }
+        
+      }
+    },
+
     notification(bookID, userID){
       //Do notifications here
       let notf = {
