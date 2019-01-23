@@ -2,38 +2,52 @@
   <div class="home">
     <Header/>
    <br>
-   <div class="box mt-4">
-     <div class="row">
-     <div class="col-12 col-md-6 ml-md-5">
-     <Recomend/> 
-     </div>
-        <div class="col-12 col-md-4 ml-md-3" id="filterBar">
-          <h3>Top Livros</h3>
-              <div class="row">
-        <div class="col-md-12" id="topBooks">
-          <br>
-        <img class="owlCoversTop" src="https://images-na.ssl-images-amazon.com/images/I/51HSkTKlauL._SX346_BO1,204,203,200_.jpg">   
-          <div class="top">
-    <h4>1</h4>
+  <div class="container">
+      <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
+    
+  
+            
+            <h3 id="catalogTitle">Recomendados</h3>
+    
+        </div>
+           <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
+          <div class="row">
+            <div class="col-6 col-md-3" v-for="book in books" :key="book.bookId" >
+              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
+                <img class="owlCovers mt-3" v-bind:src="book.cover">
+              </router-link>
+              <h6 class="mt-2">{{book.title}}</h6>
+              <h6>{{book.author}}</h6>
+              <p v-if="book.availability == true">Disponivel</p>
+              <p v-else>Indisponivel</p>
+            </div>
+          </div>
+        </div>
+        <br>
+
+         <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
+    
+  
+            
+            <h3 id="catalogTitle">Mais Vizualizados</h3>
+    
+        </div>
+           <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
+          <div class="row">
+            <div class="col-6 col-md-3" v-for="book in mostViews" :key="book.bookId" >
+              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
+                <img class="owlCovers mt-3" v-bind:src="book.cover">
+              </router-link>
+              <h6 class="mt-2">{{book.title}}</h6>
+              <h6>{{book.author}}</h6>
+              <p v-if="book.availability == true">Disponivel</p>
+              <p v-else>Indisponivel</p>
+            </div>
+          </div>
+        </div>
   </div>
-        <br>
-        <br>
-          <img class="owlCoversTop" src="https://images-na.ssl-images-amazon.com/images/I/51HSkTKlauL._SX346_BO1,204,203,200_.jpg"> 
-                <div class="top">
-    <h4>2</h4>
-  </div>      
-        <br>
-        <br>
-       
-
+      
      
-
-        </div>
-        </div>
-     </div>
-     </div>
-       
-   </div>
    <Footer/>
    </div>
 
@@ -67,6 +81,13 @@
   padding-right: 20px;
 }
 
+#recBar {
+  background-color: #bf6e26 !important;
+  height: 50px;
+  color: white;
+  padding-top: 8px;
+  text-align: left;
+}
 </style>
 
 <script>
@@ -85,18 +106,27 @@ export default {
   },
   data: function() {
     return {
-      canvasControl: false
+      books: this.$store.state.books,
+      recommended: [],
+      mostViews: []
     };
   },
   created() {
-    if (localStorage.getItem("reloaded")) {
-      // The page was just reloaded. Clear the value from local storage
-      // so that it will reload the next time this page is visited.
-      localStorage.removeItem("reloaded");
-    } else {
-      // Set a flag so that we know not to reload the page twice.
-      localStorage.setItem("reloaded", "1");
-      location.reload();
+    this.mostViews = this.books.sort(function orderByViews(a, b) {
+      if (a.nViews > b.nViews) return -1;
+      if (a.nViews < b.nViews) return 1;
+      else return 0;
+    });
+
+    console.log(this.mostViews)
+  },
+  methods: {
+    getTop2() {
+      this.top2 = this.books2.sort(function orderByViews(a, b) {
+        if (a.nViews > b.nViews) return -1;
+        if (a.nViews < b.nViews) return 1;
+        else return 0;
+      });
     }
   }
 };
