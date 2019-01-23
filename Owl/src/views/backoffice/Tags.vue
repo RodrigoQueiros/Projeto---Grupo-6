@@ -127,7 +127,7 @@ export default {
             for (let j = 0; j < this.tags.length; j++) {
               
               console.log(this.edit.tagDescription);
-              if (this.tags[j].tagDescription === this.edit.tagDescription) {
+              if (this.tags[j].tagDescription === this.edit.tagDescription && j != i) {
                 a = true;
               }
             }
