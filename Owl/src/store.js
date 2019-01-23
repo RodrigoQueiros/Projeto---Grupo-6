@@ -432,6 +432,11 @@ export default new Vuex.Store({
     NOTF_SHOW(state, payload) {
       state.notifications[payload].show = true
     },
+
+    //to do
+    UPDATE_FAVTAGS(state, payload){
+      state.users[payload[0]].favTags = payload[1]
+    }
   },
 
   actions: {
@@ -509,6 +514,10 @@ export default new Vuex.Store({
     },
     delete_suggestion(context, payload) {
       context.commit("DELETE_SUGGESTION", payload);
+    },
+    //to do
+    update_favtags(context, payload){
+      context.commit("UPDATE_FAVTAGS", payload)
     }
   }
 })
