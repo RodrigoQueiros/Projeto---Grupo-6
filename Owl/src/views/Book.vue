@@ -43,6 +43,18 @@
                   <b>Categoria:</b>
                   {{books[this.clickedBook].idTag}} ...
                 </h4>
+
+
+                <i class="fas fa-star" style="color:gold"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 1"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 2"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 2"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 3"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 3"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 4"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 4"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 5"></i>
+
               </div>
 
               <div class="row mt-4">
@@ -128,6 +140,17 @@
                 <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
                 <h6>{{review.date}}</h6>
                 <h5>{{review.rating}} stars</h5>
+                
+
+                <i class="fas fa-star" style="color:gold"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 1"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 2"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 2"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 3"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 3"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 4"></i>
+                <i class="fas fa-star" style="color:gold" v-if="review.rating > 4"></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 5"></i>
                 <!-- Precisa linha -->
               </div>
               <!-- Review Info -->
@@ -233,9 +256,23 @@ export default {
       editThatOne: -1,
       picked: 0,
       reviewArea: "",
+      bookRating: 0,
     };
   },
   methods: {
+    calculateRating(){
+      let all = 0
+      
+      for (let i = 0; i < this.reviews.length; i++) {
+        all += this.reviews[i].rating
+      }
+
+      
+      let total = Math.round(all/(this.reviews.length))
+      
+      return total
+      
+    },
     doReview(bookID, userID){
       console.log(this.picked)
       if(this.picked == 0){
@@ -263,6 +300,8 @@ export default {
         }
         console.table(newR)
         this.$store.dispatch("do_review", newR );
+        this.picked = 0;
+        this.reviewArea = "";
       }
     },
 
@@ -458,14 +497,16 @@ export default {
   },
   computed: {},
   beforeMount() {
+    
+    
     this.loggedUser = localStorage.getItem("userLoggedIn");
     this.clickedBook = this.$route.params.id;
-    console.log("clickedbook: " + this.clickedBook);
+    
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
-
+    this.bookRating = this.calculateRating()
     console.log(this.requisitions.length);
     console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
