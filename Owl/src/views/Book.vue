@@ -196,6 +196,7 @@
         </div>
       </div>
     </div>
+    <Footer/>
   </div>
 
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
@@ -239,6 +240,7 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   //Fazer filtro de reviews com id do livro
   data: function() {
@@ -452,21 +454,10 @@ export default {
             (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
-            " @ " +
             currentDate.getHours() +
             ":" +
             currentDate.getMinutes(),
-          deliveryDate:
-            currentDate.getDate() +
-            5 +
-            "/" +
-            (currentDate.getMonth() + 1) +
-            "/" +
-            currentDate.getFullYear() +
-            " @ " +
-            currentDate.getHours() +
-            ":" +
-            currentDate.getMinutes(),
+          deliveryDate: "",
           deliveryBookStatus: this.books[bookID].bookStatus,
           active: true
         };
@@ -491,7 +482,16 @@ export default {
              }
              else
              {*/
-              let del = [i,userID,50,bookID] //Saber a posição e pontos para o user
+             let currentDate = new Date();
+             let date = (currentDate.getDate() +
+            "/" +
+            (currentDate.getMonth() + 1) +
+            "/" +
+            currentDate.getFullYear() +
+            currentDate.getHours() +
+            ":" +
+            currentDate.getMinutes())
+              let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
               this.$store.dispatch("delivery_book", del);
               alert("Livro entregado");
              //}
@@ -506,7 +506,8 @@ export default {
     }
   },
   components: {
-    Header
+    Header,
+    Footer
   },
   computed: {},
   beforeMount() {

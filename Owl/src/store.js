@@ -34,6 +34,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 500,
+      favTags: [0]
     },
     {
       userId: 1,
@@ -46,6 +47,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 500,
+      favTags: [0,1]
     }
     ],
 
@@ -417,6 +419,7 @@ export default new Vuex.Store({
       state.requisitions[payload[0]].active = false
       state.users[payload[1]].points += payload[2]
       state.requisitions[payload[3]].availability = true
+      state.requisitions[payload[3]].deliveryDate = payload[4]
     },
     EDIT_REVIEW(state, payload) {
       state.reviews[payload[0]].comment = payload[1]
@@ -430,6 +433,11 @@ export default new Vuex.Store({
     NOTF_SHOW(state, payload) {
       state.notifications[payload].show = true
     },
+
+    //to do
+    UPDATE_FAVTAGS(state, payload){
+      state.users[payload[0]].favTags = payload[1]
+    }
   },
 
   actions: {
@@ -507,6 +515,10 @@ export default new Vuex.Store({
     },
     delete_suggestion(context, payload) {
       context.commit("DELETE_SUGGESTION", payload);
+    },
+    //to do
+    update_favtags(context, payload){
+      context.commit("UPDATE_FAVTAGS", payload)
     }
   }
 })
