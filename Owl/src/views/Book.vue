@@ -97,7 +97,7 @@
                 </fieldset>
               </div>
 
-              <textarea class="form-control" rows="5" id="comment"></textarea>
+              <textarea class="form-control" rows="5" id="comment" v-model="reviewArea"></textarea>
 
               <!-- Send Review -->
               <button
@@ -232,15 +232,38 @@ export default {
       verifyEdit: false,
       editThatOne: -1,
       picked: 0,
+      reviewArea: "",
     };
   },
   methods: {
     doReview(bookID, userID){
       console.log(this.picked)
       if(this.picked == 0){
-
+        alert("Nao classificou")
       }
-      
+      else{
+        let currentDate = new Date()
+        let newR = {
+        reviewId: this.reviews.length,
+        bookId: bookID,
+        userId: userID,
+        rating: this.picked,
+        date: currentDate.getDate() +
+            "/" +
+            (currentDate.getMonth() + 1) +
+            "/" +
+            currentDate.getFullYear() +
+            " " +
+            currentDate.getHours() +
+            ":" +
+            currentDate.getMinutes(),
+        comment: this.reviewArea,
+        upVote: [],
+        downVote: []
+        }
+        console.table(newR)
+        this.$store.dispatch("do_review", newR );
+      }
     },
 
     editReview(reviewID,comment) {
