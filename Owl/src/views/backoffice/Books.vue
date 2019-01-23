@@ -273,6 +273,8 @@ export default {
               publisher: this.edit.publisher,
               cover: this.edit.cover,
               description: this.edit.description,
+              launchDate: this.edit.launchDate,
+              bookStatus: this.form.bookStatus
             });
             swal({
               type: "success",

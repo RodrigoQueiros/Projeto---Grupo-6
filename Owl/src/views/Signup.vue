@@ -172,6 +172,7 @@ export default {
           email: this.form.email,
           password: this.form.password,
           password2: this.form.password2,
+          photo: "https://i.imgur.com/6NIOn6z.jpg",
           points: 0
         });
         this.$router.push("/login");
