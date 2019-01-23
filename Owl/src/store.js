@@ -164,12 +164,21 @@ export default new Vuex.Store({
       suggestionDate: new Date().toLocaleString(),
       suggestNumber: 1
     }],
-
+    notifications: [{
+      notificationId: 0,
+      userId: 0,
+      type: "bookAvailable",
+      bookId:3,
+      show: false
+    }],
+    
 
 
   },
 
   getters: {
+
+    
     Login: (state) => (user) => {
       let verification = false
       for (let i = 0; i < state.users.length; i++) {
@@ -415,9 +424,15 @@ export default new Vuex.Store({
     DO_REVIEW(state, payload) {
       state.reviews.push(payload)
     },
+    ADD_NOTIFICATION(state, payload) {
+      state.notifications.push(payload)
+    },
   },
 
   actions: {
+    add_notification(context, payload) {
+      context.commit("ADD_NOTIFICATION", payload);
+    },
     do_review(context, payload) {
       context.commit("DO_REVIEW", payload);
     },

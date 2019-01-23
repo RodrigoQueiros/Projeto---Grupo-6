@@ -68,6 +68,7 @@
                   :disabled="buttonActive == false"
                   class="btn buttonColor float-right"
                 >{{buttonText}}</button>
+                <button class="btn-primary rounded" v-if="this.buttonActive==false" @click="notification(clickedBook, loggedUser)"><i class="fas fa-bell"></i></button>
               </div>
             </div>
           </div>
@@ -260,6 +261,18 @@ export default {
     };
   },
   methods: {
+    notification(bookID, userID){
+      //Do notifications here
+      let notf = {
+      notificationId: this.$store.state.notifications.length,
+      userId: userID,
+      type: "bookAvailable",
+      bookId:bookID,
+      show: false
+      }
+      this.$store.dispatch("add_notification", notf );
+      console.log(notf)
+    },
     calculateRating(){
       let all = 0
       
