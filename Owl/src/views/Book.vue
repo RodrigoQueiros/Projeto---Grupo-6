@@ -458,17 +458,7 @@ export default {
             currentDate.getHours() +
             ":" +
             currentDate.getMinutes(),
-          deliveryDate:
-            currentDate.getDate() +
-            5 +
-            "/" +
-            (currentDate.getMonth() + 1) +
-            "/" +
-            currentDate.getFullYear() +
-            " @ " +
-            currentDate.getHours() +
-            ":" +
-            currentDate.getMinutes(),
+          deliveryDate: "",
           deliveryBookStatus: this.books[bookID].bookStatus,
           active: true
         };
