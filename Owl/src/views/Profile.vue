@@ -249,6 +249,8 @@ export default {
             console.log(this.user.favTags);
           }
         }
+        this.$store.dispatch("update_favtags", [this.userLoggedIn,this.user.favTags]);
+
       } else {
         this.clicked = true;
         // this.users[this.userLoggedIn].firstName = this.user.firstName
