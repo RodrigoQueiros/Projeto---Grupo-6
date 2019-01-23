@@ -34,6 +34,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 500,
+      favTags: [0]
     },
     {
       userId: 1,
@@ -46,6 +47,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 500,
+      favTags: [0,1]
     }
     ],
 
