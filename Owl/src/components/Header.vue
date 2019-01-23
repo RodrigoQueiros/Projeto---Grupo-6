@@ -1,52 +1,25 @@
 <template>
-  <!-- Renders the navbar with the respective router-links -->
-  <!--<nav class="navbar navbar-expand-sm navbar-dark fixed-top navbarOwl">
-    <a class="navbar-brand" href="/">Owl</a>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <router-link to="/">Home</router-link>|
-      </li>
-      <li class="nav-item">
-        <router-link to="/catalog">Catalogo</router-link>|
-      </li>
-      <li class="nav-item">
-        <router-link to="/rankings">Rankings</router-link>|
-      </li>
-      <li class="nav-item">
-        <router-link to="/suggest">Sugerir livro</router-link>|
-      </li>
-      <li class="nav-item">
-        <router-link to="/login">Login</router-link>|
-      </li>
-      <li class="nav-item">
-        <router-link to="/signup">Signup</router-link>|
-      </li>
-    </ul>
-  </nav>-->
   <div>
     <nav class="navbar navbar-light bg-light" id="navbar1">
         <router-link class="navbar-brand" to="/">
             <img src="../assets/logo.png" alt="" id="logo">
         </router-link>
-        <router-link class="navbar-brand" to="/Profile">
+        <router-link class="nav-link" to="/Profile">
             <div v-if="userLoggedIn != -1" style="color:white">
-                <i class="fas fa-user fa-2x"></i>
+                <i class="fas fa-user fa-2x"></i>  
                 <h3>{{userName}}</h3>
             </div> 
         </router-link>
-        <router-link class="navbar-brand" to="/Users">
-            <div v-if="userLoggedIn != -1" style="color:white">
+        <router-link  to="/Users">
+            <div v-if="userLoggedIn != -1 && type == 'admin'" style="color:white">
                 <i class="fas fa-cog fa-2x"></i>
-                <h3>BackOffice</h3>
             </div> 
         </router-link>
-        
-
-   </nav>
+    </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarNav">
         
-        <ul class="navbar-nav">
-            <li class="nav-item " id="navLinks">
+        <ul class="navbar-nav alignLeft">
+            <li class="nav-item ">
                 <router-link class="nav-link" to="/" color="white">Home</router-link>
             </li>
             <li class="nav-item">
@@ -67,15 +40,12 @@
             <li class="nav-item">
                 <a v-if="userLoggedIn != -1" href="" @click="logout" class="nav-link">Logout</a>
             </li>
-            
         </ul>
     </nav>
   </div>
-  
 </template>
 
 <style>
-
 
 #navbar1 {
     background-color: #BF6E26 !important;
@@ -111,7 +81,8 @@ export default {
     return {
         userLoggedIn: localStorage.getItem("userLoggedIn"),
         users: this.$store.state.users,
-        userName: ""
+        userName: "",
+        type: ""
     };
   },
 
@@ -120,7 +91,7 @@ export default {
         localStorage.setItem("userLoggedIn", -1)
     } 
 
-    this.userName = this.getUser()
+    this.getUser()
     console.log(this.userName)
     
            
@@ -136,10 +107,11 @@ export default {
       getUser() {
           for (let i = 0; i < this.users.length; i++) {
               if (this.users[i].userId == this.userLoggedIn) {
-                  this.userName = this.users[i].firstName + " " + this.users[i].lastName[0] + "."
+                this.userName = this.users[i].firstName + " " + this.users[i].lastName[0] + "."
+                this.type = this.users[i].type
               }
           }
-          return this.userName
+          
       }
   },
   computed: {
