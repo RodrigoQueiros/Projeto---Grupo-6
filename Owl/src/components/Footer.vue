@@ -19,7 +19,7 @@
                 <div class="col-sm-12 col-md-4 col-lg-4">
                     <p>ESMAD © 2019</p>
                     <p>Owl © 2019</p>
-                    <a href="https://moodle.esmad.ipp.pt/mdl1718/?redirect=0"><p>Moodle</p></a>
+                    <a href="https://moodle.esmad.ipp.pt/mdl1819/?redirect=0"><p>Moodle</p></a>
 
                   </div>
         </div>

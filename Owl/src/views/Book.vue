@@ -196,6 +196,7 @@
         </div>
       </div>
     </div>
+    <Footer/>
   </div>
 
   <!-- <router-link :to="{name:'nomePage'}"><b-button class="btn"></b-button></router-link> -->
@@ -239,6 +240,7 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   //Fazer filtro de reviews com id do livro
   data: function() {
@@ -506,7 +508,8 @@ export default {
     }
   },
   components: {
-    Header
+    Header,
+    Footer
   },
   computed: {},
   beforeMount() {
