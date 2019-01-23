@@ -12,14 +12,12 @@
         </div>
            <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
           <div class="row">
-            <div class="col-6 col-md-3" v-for="book in books" :key="book.bookId" >
+            <div class="col-6 col-md-3" v-for="book in recommended  " :key="book.bookId" >
               <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
                 <img class="owlCovers mt-3" v-bind:src="book.cover">
               </router-link>
               <h6 class="mt-2">{{book.title}}</h6>
               <h6>{{book.author}}</h6>
-              <p v-if="book.availability == true">Disponivel</p>
-              <p v-else>Indisponivel</p>
             </div>
           </div>
         </div>
@@ -40,8 +38,6 @@
               </router-link>
               <h6 class="mt-2">{{book.title}}</h6>
               <h6>{{book.author}}</h6>
-              <p v-if="book.availability == true">Disponivel</p>
-              <p v-else>Indisponivel</p>
             </div>
           </div>
         </div>
@@ -106,12 +102,20 @@ export default {
   },
   data: function() {
     return {
+      userLoggedIn: localStorage.getItem("userLoggedIn"),
+      users: this.$store.state.users,
       books: this.$store.state.books,
       recommended: [],
-      mostViews: []
+      mostViews: [],
+      userLoggedIn: -1,
+      userTags: [],
     };
   },
   created() {
+
+    console.log("userLoggedIn: " + this.userLoggedIn)
+    this.userTags = this.users[this.userLoggedIn].favTags;
+
     this.mostViews = this.books.sort(function orderByViews(a, b) {
       if (a.nViews > b.nViews) return -1;
       if (a.nViews < b.nViews) return 1;
@@ -119,6 +123,22 @@ export default {
     });
 
     console.log(this.mostViews)
+    console.log(this.books)
+
+     for (let i = 0; i < this.books.length; i++) {
+       console.log("entrou no for 1")
+          for (let j = 0; j < this.books[i].idTag.length; j++) {
+            console.log("entrou no for 2")
+            for (let z = 0; z < this.userTags.length; z++) {
+              console.log("entrou no for 3")
+              if (this.books[i].idTag[j] == this.userTags[z]) {
+                  this.recommended.push(this.books[i]);
+                  
+              }
+            }
+          }
+        }
+
   },
   methods: {
     getTop2() {
