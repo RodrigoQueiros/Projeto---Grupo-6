@@ -14,12 +14,19 @@
               <div class="row" style="text-align:left">
                 <div class="col-12 col-md-6 col-lg-3">
                   <img
+                    v-if="clicked == false"
                     :src="user.photo"
                     height="200"
                     width="250"
                     alt
                     id="profilePhoto"
                     class="mt-4 ml-2 mb-4"
+                  >
+                  <input
+                    v-if="clicked"
+                    type="text"
+                    class="form-control editInput col-9 mt-5 col-lg-7 mb-2"
+                    v-model="user.photo"
                   >
                 </div>
                 <div class="col-12 col-md-6 col-lg-9">
@@ -199,7 +206,8 @@ export default {
         firstName: "",
         lastName: "",
         email: "",
-        favTags: []
+        favTags: [],
+        photo: ""
       },
       tags: this.$store.state.tags,
       testes: []
@@ -211,6 +219,7 @@ export default {
     this.user.lastName = this.users[this.userLoggedIn].lastName;
     this.user.email = this.users[this.userLoggedIn].email;
     this.user.favTags = this.users[this.userLoggedIn].favTags;
+    this.user.photo = this.users[this.userLoggedIn].photo;
 
     for (let i = 0; i < this.user.favTags.length; i++) {
       for (let j = 0; j < this.tags.length; j++) {
@@ -231,11 +240,13 @@ export default {
         this.user.firstName = this.users[this.userLoggedIn].firstName;
         this.user.lastName = this.users[this.userLoggedIn].lastName;
         this.user.email = this.users[this.userLoggedIn].email;
+        this.user.photo = this.users[this.userLoggedIn].photo;
         this.$store.dispatch("edit_profile", {
           userId: this.userLoggedIn,
           firstName: this.user.firstName,
           lastName: this.user.lastName,
-          email: this.user.email
+          email: this.user.email,
+          photo: this.user.photo,
         });
 
         this.testes = [];

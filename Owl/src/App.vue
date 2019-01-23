@@ -44,7 +44,6 @@ export default {
   //   if (localStorage.getItem("notifications") == null) {
   //     localStorage.setItem("notifications", JSON.stringify(this.$store.state.notifications))
   //   }
-
   // },
 
   // created() {

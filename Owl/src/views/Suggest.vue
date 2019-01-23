@@ -97,15 +97,7 @@ export default {
       console.log(suggestionExists);
       if (suggestionExists == false) {
         console.log("entrou");
-        this.$store.dispatch("add_suggestion", {
-          suggestionId: this.$store.getters.getLastIdSuggestions,
-          suggestionTitle: this.form.title,
-          suggestionAuthor: this.form.author,
-          suggestionCover: this.form.cover,
-          userId: this.userLoggedIn,
-          suggestionDate: new Date().toLocaleString(),
-          suggestNumber: 1
-        });
+        
         swal({
           type: "success",
           title: "Livro sugerido com sucesso."
