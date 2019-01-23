@@ -412,9 +412,15 @@ export default new Vuex.Store({
     EDIT_REVIEW(state, payload) {
       state.reviews[payload[0]].comment = payload[1]
     },
+    DO_REVIEW(state, payload) {
+      state.reviews.push(payload)
+    },
   },
 
   actions: {
+    do_review(context, payload) {
+      context.commit("DO_REVIEW", payload);
+    },
     edit_review(context, payload) {
       context.commit("EDIT_REVIEW", payload);
     },
