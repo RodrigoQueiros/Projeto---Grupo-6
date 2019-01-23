@@ -371,6 +371,8 @@ export default new Vuex.Store({
       state.books[payload.bookId].author = payload.author
       state.books[payload.bookId].title = payload.title
       state.books[payload.bookId].publisher = payload.publisher
+      state.books[payload.bookId].cover = payload.cover
+      state.books[payload.bookId].description = payload.description
     },
 
     EDIT_PROFILE(state, payload) {
