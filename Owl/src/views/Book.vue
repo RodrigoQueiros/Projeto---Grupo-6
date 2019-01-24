@@ -35,16 +35,8 @@
               <div class="row">
                 <h4 class="bookInforHeaders alignLeft">{{books[this.clickedBook].author}}</h4>
               </div>
-
-              <div class="row mt-4">
-                <h4 class="alignLeft bookInforHeaders">
-                  <b>Editora:</b>
-                  {{books[this.clickedBook].publisher}}
-                  <b>Categoria:</b>
-                  {{books[this.clickedBook].idTag}} ...
-                </h4>
-
-
+              
+              <div class="alignLeft">
                 <i class="fas fa-star" style="color:gold"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 1"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 2"></i>
@@ -54,6 +46,18 @@
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 4"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 4"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 5"></i>
+              </div>
+              
+
+              <div class="row mt-4">
+                <h4 class="alignLeft bookInforHeaders">
+                  <b>Editora:</b>
+                  {{books[this.clickedBook].publisher}}
+
+                </h4>
+
+
+                
 
               </div>
 
@@ -280,7 +284,7 @@ export default {
       let all = 0
       
       for (let i = 0; i < this.reviews.length; i++) {
-        if(this.reviews[i].bookId == this.clickedBook){
+        if(this.reviews[i].bookId == this.pageBookId){
           all += this.reviews[i].rating}
         
         
