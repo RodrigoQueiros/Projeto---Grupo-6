@@ -1,21 +1,20 @@
 <template>
   <div class="home">
     <Header/>
-   <br>
-  <div class="container">
-
-    <div v-if="userLoggedIn != -1">
-<div class="col-12 col-md-12 ml-md-3" id="catalogBar">
-    
-  
-            
-            <h3 id="catalogTitle">Recomendados</h3>
-    
+    <br>
+    <div class="container">
+      <div v-if="userLoggedIn != -1">
+        <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
+          <h3 id="catalogTitle">Recomendados</h3>
         </div>
-           <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
+        <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
           <div class="row">
-            <div class="col-6 col-md-3" v-for="book in recommended  " :key="book.bookId" >
-              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
+            <div class="col-6 col-md-3" v-for="book in recommended  " :key="book.bookId">
+              <router-link
+                v-on:mouseover.native="clickBook(book.bookId)"
+                @click.native="addView(book.bookId)"
+                :to="{ name: 'book', params:{id: clickedBook}}"
+              >
                 <img class="owlCovers mt-3" v-bind:src="book.cover">
               </router-link>
               <h6 class="mt-2">{{book.title}}</h6>
@@ -23,36 +22,32 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <br>
+
+      <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
+        <h3 id="catalogTitle">Mais Visualizados</h3>
+      </div>
+      <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
+        <div class="row">
+          <div class="col-6 col-md-3" v-for="book in mostViews" :key="book.bookId">
+            <router-link
+              v-on:mouseover.native="clickBook(book.bookId)"
+              @click.native="addView(book.bookId)"
+              :to="{ name: 'book', params:{id: clickedBook}}"
+            >
+              <img class="owlCovers mt-3" v-bind:src="book.cover">
+            </router-link>
+            <h6 class="mt-2">{{book.title}}</h6>
+            <h6>{{book.author}}</h6>
+          </div>
+        </div>
+      </div>
     </div>
 
-      
-        <br>
-
-         <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
-    
-  
-            
-            <h3 id="catalogTitle">Mais Vizualizados</h3>
-    
-        </div>
-           <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
-          <div class="row">
-            <div class="col-6 col-md-3" v-for="book in mostViews" :key="book.bookId" >
-              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
-                <img class="owlCovers mt-3" v-bind:src="book.cover">
-              </router-link>
-              <h6 class="mt-2">{{book.title}}</h6>
-              <h6>{{book.author}}</h6>
-            </div>
-          </div>
-        </div>
+    <Footer/>
   </div>
-      
-     
-   <Footer/>
-   </div>
-
-
 </template>
 <style>
 #topBooks {
@@ -111,13 +106,11 @@ export default {
       recommended: [],
       mostViews: [],
       userTags: [],
-      clickedBook: 0,
+      clickedBook: 0
     };
   },
   created() {
-
-    console.log("userLoggedIn: " + this.userLoggedIn)
-    
+    console.log("userLoggedIn: " + this.userLoggedIn);
 
     this.mostViews = this.books.sort(function orderByViews(a, b) {
       if (a.nViews > b.nViews) return -1;
@@ -125,28 +118,24 @@ export default {
       else return 0;
     });
 
-    console.log(this.mostViews)
-    console.log(this.books)
+    console.log(this.mostViews);
+    console.log(this.books);
 
     this.userTags = this.users[this.userLoggedIn].favTags;
 
-     for (let i = 0; i < this.books.length; i++) {
-          for (let j = 0; j < this.books[i].idTag.length; j++) {
-            for (let z = 0; z < this.userTags.length; z++) {
-              if (this.books[i].idTag[j] == this.userTags[z]) {
-                  this.recommended.push(this.books[i]);
+    for (let i = 0; i < this.books.length; i++) {
+      for (let j = 0; j < this.books[i].idTag.length; j++) {
+        for (let z = 0; z < this.userTags.length; z++) {
+          if (this.books[i].idTag[j] == this.userTags[z]) {
+            this.recommended.push(this.books[i]);
 
-                  if(this.recommended[i] == this.recommended[i+1]){
-                    this.recommended.splice(i+1,1)
-                  }
-                  
-              }
+            if (this.recommended[i] == this.recommended[i + 1]) {
+              this.recommended.splice(i + 1, 1);
             }
           }
         }
-
-
-
+      }
+    }
   },
   methods: {
     getTop2() {
@@ -157,7 +146,7 @@ export default {
       });
     },
 
-     clickBook(index) {
+    clickBook(index) {
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === index) {
           this.$store.dispatch("open_book", i);
@@ -165,7 +154,7 @@ export default {
         }
       }
     },
-     addView(id) {
+    addView(id) {
       console.log("entrou");
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === id) {
