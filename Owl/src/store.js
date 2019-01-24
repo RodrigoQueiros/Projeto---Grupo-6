@@ -99,7 +99,7 @@ export default new Vuex.Store({
       idTag: [0],
       launchDate: "",
       nPages: 100,
-      description: "O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente. O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente. O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente.",
+      description: "Em 2016 chega-nos em português o novo livro de Harry Potter, o célebre personagem de J.K. Rowling. Harry Potter e a Criança Amaldiçoada (Harry Potter and the Cursed Child) traz de volta as personagens mais carismáticas da série: Harry, Ron e Herminone, agora adultos, mas também os respetivos filhos e com estes desafios novos… e antigos:",
       nViews: 100,
       availability: true,
       bookStatus: "Good"
@@ -113,7 +113,7 @@ export default new Vuex.Store({
       idTag: [1],
       launchDate: "",
       nPages: 100,
-      description: "ola ola ola",
+      description: "nfdljanfjlsahjlsdç",
       nViews: 100,
       availability: true,
       bookStatus: "Good"
@@ -161,6 +161,22 @@ export default new Vuex.Store({
       bookStatus: "Good",
       description: "Nunca o futebol mundial assistiu a um duelo tão equilibrado. Fruto de uma aturada investigação, este livro apresenta pela primeira vez os dois jogadores, comparando-os relativamente a mais de 30 diferentes fatores. ",
     },
+    {
+      bookId: 5,
+      cover: "https://img.wook.pt/images/programacao-em-java-pedro-coelho/MXwxODM1MDgwMHwxNDA0MTg5NHwxNDY5MDU1NjAwMDAw/502x",
+      title: "Programação em Java",
+      author: "Luís Miguel Pereira",
+      publisher: "Prime Books",
+      idTag: [1],
+      launchDate: "",
+      nPages: 100,
+      description: "",
+      nViews: 550,
+      availability: true,
+      bookStatus: "Good",
+      description: "Nesta altura em que o Java se afirma em múltiplos ambientes de desenvolvimento e em que as interfaces por plug-in começam a ser descontinuadas nos browsers, surge esta obra com vários exemplos práticos, escrita de forma simples e acessível, destinada a todos aqueles que possuem conhecimentos básicos de programação em outras linguagens e queiram aprender Java.",
+    },
+    
     ],
 
     reviews: [{
