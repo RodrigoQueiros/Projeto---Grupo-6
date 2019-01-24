@@ -428,6 +428,7 @@ export default new Vuex.Store({
     },
     DO_REVIEW(state, payload) {
       state.reviews.push(payload)
+      state.users[payload.userId].points += 20
     },
     ADD_NOTIFICATION(state, payload) {
       state.notifications.push(payload)

@@ -84,7 +84,7 @@
         </div>
       </div>
       <!--Comentar-->
-      <div class="row" v-if="loggedUser!=-1">
+      <div class="row" v-if="loggedUser!=-1 && reviewCheck==0">
         <div class="form-group boxContent col-12 col-md-12">
           <div class="margin5">
             <div class="row">
@@ -161,7 +161,7 @@
               </div>
               <!-- Rating -->
               <div class="row">
-                <button
+                <button v-if="loggedUser!=-1"
                   class="btn-success"
                   @click="upVote(review.reviewId, loggedUser,clickedBook)"
                 >
@@ -169,7 +169,7 @@
                   {{review.upVote.length}}
                 </button>
                 <!-- upVote -->
-                <button
+                <button v-if="loggedUser!=-1"
                   class="btn-danger"
                   @click="downVote(review.reviewId, loggedUser,clickedBook)"
                 >
@@ -260,6 +260,7 @@ export default {
       picked: 0,
       reviewArea: "",
       bookRating: 0,
+      reviewCheck: 0,
     };
   },
   methods: {
@@ -279,17 +280,28 @@ export default {
       let all = 0
       
       for (let i = 0; i < this.reviews.length; i++) {
-        all += this.reviews[i].rating
+        if(this.reviews[i].bookId == this.clickedBook){
+          all += this.reviews[i].rating}
+        
+        
       }
 
-      
+      console.log("Rating total:" + all)
       let total = Math.round(all/(this.reviews.length))
-      
+      console.log("Rating total:" + total)
       return total
       
     },
     doReview(bookID, userID){
       console.log(this.picked)
+      for (let i = 0; i < this.reviews.length; i++) {
+        
+        if(this.reviews[i].bookId == bookID && this.reviews[i].userId == userID ){
+          this.reviewCheck = 1
+        }
+        
+      }
+
       if(this.picked == 0){
         alert("Nao classificou")
       }
@@ -520,10 +532,11 @@ export default {
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
-    this.bookRating = this.calculateRating()
+    
     console.log(this.requisitions.length);
     console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
+    this.bookRating = this.calculateRating()
   }
 };
 </script>
