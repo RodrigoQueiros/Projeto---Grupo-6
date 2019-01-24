@@ -84,7 +84,7 @@
         </div>
       </div>
       <!--Comentar-->
-      <div class="row" v-if="loggedUser!=-1">
+      <div class="row" v-if="loggedUser!=-1 && reviewCheck==0">
         <div class="form-group boxContent col-12 col-md-12">
           <div class="margin5">
             <div class="row">
@@ -116,7 +116,6 @@
               <button
                 style="margin:auto"
                 @click="doReview(clickedBook, loggedUser)"
-                :disabled="buttonActive == false"
                 class="btn buttonColor col-6"
               >Publicar</button>
             </div>
@@ -137,7 +136,7 @@
             </div>
             <div class="col-9">
               <!-- Info User -->
-              <div class="row">
+              <div class="row mt-4">
                 <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
                 <h6>{{review.date}}</h6>
                 <h5>{{review.rating}} stars</h5>
@@ -155,40 +154,41 @@
                 <!-- Precisa linha -->
               </div>
               <!-- Review Info -->
-              <div class="row">
+              <div class="row mt-5">
                 <p v-if="verifyEdit==false || review.reviewId != editThatOne">{{review.comment}}</p>
                 <textarea name id cols="30" rows="10" v-if="verifyEdit== true && review.reviewId == editThatOne" v-model="review.comment"></textarea>
               </div>
               <!-- Rating -->
               <div class="row">
-                <button
-                  class="btn-success"
+                <button v-if="loggedUser!=-1"
+                  class="btn-success col-2 ml-2"
                   @click="upVote(review.reviewId, loggedUser,clickedBook)"
                 >
                   <i class="fas fa-long-arrow-alt-up"></i>
                   {{review.upVote.length}}
                 </button>
                 <!-- upVote -->
-                <button
-                  class="btn-danger"
+                <button v-if="loggedUser!=-1"
+                  class="btn-danger col-2 ml-2"
                   @click="downVote(review.reviewId, loggedUser,clickedBook)"
                 >
                   <i class="fas fa-long-arrow-alt-down"></i>
                   {{review.downVote.length}}
-                </button>
-                <!-- downVote -->
-              </div>
+                </button>  <!-- downVote -->  
 
-              <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
-                <button class="btn-primary" @click="editReview(review.reviewId,review.comment)">
+                
+                <button v-if="loggedUser == getInfoFromUser(review.userId).userId" class="btn-primary col-2 ml-2" @click="editReview(review.reviewId,review.comment)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <!-- Edit -->
-                <button class="btn-dark" @click="deleteReview(review.reviewId)">
+                <button v-if="loggedUser == getInfoFromUser(review.userId).userId" class="btn-dark col-2 ml-2" @click="deleteReview(review.reviewId)">
                   <i class="fas fa-times"></i>
                 </button>
                 <!-- Trash -->
+              
               </div>
+
+              
 
               <!-- Fazer editar e eliminar -->
             </div>
@@ -260,6 +260,7 @@ export default {
       picked: 0,
       reviewArea: "",
       bookRating: 0,
+      reviewCheck: 0,
     };
   },
   methods: {
@@ -279,17 +280,28 @@ export default {
       let all = 0
       
       for (let i = 0; i < this.reviews.length; i++) {
-        all += this.reviews[i].rating
+        if(this.reviews[i].bookId == this.clickedBook){
+          all += this.reviews[i].rating}
+        
+        
       }
 
-      
+      console.log("Rating total:" + all)
       let total = Math.round(all/(this.reviews.length))
-      
+      console.log("Rating total:" + total)
       return total
       
     },
     doReview(bookID, userID){
       console.log(this.picked)
+      for (let i = 0; i < this.reviews.length; i++) {
+        
+        if(this.reviews[i].bookId == bookID && this.reviews[i].userId == userID ){
+          this.reviewCheck = 1
+        }
+        
+      }
+
       if(this.picked == 0){
         alert("Nao classificou")
       }
@@ -520,10 +532,11 @@ export default {
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
-    this.bookRating = this.calculateRating()
+    
     console.log(this.requisitions.length);
     console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
+    this.bookRating = this.calculateRating()
   }
 };
 </script>
