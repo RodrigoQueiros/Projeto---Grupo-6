@@ -94,12 +94,12 @@
                   v-if="requisition.userId == userLoggedIn && requisition.active == true && requisition.bookId == book.bookId"
                 >
                   <div class="row" style="text-align:left">
-                    <div class="col-2">
+                    <div class="col-12 col-md-2">
                        <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
                         <img v-bind:src="book.cover" class="owlCovers mt-4 ml-3">
                        </router-link>
                     </div>
-                    <div class="col-10">
+                    <div class="col-12 col-md-10">
                       <h4 class="mt-5">{{book.title}}</h4>
                       <h5>de {{book.author}}</h5>
                       <p class="mt-4">

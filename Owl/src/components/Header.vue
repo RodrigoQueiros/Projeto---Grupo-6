@@ -1,16 +1,16 @@
 <template>
   <div>
     <nav class="navbar navbar-light bg-light" id="navbar1">
-        <router-link class="navbar-brand" to="/">
+        <router-link class="navbar-brand" :to="{name: 'home'}">
             <img src="../assets/logo.png" alt="" id="logo">
         </router-link>
-        <router-link class="nav-link" to="/Profile">
+        <router-link class="nav-link" :to="{name: 'profile'}">
             <div v-if="userLoggedIn != -1" style="color:white">
                 <i class="fas fa-user fa-2x"></i>  
                 <h3>{{userName}}</h3>
             </div> 
         </router-link>
-        <router-link  to="/Users">
+        <router-link  :to="{name: 'users'}">
             <div v-if="userLoggedIn != -1 && type == 'admin'" style="color:white">
                 <i class="fas fa-cog fa-2x"></i>
             </div> 
@@ -20,22 +20,22 @@
         
         <ul class="navbar-nav alignLeft">
             <li class="nav-item ">
-                <router-link class="nav-link" to="/" color="white">Home</router-link>
+                <router-link class="nav-link" :to="{name: 'home'}" color="white">Home</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" to="/catalog">Catalogo</router-link>
+                <router-link class="nav-link" :to="{name: 'catalog'}">Catalogo</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" to="/rankings">Rankings</router-link>
+                <router-link class="nav-link" :to="{name: 'rankings'}">Rankings</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" to="/suggest">Sugerir Livro</router-link>
+                <router-link class="nav-link" :to="{name: 'suggest'}">Sugerir Livro</router-link>
             </li>
             <li class="nav-item">
-                <router-link v-if="userLoggedIn == -1" class="nav-link" id="right" to="/login">LogIn</router-link>
+                <router-link v-if="userLoggedIn == -1" class="nav-link" id="right" :to="{name: 'login'}">LogIn</router-link>
             </li>
             <li class="nav-item">
-                <router-link v-if="userLoggedIn == -1" class="nav-link" to="/signup">SignUp</router-link>
+                <router-link v-if="userLoggedIn == -1" class="nav-link" :to="{name: 'signup'}">SignUp</router-link>
             </li>
             <li class="nav-item">
                 <a v-if="userLoggedIn != -1" href="" @click="logout" class="nav-link">Logout</a>
