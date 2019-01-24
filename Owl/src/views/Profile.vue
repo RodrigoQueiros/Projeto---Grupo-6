@@ -178,7 +178,7 @@
             <div class="col-12 mt-3" style="background-color:white">
               <div class="row">
 
-              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
+              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:aqua"></i></div>
               <div class="col-8">
               <h4 class="mt-5">
                 Fazer 5 requisição <i class="far fa-check-circle" style="color:green" v-if="achReq>4"></i>
