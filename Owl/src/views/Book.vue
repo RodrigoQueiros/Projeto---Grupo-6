@@ -90,9 +90,9 @@
             <div class="row">
               <!-- Estrelinhaas-->
               <div class="row">
-                <label for="comment" class="font-weight-bold" style="font-size:20px">Comment:</label>
+                <label for="comment" class="font-weight-bold ml-3" style="font-size:20px">Comment:</label>
 
-                <fieldset class="rate">
+                <fieldset class="rate ml-3">
                   <input class="starInput" id="rate1-star5" type="radio" name="rate1" value="5" v-model="picked">
                   <label class="star" for="rate1-star5" title="Excellent">5</label>
                   
@@ -116,7 +116,7 @@
               <button
                 style="margin:auto"
                 @click="doReview(clickedBook, loggedUser)"
-                class="btn buttonColor col-6"
+                class="btn buttonColor col-6 mt-3"
               >Publicar</button>
             </div>
           </div>
@@ -136,12 +136,13 @@
             </div>
             <div class="col-9">
               <!-- Info User -->
-              <div class="row mt-4">
-                <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
-                <h6>{{review.date}}</h6>
-                <h5>{{review.rating}} stars</h5>
-                
-
+              <div class="row mt-4 ">
+                <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>         
+                                                
+                <!-- Precisa linha -->
+                <h6 class="ml-5">{{review.date}}</h6>
+              </div>
+              <div class="row">
                 <i class="fas fa-star" style="color:gold"></i>
                 <i class="fas fa-star" style="color:gold" v-if="review.rating > 1"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 2"></i>
@@ -150,11 +151,9 @@
                 <i class="fas fa-star" style="color:gold" v-if="review.rating > 3"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 4"></i>
                 <i class="fas fa-star" style="color:gold" v-if="review.rating > 4"></i>
-                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 5"></i>
-                <!-- Precisa linha -->
-              </div>
+                <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 5"></i></div>
               <!-- Review Info -->
-              <div class="row mt-5">
+              <div class="row mt-4">
                 <p v-if="verifyEdit==false || review.reviewId != editThatOne">{{review.comment}}</p>
                 <textarea name id cols="30" rows="10" v-if="verifyEdit== true && review.reviewId == editThatOne" v-model="review.comment"></textarea>
               </div>

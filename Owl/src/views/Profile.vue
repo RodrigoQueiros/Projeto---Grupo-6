@@ -106,7 +106,7 @@
                         <b>Data de Requisição:</b>
                         {{requisition.requisitionDate}}
                       </p>
-                      <a class="btn buttonColor" style="color:white">Entregar</a>
+                      <a class="btn buttonColor" style="color:white" @click="deliverBook(book.bookId, userLoggedIn)">Entregar</a>
                     </div>
                   </div>
                 </div>
@@ -149,6 +149,18 @@
           </div>
         </div>
       </div>
+      <div class="row mt-4">
+        <div class="col-12 col-md-12 boxTitle" id>
+            <h3>Notificações</h3>
+          </div>
+         <div class="col-12 col-md-12 boxContent">
+           </div>
+
+
+      </div>
+
+
+
     </div>
     <Footer/>
   </div>
@@ -235,6 +247,30 @@ export default {
   },
 
   methods: {
+    deliverBook(bookID, userID){
+
+      for (let i = 0; i < this.requisitions.length; i++) {
+          if (this.requisitions[i].bookId == bookID &&
+              this.requisitions[i].userId == userID &&
+              this.requisitions[i].active == true)
+           {
+             
+             let currentDate = new Date();
+             let date = (currentDate.getDate() +
+            "/" +
+            (currentDate.getMonth() + 1) +
+            "/" +
+            currentDate.getFullYear() + " " +
+            currentDate.getHours() +
+            ":" +
+            currentDate.getMinutes())
+              let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
+              this.$store.dispatch("delivery_book", del);
+           }}
+
+
+
+    },
     editProfile() {
       if (this.clicked) {
         this.clicked = false;
