@@ -116,7 +116,6 @@
               <button
                 style="margin:auto"
                 @click="doReview(clickedBook, loggedUser)"
-                :disabled="buttonActive == false"
                 class="btn buttonColor col-6"
               >Publicar</button>
             </div>
@@ -137,7 +136,7 @@
             </div>
             <div class="col-9">
               <!-- Info User -->
-              <div class="row">
+              <div class="row mt-4">
                 <h3>{{getInfoFromUser(review.userId).firstName}} {{getInfoFromUser(review.userId).lastName}}</h3>
                 <h6>{{review.date}}</h6>
                 <h5>{{review.rating}} stars</h5>
@@ -155,14 +154,14 @@
                 <!-- Precisa linha -->
               </div>
               <!-- Review Info -->
-              <div class="row">
+              <div class="row mt-5">
                 <p v-if="verifyEdit==false || review.reviewId != editThatOne">{{review.comment}}</p>
                 <textarea name id cols="30" rows="10" v-if="verifyEdit== true && review.reviewId == editThatOne" v-model="review.comment"></textarea>
               </div>
               <!-- Rating -->
               <div class="row">
                 <button v-if="loggedUser!=-1"
-                  class="btn-success"
+                  class="btn-success col-2 ml-2"
                   @click="upVote(review.reviewId, loggedUser,clickedBook)"
                 >
                   <i class="fas fa-long-arrow-alt-up"></i>
@@ -170,25 +169,26 @@
                 </button>
                 <!-- upVote -->
                 <button v-if="loggedUser!=-1"
-                  class="btn-danger"
+                  class="btn-danger col-2 ml-2"
                   @click="downVote(review.reviewId, loggedUser,clickedBook)"
                 >
                   <i class="fas fa-long-arrow-alt-down"></i>
                   {{review.downVote.length}}
-                </button>
-                <!-- downVote -->
-              </div>
+                </button>  <!-- downVote -->  
 
-              <div class="row" v-if="loggedUser == getInfoFromUser(review.userId).userId">
-                <button class="btn-primary" @click="editReview(review.reviewId,review.comment)">
+                
+                <button v-if="loggedUser == getInfoFromUser(review.userId).userId" class="btn-primary col-2 ml-2" @click="editReview(review.reviewId,review.comment)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <!-- Edit -->
-                <button class="btn-dark" @click="deleteReview(review.reviewId)">
+                <button v-if="loggedUser == getInfoFromUser(review.userId).userId" class="btn-dark col-2 ml-2" @click="deleteReview(review.reviewId)">
                   <i class="fas fa-times"></i>
                 </button>
                 <!-- Trash -->
+              
               </div>
+
+              
 
               <!-- Fazer editar e eliminar -->
             </div>
