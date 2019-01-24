@@ -149,6 +149,87 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+
+      <div class="col-6 m-auto">
+
+      <div class="row mt-4">
+        <div class="col-12 col-md-12 boxTitle " id>
+            <h3>Achievements</h3>
+          </div>
+         <div class="col-12 col-md-12 boxContent pb-3">
+
+            <div class="col-12 mt-3" style="background-color:white">
+              <div class="row">
+
+              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
+              <div class="col-8">
+              <h4 class="mt-5">
+                Fazer 1 requisição <i class="far fa-check-circle" style="color:green" v-if="achReq>0"></i>
+              </h4>
+              </div>
+
+
+              </div>
+              
+            </div>
+
+            <div class="col-12 mt-3" style="background-color:white">
+              <div class="row">
+
+              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
+              <div class="col-8">
+              <h4 class="mt-5">
+                Fazer 5 requisição <i class="far fa-check-circle" style="color:green" v-if="achReq>4"></i>
+              </h4>
+              </div>             
+
+              </div>        
+              
+            </div>
+
+
+            <div class="col-12 mt-3" style="background-color:white">
+              <div class="row">
+
+              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
+              <div class="col-8">
+              <h4 class="mt-5">
+                Fazer 5 comentarios <i class="far fa-check-circle" style="color:green" v-if="achRev>4"></i>
+              </h4>
+              </div>
+
+
+              </div>
+              
+            </div>
+
+
+            <div class="col-12 mt-3" style="background-color:white">
+              <div class="row">
+
+              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
+              <div class="col-8">
+              <h4 class="mt-5">
+                Receber 20 upvotes <i class="far fa-check-circle" style="color:green" v-if="achVot>19"></i>
+              </h4>
+              </div>
+
+
+              </div>
+              
+            </div>
+
+
+           </div>
+
+
+      </div>
+      
+      </div>
+      <div class="col-5 m-auto">
+
       <div class="row mt-4">
         <div class="col-12 col-md-12 boxTitle" id>
             <h3>Notificações</h3>
@@ -158,6 +239,17 @@
 
 
       </div>
+
+      </div>
+
+
+
+
+
+
+      </div>
+      
+      
 
 
 
@@ -213,6 +305,7 @@ export default {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
       requisitions: this.$store.state.requisitions,
       books: this.$store.state.books,
+      reviews: this.$store.state.reviews,
       clicked: false,
       user: {
         firstName: "",
@@ -224,6 +317,9 @@ export default {
       tags: this.$store.state.tags,
       testes: [],
       clickedBook: 0,
+      achReq: 0,
+      achRev: 0,
+      achVot: 0,
     };
   },
 
@@ -233,7 +329,9 @@ export default {
     this.user.email = this.users[this.userLoggedIn].email;
     this.user.favTags = this.users[this.userLoggedIn].favTags;
     this.user.photo = this.users[this.userLoggedIn].photo;
-
+    this.achReq = this.achievementReq()
+    this.achRev = this.achievementRev()
+    this.achVot = this.achievementVot()
     for (let i = 0; i < this.user.favTags.length; i++) {
       for (let j = 0; j < this.tags.length; j++) {
         if (this.user.favTags[i] == this.tags[j].tagId) {
@@ -247,6 +345,44 @@ export default {
   },
 
   methods: {
+    achievementReq(){
+      let numberReq = 0
+
+      for (let i = 0; i< this.requisitions.length; i++) {
+        
+        if(this.requisitions[i].userId == this.userLoggedIn){
+          numberReq++
+        }
+       
+      }
+      return numberReq
+    },
+    achievementRev(){
+      let numberRev = 0
+
+      for (let i = 0; i< this.reviews.length; i++) {
+        
+        if(this.reviews[i].userId == this.userLoggedIn){
+          numberRev++
+        }
+       
+      } console.log(numberRev)
+      return numberRev
+    },
+    achievementVot(){
+      let numberVot = 0
+
+      for (let i = 0; i< this.reviews.length; i++) {
+        
+        if(this.reviews[i].userId == this.userLoggedIn){
+          numberVot += this.reviews[i].upVote.length
+        }
+       
+      }
+      return numberVot
+    },
+
+
     deliverBook(bookID, userID){
 
       for (let i = 0; i < this.requisitions.length; i++) {
