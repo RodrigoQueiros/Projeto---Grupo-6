@@ -95,9 +95,9 @@
                 >
                   <div class="row" style="text-align:left">
                     <div class="col-2">
-                      <a>
+                       <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
                         <img v-bind:src="book.cover" class="owlCovers mt-4 ml-3">
-                      </a>
+                       </router-link>
                     </div>
                     <div class="col-10">
                       <h4 class="mt-5">{{book.title}}</h4>
@@ -210,7 +210,8 @@ export default {
         photo: ""
       },
       tags: this.$store.state.tags,
-      testes: []
+      testes: [],
+      clickedBook: 0,
     };
   },
 
@@ -275,6 +276,25 @@ export default {
           if (i == this.user.favTags[j]) {
             document.getElementById(i.toString()).checked = true;
           }
+        }
+      }
+      
+    },
+     clickBook(index) {
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === index) {
+          this.$store.dispatch("open_book", i);
+          this.clickedBook = i;
+        }
+      }
+    },
+
+    addView(id) {
+      console.log("entrou");
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === id) {
+          this.$store.dispatch("add_view", i);
+          console.log("oi");
         }
       }
     },
