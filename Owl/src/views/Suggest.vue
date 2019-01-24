@@ -68,7 +68,7 @@ export default {
     return {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
       form: {
-        title: "Programação em Python",
+        title: "Foi Sem Querer Que Te Quis",
         cover: "https://img.wook.pt/images/programacao-em-python-ernesto-costa/MXwxNzA0MzMzNXwxMjY2NzI1MnwxNDQ4MjM2ODAwMDAw/502x",
         author: "Ernesto Costa"
       },
@@ -102,9 +102,6 @@ export default {
           type: "success",
           title: "Livro sugerido com sucesso."
         });
-        document.getElementById("formSugestion").reset();
-      }
-      else {
         this.$store.dispatch("add_suggestion", {
             suggestionId: this.$store.getters.getLastIdSuggestions,
             suggestionTitle: this.form.title,
@@ -114,6 +111,10 @@ export default {
             suggestionDate: new Date().toLocaleString(),
             suggestNumber: 1
           });
+        document.getElementById("formSugestion").reset();
+      }
+      else {
+        
       }
     }
   }
