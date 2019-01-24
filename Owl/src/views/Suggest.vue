@@ -68,9 +68,9 @@ export default {
     return {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
       form: {
-        title: "",
-        cover: "",
-        author: ""
+        title: "Programação em Python",
+        cover: "https://img.wook.pt/images/programacao-em-python-ernesto-costa/MXwxNzA0MzMzNXwxMjY2NzI1MnwxNDQ4MjM2ODAwMDAw/502x",
+        author: "Ernesto Costa"
       },
       bookSuggestions: this.$store.state.bookSuggestions
     };
