@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-light bg-light" id="navbar1">
+    <nav class="navbar navbar-light bg-light"  id="navbar1">
         <router-link class="navbar-brand" :to="{name: 'home'}">
             <img src="../assets/logo.png" alt="" id="logo">
         </router-link>

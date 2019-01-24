@@ -303,7 +303,10 @@ export default {
       }
 
       if(this.picked == 0){
-        alert("Nao classificou")
+        swal({
+              type: "error",
+              title: "Tem de classificar o livro para submeter a review."
+            });
       }
       else{
         let currentDate = new Date()
@@ -477,7 +480,10 @@ export default {
         console.table(this.requisitions);
         this.$store.dispatch("add_req", reqs);
         console.table(this.requisitions);
-        alert("Livro Requisitado");
+        swal({
+              type: "success",
+              title: "Livro requisitado com sucesso."
+            });
         console.log(req);
         this.checkRequesition(bookID, userID);
       } else {
@@ -505,7 +511,10 @@ export default {
             currentDate.getMinutes())
               let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
               this.$store.dispatch("delivery_book", del);
-              alert("Livro entregado");
+              swal({
+              type: "success",
+              title: "Livro entregado com sucesso."
+            });
              //}
             this.checkRequesition(bookID, userID);
             console.table(this.users)
