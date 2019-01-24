@@ -48,6 +48,45 @@ export default new Vuex.Store({
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 500,
       favTags: [0,1]
+    },
+    {
+      userId: 2,
+      firstName: "Bernardo",
+      lastName: "Ferreira",
+      email: "bf@gmail.com",
+      password: "123456",
+      ableToRequest: true,
+      type: "user",
+      nRequisitionsNow: 0,
+      photo: "https://i.imgur.com/6NIOn6z.jpg",
+      points: 100,
+      favTags: [0,1]
+    },
+    {
+      userId: 3,
+      firstName: "Antonio",
+      lastName: "Rocha",
+      email: "ar@gmail.com",
+      password: "123456",
+      ableToRequest: true,
+      type: "user",
+      nRequisitionsNow: 0,
+      photo: "https://i.imgur.com/6NIOn6z.jpg",
+      points: 350,
+      favTags: [0,1]
+    },
+    {
+      userId: 4,
+      firstName: "Rodrigo",
+      lastName: "Queiros",
+      email: "rq@gmail.com",
+      password: "123456",
+      ableToRequest: true,
+      type: "user",
+      nRequisitionsNow: 0,
+      photo: "https://i.imgur.com/6NIOn6z.jpg",
+      points: 300,
+      favTags: [0,1]
     }
     ],
 
@@ -106,7 +145,23 @@ export default new Vuex.Store({
       nViews: 200,
       availability: false,
       bookStatus: "Worn"
-    }],
+    },
+    {
+      bookId: 4,
+      cover: "https://img.wook.pt/images/duelo-nunca-visto-luciano-wernick/MXwyMjI2NzcxNXwxODE2MDUzOXwxNTM3Mzk4MDAwMDAw/502x",
+      title: "Duelo Nunca Visto",
+      author: "Luís Miguel Pereira",
+      publisher: "Prime Books",
+      idTag: [0, 1],
+      launchDate: "",
+      nPages: 100,
+      description: "",
+      nViews: 600,
+      availability: true,
+      bookStatus: "Good",
+      description: "Nunca o futebol mundial assistiu a um duelo tão equilibrado. Fruto de uma aturada investigação, este livro apresenta pela primeira vez os dois jogadores, comparando-os relativamente a mais de 30 diferentes fatores. ",
+    },
+    ],
 
     reviews: [{
       reviewId: 0,
@@ -130,22 +185,22 @@ export default new Vuex.Store({
     }],
 
     requisitions: [{
-      requisitionId: 0,
-      bookId: 2,
-      userId: 0,
-      requisitionDate: "",
-      deliveryDate: "",
-      deliveryBookStatus: "",
-      active: true
+      // requisitionId: 0,
+      // bookId: 2,
+      // userId: 0,
+      // requisitionDate: "",
+      // deliveryDate: "",
+      // deliveryBookStatus: "",
+      // active: true
     },
     {
-      requisitionId: 1,
-      bookId: 0,
-      userId: 0,
-      requisitionDate: "",
-      deliveryDate: "",
-      deliveryBookStatus: "",
-      active: false
+      // requisitionId: 1,
+      // bookId: 0,
+      // userId: 0,
+      // requisitionDate: "",
+      // deliveryDate: "",
+      // deliveryBookStatus: "",
+      // active: false
     }],
 
     tags: [{
@@ -392,6 +447,7 @@ export default new Vuex.Store({
       state.users[payload.userId].firstName = payload.firstName
       state.users[payload.userId].lastName = payload.lastName
       state.users[payload.userId].email = payload.email
+      state.users[payload.userId].photo = payload.photo
     },
 
     EDIT_TAG(state, payload) {
