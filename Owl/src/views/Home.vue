@@ -3,7 +3,9 @@
     <Header/>
    <br>
   <div class="container">
-      <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
+
+    <div v-if="userLoggedIn != -1">
+<div class="col-12 col-md-12 ml-md-3" id="catalogBar">
     
   
             
@@ -21,6 +23,9 @@
             </div>
           </div>
         </div>
+    </div>
+
+      
         <br>
 
          <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
@@ -89,14 +94,12 @@
 <script>
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
-import Recomend from "@/components/Recomend.vue";
 import Footer from "@/components/Footer.vue";
 //import Mainbar from '@/components/Mainbar.vue'
 export default {
   name: "home",
   components: {
     Header,
-    Recomend,
     Footer
     //Mainbar
   },
@@ -107,14 +110,14 @@ export default {
       books: this.$store.state.books,
       recommended: [],
       mostViews: [],
-      userLoggedIn: -1,
       userTags: [],
+      clickedBook: 0,
     };
   },
   created() {
 
     console.log("userLoggedIn: " + this.userLoggedIn)
-    this.userTags = this.users[this.userLoggedIn].favTags;
+    
 
     this.mostViews = this.books.sort(function orderByViews(a, b) {
       if (a.nViews > b.nViews) return -1;
@@ -125,19 +128,24 @@ export default {
     console.log(this.mostViews)
     console.log(this.books)
 
+    this.userTags = this.users[this.userLoggedIn].favTags;
+
      for (let i = 0; i < this.books.length; i++) {
-       console.log("entrou no for 1")
           for (let j = 0; j < this.books[i].idTag.length; j++) {
-            console.log("entrou no for 2")
             for (let z = 0; z < this.userTags.length; z++) {
-              console.log("entrou no for 3")
               if (this.books[i].idTag[j] == this.userTags[z]) {
                   this.recommended.push(this.books[i]);
+
+                  if(this.recommended[i] == this.recommended[i+1]){
+                    this.recommended.splice(i+1,1)
+                  }
                   
               }
             }
           }
         }
+
+
 
   },
   methods: {
@@ -147,6 +155,24 @@ export default {
         if (a.nViews < b.nViews) return 1;
         else return 0;
       });
+    },
+
+     clickBook(index) {
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === index) {
+          this.$store.dispatch("open_book", i);
+          this.clickedBook = i;
+        }
+      }
+    },
+     addView(id) {
+      console.log("entrou");
+      for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].bookId === id) {
+          this.$store.dispatch("add_view", i);
+          console.log("oi");
+        }
+      }
     }
   }
 };
