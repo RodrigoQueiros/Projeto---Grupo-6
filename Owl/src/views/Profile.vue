@@ -229,7 +229,7 @@
       
       </div>
       <div class="col-5 m-auto">
-
+        <!--
       <div class="row mt-4">
         <div class="col-12 col-md-12 boxTitle" id>
             <h3>Notificações</h3>
@@ -239,7 +239,7 @@
 
 
       </div>
-
+        -->
       </div>
 
 
