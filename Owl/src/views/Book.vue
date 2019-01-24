@@ -64,7 +64,7 @@
 
               <div class="row">
                 <button
-                  @click="requesition(clickedBook, loggedUser)"
+                  @click="requesition(pageBookId, loggedUser)"
                   :disabled="buttonActive == false"
                   class="btn buttonColor float-right"
                 >{{buttonText}}</button>
@@ -115,7 +115,7 @@
               <!-- Send Review -->
               <button
                 style="margin:auto"
-                @click="doReview(clickedBook, loggedUser)"
+                @click="doReview(pageBookId , loggedUser)"
                 class="btn buttonColor col-6 mt-3"
               >Publicar</button>
             </div>
@@ -126,7 +126,7 @@
       <div class="row boxContent">
         <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId">
           <!-- User Image-->
-          <template v-if="review.bookId == clickedBook">
+          <template v-if="review.bookId == pageBookId">
             <div class="col-3">
               <img
                 v-bind:src="getInfoFromUser(review.userId).photo"
@@ -260,6 +260,7 @@ export default {
       reviewArea: "",
       bookRating: 0,
       reviewCheck: 0,
+      pageBookId: 0,
     };
   },
   methods: {
@@ -529,6 +530,7 @@ export default {
     
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
+    this.pageBookId = this.books[this.clickedBook].bookId
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
     
