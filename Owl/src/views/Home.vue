@@ -118,7 +118,7 @@ export default {
       else return 0;
     });
 
-     this.mostViews.splice(4,this.mostViews.length-1)
+    // this.mostViews.splice(4,this.mostViews.length-1)
 
     console.log(this.mostViews);
     console.log(this.books);
