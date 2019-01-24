@@ -245,6 +245,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import swal from "sweetalert2"; 
 export default {
   //Fazer filtro de reviews com id do livro
   data: function() {
