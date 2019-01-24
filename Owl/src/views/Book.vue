@@ -454,12 +454,7 @@ export default {
         //Devia ser true
         let currentDate = new Date();
         //Requisitar
-        for (let i = 0; i < this.books.length; i++) {
-          if(i == bookID){
-            bookID ==this.books[i].bookId
-          }
-          
-        }
+        
         let req = {
           requisitionId: this.$store.getters.getLastIdReq,
           bookId: bookID,
