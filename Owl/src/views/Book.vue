@@ -37,7 +37,8 @@
               </div>
               
               <div class="alignLeft">
-                <i class="fas fa-star" style="color:gold"></i>
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 0" ></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 1"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 1"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 2"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 2"></i>
