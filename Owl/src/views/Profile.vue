@@ -156,7 +156,7 @@
 
       <div class="row mt-4">
         <div class="col-12 col-md-12 boxTitle " id>
-            <h3>Achievements</h3>
+            <h3>Conquistas</h3>
           </div>
          <div class="col-12 col-md-12 boxContent pb-3">
 
@@ -221,6 +221,8 @@
               
             </div>
 
+            <!-- See more here -->
+            <router-link :to="{name:'achievements'}">»» See more ««</router-link>
 
            </div>
 

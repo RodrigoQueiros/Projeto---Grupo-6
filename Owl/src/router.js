@@ -8,6 +8,7 @@ import Suggest from './views/Suggest.vue'
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
 import Profile from './views/Profile.vue'
+import Achievements from './views/Achievements.vue'
 
 import Users from './views/backoffice/Users.vue'
 import Books from './views/backoffice/Books.vue'
@@ -78,5 +79,10 @@ export default new Router({
       name: 'suggestions',
       component: Suggestions
     },
+    {
+      path: '/achievements',
+      name: 'achievements',
+      component: Achievements
+    }
   ]
 })
