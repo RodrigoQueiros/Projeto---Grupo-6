@@ -12,9 +12,10 @@
 
         <div class="row">
         <div class="col-12 col-md-12 boxContent"> <!-- Show Points -->
+        <div class="row">
 
-            <div class="col-4 mt-3 mb-3" style="background-color:white">
-              <div class="row">
+            <div class="col-4 mt-3 mb-3 pl-5 pr-5" >
+              <div class="row" style="background-color:white">
               <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
               <div class="col-8">
               <h4 class="mt-5">
@@ -23,8 +24,9 @@
               </div>
               </div>              
             </div>
-            <div class="col-4 mt-3 mb-3" style="background-color:white">
-              <div class="row">
+            
+            <div class="col-4 mt-3 mb-3 pl-5 pr-5" >
+              <div class="row" style="background-color:white">
               <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
               <div class="col-8">
               <h4 class="mt-5">
@@ -34,11 +36,21 @@
               </div>              
             </div>
 
+            <div class="col-4 mt-3 mb-3 pl-5 pr-5" >
+              <div class="row" style="background-color:white">
+              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
+              <div class="col-8">
+              <h4 class="mt-5">
+                Fazer 1 requisição <i class="far fa-check-circle" style="color:green" v-if="achReq>0"></i>
+              </h4>
+              </div>
+              </div>              
+            </div>
             
 
 
 
-
+        </div>
         </div>
         </div>
 
