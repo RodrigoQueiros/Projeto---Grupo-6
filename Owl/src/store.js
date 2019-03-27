@@ -244,7 +244,13 @@ export default new Vuex.Store({
       bookId:3,
       show: false
     }],
-    
+    achievements: {
+      type1: [1,5,20,1,10,50,5,50,100,200,1000,5000],
+      text1: ["Fazer "," requisições"],
+      text2: ["Fazer "," reviews"],
+      text3: ["Fazer "," upvotes"],
+      text4: ["Atingir "," pontos"],
+    },    
 
 
   },
