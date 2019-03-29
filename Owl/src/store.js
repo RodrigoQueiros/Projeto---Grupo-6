@@ -201,22 +201,22 @@ export default new Vuex.Store({
     }],
 
     requisitions: [{
-      // requisitionId: 0,
-      // bookId: 2,
-      // userId: 0,
-      // requisitionDate: "",
-      // deliveryDate: "",
-      // deliveryBookStatus: "",
-      // active: true
+      requisitionId: 0,
+      bookId: 2,
+      userId: 0,
+      requisitionDate: "",
+      deliveryDate: "",
+      deliveryBookStatus: "",
+      active: true
     },
     {
-      // requisitionId: 1,
-      // bookId: 0,
-      // userId: 0,
-      // requisitionDate: "",
-      // deliveryDate: "",
-      // deliveryBookStatus: "",
-      // active: false
+      requisitionId: 1,
+      bookId: 0,
+      userId: 0,
+      requisitionDate: "",
+      deliveryDate: "",
+      deliveryBookStatus: "",
+      active: false
     }],
 
     tags: [{
@@ -245,7 +245,7 @@ export default new Vuex.Store({
       show: false
     }],
     achievements: {
-      type1: [1,5,20,1,10,50,5,50,100,200,1000,5000],
+      type1: [1,5,20,2,10,50,6,60,100,200,1000,5000],
       text1: ["Fazer "," requisições"],
       text2: ["Fazer "," reviews"],
       text3: ["Fazer "," upvotes"],
