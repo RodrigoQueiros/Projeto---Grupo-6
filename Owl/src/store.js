@@ -447,6 +447,14 @@ export default new Vuex.Store({
       state.users[payload].type = "user"
     },
 
+    LET_REQUEST(state, payload) {
+      state.users[payload].ableToRequest = true
+    },
+
+    DENY_REQUEST(state, payload) {
+      state.users[payload].ableToRequest = false
+    },
+
     ADD_SUGGESTION(state, payload) {
       state.bookSuggestions.push(payload)
     },
@@ -569,6 +577,12 @@ export default new Vuex.Store({
     },
     delete_admin(context, payload) {
       context.commit("DELETE_ADMIN", payload);
+    },
+    let_request(context, payload) {
+      context.commit("LET_REQUEST", payload);
+    },
+    deny_request(context, payload) {
+      context.commit("DENY_REQUEST", payload);
     },
     add_suggestion(context, payload) {
       context.commit("ADD_SUGGESTION", payload);
