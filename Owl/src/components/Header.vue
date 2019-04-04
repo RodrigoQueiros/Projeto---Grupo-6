@@ -5,8 +5,8 @@
             <img src="../assets/logo.png" alt="" id="logo">
         </router-link>
         <router-link class="nav-link" :to="{name: 'profile'}">
-            <div v-if="userLoggedIn != -1" style="color:white">
-                <i class="fas fa-user fa-2x"></i>  
+            <div v-if="userLoggedIn != -1" style="color:white" >
+                <i id="x" class="fas fa-user fa-2x"></i>  
                 <h3>{{userName}}</h3>
             </div> 
         </router-link>
@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 
 #navbar1 {
     background-color: #BF6E26 !important;
@@ -66,6 +66,11 @@
 .nav-link {
     color: white !important;
     padding-left: 25px !important; 
+}
+
+#x {
+    float: left;
+    
 }
 
 /* #right {
