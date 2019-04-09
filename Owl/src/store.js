@@ -96,10 +96,10 @@ export default new Vuex.Store({
       title: "Harry Potter and the Sorcerer's Stone",
       author: "J.K. Rowling",
       publisher: "Scholastic",
-      idTag: [0, 1],
+      idTag: [1],
       launchDate: "",
       nPages: 100,
-      description: "O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente. O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente. O harry potter é muito fixe e o carlos leu tudo, mas quando foi ver o filme ficou apaixonado pela hermione e depois nunca mais viu nada a frente.",
+      description: "Em 2016 chega-nos em português o novo livro de Harry Potter, o célebre personagem de J.K. Rowling. Harry Potter e a Criança Amaldiçoada (Harry Potter and the Cursed Child) traz de volta as personagens mais carismáticas da série: Harry, Ron e Herminone, agora adultos, mas também os respetivos filhos e com estes desafios novos… e antigos:",
       nViews: 100,
       availability: true,
       bookStatus: "Good"
@@ -110,10 +110,10 @@ export default new Vuex.Store({
       title: "Sangue e Fogo - A História dos Reis Targaryen",
       author: "George R. R. Martin",
       publisher: "Scholastic",
-      idTag: [0, 1],
+      idTag: [1],
       launchDate: "",
       nPages: 100,
-      description: "ola ola ola",
+      description: "nfdljanfjlsahjlsdç",
       nViews: 100,
       availability: true,
       bookStatus: "Good"
@@ -124,7 +124,7 @@ export default new Vuex.Store({
       title: "Onde Caem os Anjos",
       author: "Nora Roberts",
       publisher: "Scholastic",
-      idTag: [0, 1],
+      idTag: [1],
       launchDate: "",
       nPages: 100,
       description: "",
@@ -138,7 +138,7 @@ export default new Vuex.Store({
       title: "Fullstack Vue: The Complete Guide to Vue.js",
       author: "Hassan Djirdeh",
       publisher: "CreateSpace Independent Publishing Platform",
-      idTag: [0, 1],
+      idTag: [1],
       launchDate: "",
       nPages: 320,
       description: "",
@@ -161,6 +161,22 @@ export default new Vuex.Store({
       bookStatus: "Good",
       description: "Nunca o futebol mundial assistiu a um duelo tão equilibrado. Fruto de uma aturada investigação, este livro apresenta pela primeira vez os dois jogadores, comparando-os relativamente a mais de 30 diferentes fatores. ",
     },
+    {
+      bookId: 5,
+      cover: "https://img.wook.pt/images/programacao-em-java-pedro-coelho/MXwxODM1MDgwMHwxNDA0MTg5NHwxNDY5MDU1NjAwMDAw/502x",
+      title: "Programação em Java",
+      author: "Luís Miguel Pereira",
+      publisher: "Prime Books",
+      idTag: [0],
+      launchDate: "",
+      nPages: 100,
+      description: "",
+      nViews: 550,
+      availability: true,
+      bookStatus: "Good",
+      description: "Nesta altura em que o Java se afirma em múltiplos ambientes de desenvolvimento e em que as interfaces por plug-in começam a ser descontinuadas nos browsers, surge esta obra com vários exemplos práticos, escrita de forma simples e acessível, destinada a todos aqueles que possuem conhecimentos básicos de programação em outras linguagens e queiram aprender Java.",
+    },
+    
     ],
 
     reviews: [{
@@ -185,22 +201,22 @@ export default new Vuex.Store({
     }],
 
     requisitions: [{
-      // requisitionId: 0,
-      // bookId: 2,
-      // userId: 0,
-      // requisitionDate: "",
-      // deliveryDate: "",
-      // deliveryBookStatus: "",
-      // active: true
+      requisitionId: 0,
+      bookId: 2,
+      userId: 0,
+      requisitionDate: "",
+      deliveryDate: "",
+      deliveryBookStatus: "",
+      active: true
     },
     {
-      // requisitionId: 1,
-      // bookId: 0,
-      // userId: 0,
-      // requisitionDate: "",
-      // deliveryDate: "",
-      // deliveryBookStatus: "",
-      // active: false
+      requisitionId: 1,
+      bookId: 0,
+      userId: 0,
+      requisitionDate: "",
+      deliveryDate: "",
+      deliveryBookStatus: "",
+      active: false
     }],
 
     tags: [{
@@ -228,7 +244,13 @@ export default new Vuex.Store({
       bookId:3,
       show: false
     }],
-    
+    achievements: {
+      type1: [1,5,20,2,10,50,6,60,100,200,1000,5000],
+      text1: ["Fazer "," requisições"],
+      text2: ["Fazer "," reviews"],
+      text3: ["Fazer "," upvotes"],
+      text4: ["Atingir "," pontos"],
+    },    
 
 
   },
@@ -425,6 +447,14 @@ export default new Vuex.Store({
       state.users[payload].type = "user"
     },
 
+    LET_REQUEST(state, payload) {
+      state.users[payload].ableToRequest = true
+    },
+
+    DENY_REQUEST(state, payload) {
+      state.users[payload].ableToRequest = false
+    },
+
     ADD_SUGGESTION(state, payload) {
       state.bookSuggestions.push(payload)
     },
@@ -547,6 +577,12 @@ export default new Vuex.Store({
     },
     delete_admin(context, payload) {
       context.commit("DELETE_ADMIN", payload);
+    },
+    let_request(context, payload) {
+      context.commit("LET_REQUEST", payload);
+    },
+    deny_request(context, payload) {
+      context.commit("DENY_REQUEST", payload);
     },
     add_suggestion(context, payload) {
       context.commit("ADD_SUGGESTION", payload);

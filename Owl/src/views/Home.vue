@@ -47,7 +47,7 @@
       <br>
 
       <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
-        <h3 id="catalogTitle">Mais Visualizados</h3>
+        <h3 id="catalogTitle">Mais Populares</h3>
       </div>
       <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
         <div class="row">
@@ -167,6 +167,8 @@ export default {
       else return 0;
     });
 
+    // this.mostViews.splice(4,this.mostViews.length-1)
+
     console.log(this.mostViews);
     console.log(this.books);
 
@@ -175,6 +177,11 @@ export default {
     for (let i = 0; i < this.books.length; i++) {
       for (let j = 0; j < this.books[i].idTag.length; j++) {
         for (let z = 0; z < this.userTags.length; z++) {
+
+           if(this.recommended.length >= 4){
+              break;
+            }
+
           if (this.books[i].idTag[j] == this.userTags[z]) {
             this.recommended.push(this.books[i]);
 

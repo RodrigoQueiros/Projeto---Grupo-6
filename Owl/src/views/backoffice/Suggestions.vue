@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="bookSuggestion in tempSuggestions" :key="bookSuggestion.bookSuggestionId">
+              <tr v-for="bookSuggestion in bookSuggestions" :key="bookSuggestion.bookSuggestionId">
                 <td>{{bookSuggestion.suggestionId}}</td>
                 <td>{{bookSuggestion.suggestionTitle}}</td>
                 <td>
@@ -101,7 +101,7 @@ export default {
   },
 
   created() {
-    this.filterSuggestions();
+    
   },
 
   methods: {

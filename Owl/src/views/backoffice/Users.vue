@@ -17,7 +17,8 @@
                 <th scope="col">Último Nome</th>
                 <th scope="col">Email</th>
                 <th scope="col">Foto</th>
-                <th scope="col">Type</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Pode Requisitar</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
@@ -29,6 +30,24 @@
                 <td>{{user.email}}</td>
                 <td>{{user.photo}}</td>
                 <td>{{user.type}}</td>
+                <td>
+                  <span v-if="user.ableToRequest == true">Sim </span>
+                  <span v-if="user.ableToRequest == false">Não </span>
+                  <button
+                    v-if="user.ableToRequest == true"
+                    type="button"
+                    style="color:white"
+                    @click="denyRequest(user.userId)"
+                    class="btn btn-danger ml-2"
+                  ><i class="fas fa-ban"></i></button>
+                  <button
+                    v-if="user.ableToRequest == false"
+                    type="button"
+                    style="color:white"
+                    @click="letRequest(user.userId)"
+                    class="btn btn-success ml-2"
+                  ><i class="fas fa-check"></i></button>
+                </td>
                 <td>
                   <button
                     type="button"
@@ -99,7 +118,6 @@ export default {
               swal("Deleted!", "User has been deleted.", "success");
             }
           }
-          
         }
       });
     },
@@ -126,7 +144,31 @@ export default {
           });
         }
       }
-    }
+    },
+
+    letRequest(id) {
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].userId === id) {
+          this.$store.dispatch("let_request", i);
+          swal({
+            type: "success",
+            title: "O utilizador já pode requisitar."
+          });
+        }
+      }
+    },
+
+    denyRequest(id) {
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].userId === id) {
+          this.$store.dispatch("deny_request", i);
+          swal({
+            type: "success",
+            title: "O utilizador esta proibido de requisitar."
+          });
+        }
+      }
+    },
   }
 };
 </script>

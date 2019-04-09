@@ -35,17 +35,10 @@
               <div class="row">
                 <h4 class="bookInforHeaders alignLeft">{{books[this.clickedBook].author}}</h4>
               </div>
-
-              <div class="row mt-4">
-                <h4 class="alignLeft bookInforHeaders">
-                  <b>Editora:</b>
-                  {{books[this.clickedBook].publisher}}
-                  <b>Categoria:</b>
-                  {{books[this.clickedBook].idTag}} ...
-                </h4>
-
-
-                <i class="fas fa-star" style="color:gold"></i>
+              
+              <div class="alignLeft">
+                <i class="fas fa-star" style="color:gold" v-if="bookRating > 0" ></i>
+                <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 1"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 1"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 2"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 2"></i>
@@ -54,6 +47,18 @@
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 4"></i>
                 <i class="fas fa-star" style="color:gold" v-if="bookRating > 4"></i>
                 <i class="fas fa-star" style="color:lightgrey" v-if="bookRating < 5"></i>
+              </div>
+              
+
+              <div class="row mt-4">
+                <h4 class="alignLeft bookInforHeaders">
+                  <b>Editora:</b>
+                  {{books[this.clickedBook].publisher}}
+
+                </h4>
+
+
+                
 
               </div>
 
@@ -240,6 +245,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import swal from "sweetalert2"; 
 export default {
   //Fazer filtro de reviews com id do livro
   data: function() {
@@ -280,7 +286,7 @@ export default {
       let all = 0
       
       for (let i = 0; i < this.reviews.length; i++) {
-        if(this.reviews[i].bookId == this.clickedBook){
+        if(this.reviews[i].bookId == this.pageBookId){
           all += this.reviews[i].rating}
         
         
@@ -303,7 +309,10 @@ export default {
       }
 
       if(this.picked == 0){
-        alert("Nao classificou")
+        swal({
+              type: "error",
+              title: "Tem de classificar o livro para submeter a review."
+            });
       }
       else{
         let currentDate = new Date()
@@ -477,7 +486,10 @@ export default {
         console.table(this.requisitions);
         this.$store.dispatch("add_req", reqs);
         console.table(this.requisitions);
-        alert("Livro Requisitado");
+        swal({
+              type: "success",
+              title: "Livro requisitado com sucesso."
+            });
         console.log(req);
         this.checkRequesition(bookID, userID);
       } else {
@@ -505,7 +517,10 @@ export default {
             currentDate.getMinutes())
               let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
               this.$store.dispatch("delivery_book", del);
-              alert("Livro entregado");
+              swal({
+              type: "success",
+              title: "Livro entregado com sucesso."
+            });
              //}
             this.checkRequesition(bookID, userID);
             console.table(this.users)

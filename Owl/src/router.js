@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Catalog from './views/Catalog.vue'
+import Catalog2 from './views/Catalog2.vue'
 import Book from './views/Book.vue'
 import Rankings from './views/Rankings.vue'
 import Suggest from './views/Suggest.vue'
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
 import Profile from './views/Profile.vue'
+import Achievements from './views/Achievements.vue'
 
 import Users from './views/backoffice/Users.vue'
 import Books from './views/backoffice/Books.vue'
@@ -37,6 +39,11 @@ export default new Router({
       path: '/catalog',
       name: 'catalog',
       component: Catalog
+    },
+    {
+      path: '/catalog2',
+      name: 'catalog2',
+      component: Catalog2
     },
     {
       path: '/book/:id',
@@ -78,5 +85,10 @@ export default new Router({
       name: 'suggestions',
       component: Suggestions
     },
+    {
+      path: '/achievements',
+      name: 'achievements',
+      component: Achievements
+    }
   ]
 })
