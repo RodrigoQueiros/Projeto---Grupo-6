@@ -1,7 +1,27 @@
 <template>
   <div class="home">
     <Header/>
-    <br>
+
+    <header  id="home">
+  <div class="header" style="height:800px;">
+    <div class="col-6 col-md-6 ml-md-3" style="padding-top: 140px;">
+      
+        <h1>
+         Descubra o que o Owl tem para si!
+        </h1>
+        <p>
+          Owl fornece uma vasta libraria, veja o nosso catálogo!
+        </p>
+        <div>
+          <router-link class="nav-link" :to="{name: 'catalog'}">  
+            <button class="btn btn-owl">
+            Ver catálogo</button></router-link>
+       
+        </div>
+      </div>
+  </div>
+</header>
+
     <div class="container">
       <div v-if="userLoggedIn != -1">
         <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
@@ -84,6 +104,35 @@
   padding-top: 8px;
   text-align: left;
 }
+
+
+
+.header {
+    /* The image used */
+    background-image: url(https://imgur.com/LepFOUR.png);
+    height: 45%; 
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+  .btn-owl{
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 24px;
+        background-color: #bf6e26;
+        position: relative;
+        top: 5px;
+        color: white;
+        font-family: 'Libre Franklin', sans-serif;
+        margin:0 auto;
+        
+      }
+
 </style>
 
 <script>
