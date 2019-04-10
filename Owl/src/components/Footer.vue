@@ -1,5 +1,5 @@
 <template>
-    <div class="footer mt-4">
+    <div class="footer">
           <br>
   
       <div class="container">

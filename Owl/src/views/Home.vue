@@ -2,7 +2,7 @@
   <div class="home">
     <Header/>
 
-    <header  id="home">
+    <header  id="home" v-if="userLoggedIn == -1">
   <div class="header" style="height:800px;">
     <div class="col-6 col-md-6 ml-md-3" style="padding-top: 140px;">
       
@@ -22,49 +22,50 @@
   </div>
 </header>
 
-    <div class="container">
+    
       <div v-if="userLoggedIn != -1">
-        <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
-          <h3 id="catalogTitle">Recomendados</h3>
+        <div class="" id="recBar">
+          <h3 id="recommended">Recomendados</h3>
         </div>
-        <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
+        <div class="" id="">
+          <br>
           <div class="row">
-            <div class="col-6 col-md-3" v-for="book in recommended  " :key="book.bookId">
+            <div class="col-6 col-md-3" v-for="book in recommended.slice(0,4)" :key="book.bookId">
               <router-link
                 v-on:mouseover.native="clickBook(book.bookId)"
                 @click.native="addView(book.bookId)"
                 :to="{ name: 'book', params:{id: clickedBook}}"
               >
-                <img class="owlCovers mt-3" v-bind:src="book.cover">
+                <img class="owlBigCovers mt-3" v-bind:src="book.cover">
               </router-link>
-              <h6 class="mt-2">{{book.title}}</h6>
-              <h6>{{book.author}}</h6>
             </div>
           </div>
+          <br><br><br>
         </div>
       </div>
 
-      <br>
 
-      <div class="col-12 col-md-12 ml-md-3" id="catalogBar">
-        <h3 id="catalogTitle">Mais Populares</h3>
+
+     
+    
+     <div class="" id="landingBar">
+        <h3 id="owlTitle">Mais Populares</h3>
       </div>
-      <div class="col-12 col-md-12 ml-md-3" id="catalogContents">
+      <div class="" id="catalogContents">
+        <br>
         <div class="row">
-          <div class="col-6 col-md-3" v-for="book in mostViews" :key="book.bookId">
+          <div class="col-6 col-md-3" v-for="book in mostViews.slice(0,4)" :key="book.bookId">
             <router-link
               v-on:mouseover.native="clickBook(book.bookId)"
               @click.native="addView(book.bookId)"
               :to="{ name: 'book', params:{id: clickedBook}}"
             >
-              <img class="owlCovers mt-3" v-bind:src="book.cover">
+              <img class="owlBigCovers mt-3" v-bind:src="book.cover">
             </router-link>
-            <h6 class="mt-2">{{book.title}}</h6>
-            <h6>{{book.author}}</h6>
           </div>
         </div>
+        <br><br><br>
       </div>
-    </div>
 
     <Footer/>
   </div>
@@ -98,18 +99,42 @@
 }
 
 #recBar {
-  background-color: #bf6e26 !important;
+  background-color: #ffffff !important;
   height: 50px;
-  color: white;
-  padding-top: 8px;
+  padding-top: 10px;
   text-align: left;
 }
 
+.owlBigCovers {
+  height: 300px;
+  width: 225px;
+  box-sizing: border-box;
+  border: 3px solid white;
+  border-radius: 5px;
+}
+
+#landingBar {
+  background-color: #d9b97e !important;
+  height: 50px;
+  color: white;
+  padding-top: 10px;
+  text-align: left;
+}
+
+#owlTitle {
+  padding-left: 15px;
+  font-size: 45px;
+}
+#recommended {
+  padding-left: 15px;
+  font-size: 45px;
+  color: #1f1f1f;
+}
 
 
 .header {
     /* The image used */
-    background-image: url(https://imgur.com/LepFOUR.png);
+    background-image: url(https://i.imgur.com/jgBjRVJ.png);
     height: 45%; 
     
     background-position: center;
@@ -167,7 +192,7 @@ export default {
       else return 0;
     });
 
-    // this.mostViews.splice(4,this.mostViews.length-1)
+    //this.mostViews.splice(4,this.mostViews.length-1)
 
     console.log(this.mostViews);
     console.log(this.books);
