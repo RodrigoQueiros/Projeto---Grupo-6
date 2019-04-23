@@ -1,5 +1,5 @@
 # Owl
-![GitHub Logo ](Owl/src/assets/logo.png)
+![GitHub Logo ](../assets/logo.png)
 
 
 [ENG]
