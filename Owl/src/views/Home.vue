@@ -2,59 +2,28 @@
   <div class="home">
     <Header/>
 
-    <header  id="home" v-if="userLoggedIn == -1">
-  <div class="header" style="height:800px;">
-    <div class="col-6 col-md-6 ml-md-3" style="padding-top: 140px;">
-      
-        <h1>
-         Descubra o que o Owl tem para si!
-        </h1>
-        <p>
-          Owl fornece uma vasta libraria, veja o nosso catálogo!
-        </p>
-        <div>
-          <router-link class="nav-link" :to="{name: 'catalog'}">  
-            <button class="btn btn-owl">
-            Ver catálogo</button></router-link>
-       
-        </div>
-      </div>
-  </div>
-</header>
-
-    
-      <div v-if="userLoggedIn != -1">
-        <div class="" id="recBar">
-          <h3 id="recommended">Recomendados</h3>
-        </div>
-        <div class="" id="">
-          <br>
-          <div class="row">
-            <div class="col-6 col-md-3" v-for="book in recommended.slice(0,4)" :key="book.bookId">
-              <router-link
-                v-on:mouseover.native="clickBook(book.bookId)"
-                @click.native="addView(book.bookId)"
-                :to="{ name: 'book', params:{id: clickedBook}}"
-              >
-                <img class="owlBigCovers mt-3" v-bind:src="book.cover">
-              </router-link>
-            </div>
+    <header id="home" v-if="userLoggedIn == -1">
+      <div class="header" style="height:800px;">
+        <div class="col-6 col-md-6 ml-md-3" style="padding-top: 140px;">
+          <h1>Descubra o que o Owl tem para si!</h1>
+          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p>
+          <div>
+            <router-link class="nav-link" :to="{name: 'catalog'}">
+              <button class="btn btn-owl">Ver catálogo</button>
+            </router-link>
           </div>
-          <br><br><br>
         </div>
       </div>
+    </header>
 
-
-
-     
-    
-     <div class="" id="landingBar">
-        <h3 id="owlTitle">Mais Populares</h3>
+    <div v-if="userLoggedIn != -1">
+      <div class id="recBar">
+        <h3 id="recommended">Recomendados</h3>
       </div>
-      <div class="" id="catalogContents">
+      <div class id>
         <br>
         <div class="row">
-          <div class="col-6 col-md-3" v-for="book in mostViews.slice(0,4)" :key="book.bookId">
+          <div class="col-6 col-md-3" v-for="book in recommended.slice(0,4)" :key="book.bookId">
             <router-link
               v-on:mouseover.native="clickBook(book.bookId)"
               @click.native="addView(book.bookId)"
@@ -64,8 +33,32 @@
             </router-link>
           </div>
         </div>
-        <br><br><br>
+        <br>
+        <br>
+        <br>
       </div>
+    </div>
+
+    <div class id="landingBar">
+      <h3 id="owlTitle">Mais Populares</h3>
+    </div>
+    <div class id="catalogContents">
+      <br>
+      <div class="row">
+        <div class="col-6 col-md-3" v-for="book in mostViews.slice(0,4)" :key="book.bookId">
+          <router-link
+            v-on:mouseover.native="clickBook(book.bookId)"
+            @click.native="addView(book.bookId)"
+            :to="{ name: 'book', params:{id: clickedBook}}"
+          >
+            <img class="owlBigCovers mt-3" v-bind:src="book.cover">
+          </router-link>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+    </div>
 
     <Footer/>
   </div>
@@ -131,33 +124,29 @@
   color: #1f1f1f;
 }
 
-
 .header {
-    /* The image used */
-    background-image: url(https://i.imgur.com/jgBjRVJ.png);
-    height: 45%; 
-    
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  /* The image used */
+  background-image: url(https://i.imgur.com/jgBjRVJ.png);
+  height: 45%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-
-  .btn-owl{
-        border: none;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 24px;
-        background-color: #bf6e26;
-        position: relative;
-        top: 5px;
-        color: white;
-        font-family: 'Libre Franklin', sans-serif;
-        margin:0 auto;
-        
-      }
-
+.btn-owl {
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 24px;
+  background-color: #bf6e26;
+  position: relative;
+  top: 5px;
+  color: white;
+  font-family: "Libre Franklin", sans-serif;
+  margin: 0 auto;
+}
 </style>
 
 <script>
@@ -202,10 +191,9 @@ export default {
     for (let i = 0; i < this.books.length; i++) {
       for (let j = 0; j < this.books[i].idTag.length; j++) {
         for (let z = 0; z < this.userTags.length; z++) {
-
-           if(this.recommended.length >= 4){
-              break;
-            }
+          if (this.recommended.length >= 4) {
+            break;
+          }
 
           if (this.books[i].idTag[j] == this.userTags[z]) {
             this.recommended.push(this.books[i]);
