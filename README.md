@@ -1,6 +1,5 @@
 # Owl
-
-![Our logo](https://imginger.s-ul.eu/0Joee7W6)
+![GitHub Logo ](Owl/src/assets/logo.png)
 
 
 [ENG]
