@@ -1,59 +1,81 @@
 <template>
   <div class="home">
     <Header/>
-    <div class="box mt-4">
+    <div class="margin5 mt-4">
       <div class="row">
-        <div class="col-12 col-md-3" id="filterBar">
-          <h3>Filtros</h3>
-        </div>
-        <div class="col-12 col-md-8 ml-md-3" id="catalogBar">
-    
-          <div class="row">
-            
-            <h3 id="catalogTitle">Catálogo</h3>
-          <p id="catalogOrder" >Ordenar por: &nbsp</p>
-          <select v-on:change="sortBooks" class="float-right" v-model="orderTab">
-            <option>Mais Populares</option>
-            <option>Menos Populares</option>
-            <option>Alfabetico (Por Titulo)</option>
-            <option>Alfabetico (Por Autor)</option>
-            
-            </select></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-3" id="filterContents">
-          <label for="filterAuthors" class="mt-2">Por Autor:</label>
-          <select class="form-control" id="filterAuthors" v-model="authorFilter">
-            <option>Todos</option>
-            <option v-for="author in authors" :key="author">{{author}}</option>
-          </select>
-          
-          <label for="filterPublisher" class="mt-2">Por Editora:</label>
-          <select class="form-control" id="filterPublisher" v-model="publisherFilter">
-            <option>Todos</option>
-            <option v-for="publisher in publishers" :key="publisher">{{publisher}}</option>
-          </select>
-          
-          <label for="filterTag" class="mt-2">Por Tag:</label>
-          <select class="form-control" id="filterTag" v-model="tagFilter">
-            <option>Todos</option>
-            <option v-for="tag in tags" :key="tag">{{tag.tagDescription}}</option>
-          </select>
-          <br>
-          <button class="btn btn-lg btn-block" id="btnLogin" @click="filterBooks">Filtrar</button>
+        <div class="col-12 col-md-3">
+          <div class="boxTitle">
+            <h3 id="filterTitle">Filtros</h3>
+          </div>
+          <div class="boxContent alignLeft" id="margin">
+            <label for="filterName">Por Nome:</label>
+            <input type="text" class="form-control">
+            <label for="filterAuthors" class ="mt-2">Por Autor:</label>
+            <select class="form-control" id="filterAuthors" v-model="authorFilter">
+              <option>Todos</option>
+              <option v-for="author in authors" :key="author">{{author}}</option>
+            </select>
 
+            <label for="filterPublisher" class ="mt-2">Por Editora:</label>
+            <select class="form-control" id="filterPublisher" v-model="publisherFilter">
+              <option>Todos</option>
+              <option v-for="publisher in publishers" :key="publisher">{{publisher}}</option>
+            </select>
+
+            <label for="filterTag" class="mt-2">Por Tag:</label>
+            <select class="form-control" id="filterTag" v-model="tagFilter">
+              <option>Todos</option>
+              <option v-for="tag in tags" :key="tag">{{tag.tagDescription}}</option>
+            </select>
+            <br>
+            <button class="btn btn-lg btn-block buttonColor" id="btnLogin" @click="filterBooks">Filtrar</button>
+          </div>
         </div>
-        <div class="col-12 col-md-8 ml-md-3" id="catalogContents">
-          <div class="row">
-            <div class="col-6 col-md-3" v-for="book in filteredBooks" :key="book.bookId" >
-              <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
-                <img class="owlCovers mt-3" v-bind:src="book.cover">
-              </router-link>
-              <h6 class="mt-2">{{book.title}}</h6>
-              <h6>{{book.author}}</h6>
-              <p v-if="book.availability == true">Disponivel</p>
-              <p v-else>Indisponivel</p>
+        <div class="col-12 col-md-9 mt-4 mt-md-0">
+          <div class="boxTitle">
+            <div class="row">
+              <div class="col-2">
+                <h3 id="catalogTitle">Catalogo</h3>
+              </div>
+                <div class=" ml-auto" id="ordenarPC">
+                  <form class="form-inline">
+                    <label> Ordenar por:</label>
+                    <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4" >
+                      <option>Mais Populares</option>
+                      <option>Menos Populares</option>
+                      <option>Alfabetico (Por Titulo)</option>
+                      <option>Alfabetico (Por Autor)</option>
+                    </select>
+                  </form>
+                </div> 
+              </div>
+            </div>
+          <div class="boxContent" id="margin">
+            <div class=" ml-auto" id="ordenarMobile">
+                  <form class="form-inline">
+                    <label> Ordenar por:</label>
+                    <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4" >
+                      <option>Mais Populares</option>
+                      <option>Menos Populares</option>
+                      <option>Alfabetico (Por Titulo)</option>
+                      <option>Alfabetico (Por Autor)</option>
+                    </select>
+                  </form>
+                </div> 
+            <div class="row">
+              <div class="col-6 col-xl-3 col-lg-4" v-for="book in filteredBooks" :key="book.bookId">
+                <router-link
+                  v-on:mouseover.native="clickBook(book.bookId)"
+                  @click.native="addView(book.bookId)"
+                  :to="{ name: 'book', params:{id: clickedBook}}"
+                >
+                  <img class="owlCovers mt-3" v-bind:src="book.cover">
+                </router-link>
+                <h6 class="mt-2">{{book.title}}</h6>
+                <h6>{{book.author}}</h6>
+                <p v-if="book.availability == true">Disponivel</p>
+                <p v-else>Indisponivel</p>
+              </div>
             </div>
           </div>
         </div>
@@ -63,7 +85,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 #filterBar {
   background-color: #bf6e26 !important;
   height: 50px;
@@ -94,9 +116,20 @@
   padding-left: 15px;
 }
 
+#filterTitle {
+  padding-left: 15px;
+}
+
+
 #catalogOrder {
   padding-left: 460px;
 }
+
+#margin {
+  padding: 15px 15px 15px 15px;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
 
 .box {
   margin-left: 5%;
@@ -114,6 +147,19 @@
   /* border-color: #592316; */
   opacity: 0.8;
 }
+
+@media screen and (max-width: 576px) {
+  #ordenarPC {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #ordenarMobile {
+    display: none;
+  }
+}
+
 </style>
 
 <script>
@@ -171,7 +217,6 @@ export default {
     },
 
     sortBooks() {
-
       //Ordenar alfabeticamente
       if (this.orderTab == "Alfabetico (Por Titulo)") {
         this.filteredBooks.sort(function(a, b) {
@@ -183,11 +228,10 @@ export default {
           }
           return 0;
         });
-        
       }
 
-    //Ordenar por autor
-       if (this.orderTab == "Alfabetico (Por Autor)") {
+      //Ordenar por autor
+      if (this.orderTab == "Alfabetico (Por Autor)") {
         this.filteredBooks.sort(function(a, b) {
           if (a.author < b.author) {
             return -1;
@@ -197,10 +241,9 @@ export default {
           }
           return 0;
         });
-        
       }
 
-       if (this.orderTab == "Mais Populares") {
+      if (this.orderTab == "Mais Populares") {
         this.filteredBooks.sort(function(a, b) {
           if (a.nViews > b.nViews) {
             return -1;
@@ -210,10 +253,9 @@ export default {
           }
           return 0;
         });
-        
       }
 
-   if (this.orderTab == "Menos Populares") {
+      if (this.orderTab == "Menos Populares") {
         this.filteredBooks.sort(function(a, b) {
           if (a.nViews < b.nViews) {
             return -1;
@@ -223,9 +265,7 @@ export default {
           }
           return 0;
         });
-        
       }
-
     },
 
     filterBooks() {

@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 #formSugestion {
   text-align: left;
 }
