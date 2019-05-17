@@ -172,7 +172,10 @@ export default {
       clickedBook: 0
     };
   },
-  created() {
+  async created() {
+
+    this.users = await axios.get('/user'); //await axios.get('/user?ID=12345');
+
     console.log("userLoggedIn: " + this.userLoggedIn);
 
     this.mostViews = this.books.sort(function orderByViews(a, b) {
