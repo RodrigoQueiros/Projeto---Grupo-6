@@ -3,7 +3,7 @@
     <Header/>
     <div class="margin5 mt-4">
       <div class="row">
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-lg-3 col-md-12">
           <div class="boxTitle">
             <h3 id="filterTitle">Filtros</h3>
           </div>
@@ -13,25 +13,25 @@
             <label for="filterAuthors" class ="mt-2">Por Autor:</label>
             <select class="form-control" id="filterAuthors" v-model="authorFilter">
               <option>Todos</option>
-              <option v-for="author in authors" :key="author">{{author}}</option>
+              <option v-for="(author, index) in authors" :key="index">{{author}}</option>
             </select>
 
             <label for="filterPublisher" class ="mt-2">Por Editora:</label>
             <select class="form-control" id="filterPublisher" v-model="publisherFilter">
               <option>Todos</option>
-              <option v-for="publisher in publishers" :key="publisher">{{publisher}}</option>
+              <option v-for="(publisher, index) in publishers" :key="index">{{publisher}}</option>
             </select>
 
             <label for="filterTag" class="mt-2">Por Tag:</label>
             <select class="form-control" id="filterTag" v-model="tagFilter">
               <option>Todos</option>
-              <option v-for="tag in tags" :key="tag">{{tag.tagDescription}}</option>
+              <option v-for="(tag, index) in tags" :key="index">{{tag.tagDescription}}</option>
             </select>
             <br>
             <button class="btn btn-lg btn-block buttonColor" id="btnLogin" @click="filterBooks">Filtrar</button>
           </div>
         </div>
-        <div class="col-12 col-md-9 mt-4 mt-md-0">
+        <div class="col-12 col-lg-9 mt-4 mt-lg-0 ">
           <div class="boxTitle">
             <div class="row">
               <div class="col-2">
@@ -40,7 +40,7 @@
                 <div class=" ml-auto" id="ordenarPC">
                   <form class="form-inline">
                     <label> Ordenar por:</label>
-                    <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4" >
+                    <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4 " >
                       <option>Mais Populares</option>
                       <option>Menos Populares</option>
                       <option>Alfabetico (Por Titulo)</option>
