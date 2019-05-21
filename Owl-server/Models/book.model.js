@@ -5,21 +5,19 @@ var bookSchema = new mongoose.Schema({
   cover: {
     type: String
   },
-  title:  {
+  title: {
     type: String
-  } ,
+  },
   author: {
     type: String
   },
   publisher: {
     type: String
   },
-    /*idTag: [{
-    tag: {
-      type: ObjectId 
-    }
+  idTag: [{
+    type: ObjectId
   }
-  ]*/ 
+  ],
   launchDate: {
     type: String
   },
@@ -32,12 +30,12 @@ var bookSchema = new mongoose.Schema({
   nViews: {
     type: String
   },
-  availability:{
+  availability: {
     type: Boolean
   },
-  bookStatus:{
+  bookStatus: {
     type: String
-  }  
+  }
 });
 
 /*userSchema.pre("save", async function(next) {
@@ -49,5 +47,5 @@ var bookSchema = new mongoose.Schema({
 })
  */
 const Book = mongoose.model('Book', bookSchema);
- 
+
 module.exports = Book;
