@@ -1,41 +1,43 @@
 var mongoose = require('../Database/connection');
 const ObjectId = mongoose.Schema.Types.ObjectId
 
-var userSchema = new mongoose.Schema({
-  firstName: {
+var bookSchema = new mongoose.Schema({
+  cover: {
     type: String
   },
-  lastName:  {
+  title:  {
     type: String
   } ,
-  email: {
+  author: {
     type: String
   },
-  password: {
+  publisher: {
     type: String
   },
-  ableToRequest: {
-    type: Boolean
-  },
-  type: {
-    type: String
-  },
-  nRequisitionsNow: {
-    type: Number
-  },
-  photo: {
-    type: String
-  },
-  points:{
-    type: Number
-  },
-  /*favTags: [{
+    /*idTag: [{
     tag: {
       type: ObjectId 
     }
   }
-  ]*/
-  //favTags: [ {idTag: Number}],  
+  ]*/ 
+  launchDate: {
+    type: String
+  },
+  nPages: {
+    type: Number
+  },
+  description: {
+    type: String
+  },
+  nViews: {
+    type: String
+  },
+  availability:{
+    type: Boolean
+  },
+  bookStatus:{
+    type: String
+  }  
 });
 
 /*userSchema.pre("save", async function(next) {
@@ -46,6 +48,6 @@ var userSchema = new mongoose.Schema({
     next();
 })
  */
-const User = mongoose.model('User', userSchema);
+const Book = mongoose.model('Book', bookSchema);
  
-module.exports = User;
+module.exports = Book;

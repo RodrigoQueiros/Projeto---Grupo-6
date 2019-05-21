@@ -1,15 +1,51 @@
-const connectL = require('./connect');
+//const connectL = require('./connect');
+const User = require('../Models/user.model.js')
 
-app.post('/myaction', function (req, res) {
-    const post = [req.body.name, req.body.age]
-    //const sql_insert = "INSERT INTO webitclo_teste.`9170448` VALUES ('"+req.body.name+"','"+ req.body.age+"');";
-    const sql_insert = "INSERT INTO webitclo_teste.`9170448` VALUES ($name, $age);";
-    //const sql_select = "SELECT * FROM users WHERE user = $1 AND pass = $2";
+async function get(req, res) {
+    try {
+        return res.send(await User.find())
+    } catch (err) {
+        return res.status(400).send({ error: `Could not get users: ${err}` })
+    }
+}
+/*
+async function get(req, res) {
+    const { email } = req.query
+    console.log("teste")
+    try {
+        if (email) {
+            console.log("email")
+            const response = await User.findOne({ email })
+            if (response) {
+                return res.send(response)
+            } else {
+                return res.status(404).send({ error: "Email not found" })
+            }
+        } else {
+            console.log("no email")
+            try {
+                return res.send(await User.find())
+            } catch (err) {
+                return res.status(400).send({ error: err })
+            }
+        }
 
-    console.log(sql_insert);
+    } catch (err) {
+        return res.status(400).send({ error: `Could not get users: ${err}` })
+    }
+}*/
 
-    var a = connectL.con.query("INSERT INTO webitclo_teste.`9170448`(name, age) VALUES (?, ?)", post, function (err, result) {
-    });
-    console.log(a.sql)
-    res.send('Name: "' + req.body.name + '" - Age: "' + req.body.age + '".');
-});
+async function post(req, res) {
+    try {
+        User.create(req.body)
+        return res.send()
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not create user: ${err}` })
+
+    }
+}
+
+
+module.exports = { get, post }
