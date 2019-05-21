@@ -15,7 +15,7 @@
           <!-- Show Points -->
           <div class="row">
             <div
-              class="col-4 mt-3 mb-3 pl-5 pr-5"
+              class="col-12 col-sm-6 col-lg-4 mt-3 mb-3 pl-5 pr-5"
               v-for="(achievement,i) in achievements.type1"
               :key="achievement"
             >
