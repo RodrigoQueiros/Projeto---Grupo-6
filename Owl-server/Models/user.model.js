@@ -29,13 +29,10 @@ var userSchema = new mongoose.Schema({
   points:{
     type: Number
   },
-  /*favTags: [{
-    tag: {
+  favTags: [{
       type: ObjectId 
-    }
   }
-  ]*/
-  //favTags: [ {idTag: Number}],  
+  ]
 });
 
 /*userSchema.pre("save", async function(next) {
