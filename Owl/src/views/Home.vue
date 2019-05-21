@@ -172,9 +172,9 @@ export default {
       clickedBook: 0
     };
   },
-  async created() {
+  created() {
 
-    this.users = await axios.get('/user'); //await axios.get('/user?ID=12345');
+    //this.users = await axios.get('/user'); //await axios.get('/user?ID=12345');
 
     console.log("userLoggedIn: " + this.userLoggedIn);
 
