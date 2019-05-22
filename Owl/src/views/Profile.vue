@@ -3,12 +3,12 @@
     <Header/>
     <div class="margin5 mt-4">
       <div class="row">
-        <div class="col-12 col-md-12 boxTitle" id>
+        <div class="col-12 col-md-12 boxTitle" >
           <h3>Perfil</h3>
         </div>
       </div>
       <div class="row">
-        <div class="col-9 col-md-9 boxContent" id>
+        <div class="col-9 col-md-9 boxContent" >
           <div v-for="user in users" :key="user.userId">
             <div v-if="user.userId == userLoggedIn">
               <div class="row" style="text-align:left">
@@ -64,13 +64,13 @@
           </div>
         </div>
 
-        <div class="col-3 col-md-3 boxContent" id v-if="clicked == false">
+        <div class="col-3 col-md-3 boxContent" v-if="clicked == false">
           <h4 class="mt-4">Tags Favoritas</h4>
           <ul>
             <li class="text-left" v-for="teste in testes" :key="teste">{{teste}}</li>
           </ul>
         </div>
-        <div class="col-3 col-md-3 boxContent" id v-if="clicked">
+        <div class="col-3 col-md-3 boxContent" v-if="clicked">
           <h4 class="mt-4">Tags Favoritas</h4>
           <div class="scrollbox">
             <p v-for="(tag,index) in tags" :key="tag">
