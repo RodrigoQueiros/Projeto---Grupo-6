@@ -3,12 +3,12 @@
     <Header/>
     <div class="margin5 mt-4">
       <div class="row">
-        <div class="col-12 col-md-12 boxTitle" >
+        <div class="col-12 col-md-12 boxTitle">
           <h3>Perfil</h3>
         </div>
       </div>
       <div class="row">
-        <div class="col-9 col-md-9 boxContent" >
+        <div class="col-9 col-md-9 boxContent">
           <div v-for="user in users" :key="user.userId">
             <div v-if="user.userId == userLoggedIn">
               <div class="row" style="text-align:left">
@@ -95,9 +95,13 @@
                 >
                   <div class="row" style="text-align:left">
                     <div class="col-12 col-md-2">
-                       <router-link v-on:mouseover.native="clickBook(book.bookId)" @click.native="addView(book.bookId)" :to="{ name: 'book', params:{id: clickedBook}}">
+                      <router-link
+                        v-on:mouseover.native="clickBook(book.bookId)"
+                        @click.native="addView(book.bookId)"
+                        :to="{ name: 'book', params:{id: clickedBook}}"
+                      >
                         <img v-bind:src="book.cover" class="owlCovers mt-4 ml-3">
-                       </router-link>
+                      </router-link>
                     </div>
                     <div class="col-12 col-md-10">
                       <h4 class="mt-5">{{book.title}}</h4>
@@ -106,7 +110,11 @@
                         <b>Data de Requisição:</b>
                         {{requisition.requisitionDate}}
                       </p>
-                      <a class="btn buttonColor" style="color:white" @click="deliverBook(book.bookId, userLoggedIn)">Entregar</a>
+                      <a
+                        class="btn buttonColor"
+                        style="color:white"
+                        @click="deliverBook(book.bookId, userLoggedIn)"
+                      >Entregar</a>
                     </div>
                   </div>
                 </div>
@@ -136,13 +144,23 @@
               </thead>
               <tbody v-for="requisition in requisitions" :key="requisition.requisitionId">
                 <tr v-for="book in books" :key="book.bookId">
-                  <td v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId">{{book.title}}</td>
-                  <td v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId">
+                  <td
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                  >{{book.title}}</td>
+                  <td
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                  >
                     <input type="button" @click="seeCover(book.cover)" value="+">
                   </td>
-                  <td v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId">{{book.author}}</td>
-                  <td v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId">{{requisition.requisitionDate}}</td>
-                  <td v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId">{{requisition.deliveryDate}}</td>
+                  <td
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                  >{{book.author}}</td>
+                  <td
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                  >{{requisition.requisitionDate}}</td>
+                  <td
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                  >{{requisition.deliveryDate}}</td>
                 </tr>
               </tbody>
             </table>
@@ -151,87 +169,75 @@
       </div>
 
       <div class="row">
+        <div class="col-6 m-auto">
+          <div class="row mt-4">
+            <div class="col-12 col-md-12 boxTitle" id>
+              <h3>Conquistas</h3>
+            </div>
+            <div class="col-12 col-md-12 boxContent pb-3">
+              <div class="col-12 mt-3" style="background-color:white">
+                <div class="row">
+                  <div class="col-3">
+                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
+                  </div>
+                  <div class="col-8">
+                    <h4 class="mt-5">
+                      Fazer 1 requisição
+                      <i class="far fa-check-circle" style="color:green" v-if="achReq>0"></i>
+                    </h4>
+                  </div>
+                </div>
+              </div>
 
-      <div class="col-6 m-auto">
+              <div class="col-12 mt-3" style="background-color:white">
+                <div class="row">
+                  <div class="col-3">
+                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:aqua"></i>
+                  </div>
+                  <div class="col-8">
+                    <h4 class="mt-5">
+                      Fazer 5 requisição
+                      <i class="far fa-check-circle" style="color:green" v-if="achReq>4"></i>
+                    </h4>
+                  </div>
+                </div>
+              </div>
 
-      <div class="row mt-4">
-        <div class="col-12 col-md-12 boxTitle " id>
-            <h3>Conquistas</h3>
+              <div class="col-12 mt-3" style="background-color:white">
+                <div class="row">
+                  <div class="col-3">
+                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
+                  </div>
+                  <div class="col-8">
+                    <h4 class="mt-5">
+                      Fazer 5 comentarios
+                      <i class="far fa-check-circle" style="color:green" v-if="achRev>4"></i>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 mt-3" style="background-color:white">
+                <div class="row">
+                  <div class="col-3">
+                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
+                  </div>
+                  <div class="col-8">
+                    <h4 class="mt-5">
+                      Receber 20 upvotes
+                      <i class="far fa-check-circle" style="color:green" v-if="achVot>19"></i>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+
+              <!-- See more here -->
+              <router-link :to="{name:'achievements'}">»» See more ««</router-link>
+            </div>
           </div>
-         <div class="col-12 col-md-12 boxContent pb-3">
-
-            <div class="col-12 mt-3" style="background-color:white">
-              <div class="row">
-
-              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
-              <div class="col-8">
-              <h4 class="mt-5">
-                Fazer 1 requisição <i class="far fa-check-circle" style="color:green" v-if="achReq>0"></i>
-              </h4>
-              </div>
-
-
-              </div>
-              
-            </div>
-
-            <div class="col-12 mt-3" style="background-color:white">
-              <div class="row">
-
-              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:aqua"></i></div>
-              <div class="col-8">
-              <h4 class="mt-5">
-                Fazer 5 requisição <i class="far fa-check-circle" style="color:green" v-if="achReq>4"></i>
-              </h4>
-              </div>             
-
-              </div>        
-              
-            </div>
-
-
-            <div class="col-12 mt-3" style="background-color:white">
-              <div class="row">
-
-              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
-              <div class="col-8">
-              <h4 class="mt-5">
-                Fazer 5 comentarios <i class="far fa-check-circle" style="color:green" v-if="achRev>4"></i>
-              </h4>
-              </div>
-
-
-              </div>
-              
-            </div>
-
-
-            <div class="col-12 mt-3" style="background-color:white">
-              <div class="row">
-
-              <div class="col-3"><i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i></div>
-              <div class="col-8">
-              <h4 class="mt-5">
-                Receber 20 upvotes <i class="far fa-check-circle" style="color:green" v-if="achVot>19"></i>
-              </h4>
-              </div>
-
-
-              </div>
-              
-            </div>
-
-            <!-- See more here -->
-            <router-link :to="{name:'achievements'}">»» See more ««</router-link>
-
-           </div>
-
-
-      </div>
-      
-      </div>
-      <div class="col-5 m-auto">
-        <!--
+        </div>
+        <div class="col-5 m-auto">
+          <!--
       <div class="row mt-4">
         <div class="col-12 col-md-12 boxTitle" id>
             <h3>Notificações</h3>
@@ -241,26 +247,15 @@
 
 
       </div>
-        -->
+          -->
+        </div>
       </div>
-
-
-
-
-
-
-      </div>
-      
-      
-
-
-
     </div>
     <Footer/>
   </div>
 </template>
 
-<style>
+<style >
 .boxContent {
   background-color: #d9b97e;
   height: 260px;
@@ -289,6 +284,18 @@
 .scrollbox {
   height: 200px;
   overflow-x: scroll;
+}
+
+.owlCovers {
+  height: 200px;
+  width: 150px;
+  box-sizing: border-box;
+  border: 3px solid white;
+  border-radius: 5px;
+}
+.owlCovers:hover {
+  /* border-color: #592316; */
+  opacity: 0.8;
 }
 </style>
 
@@ -321,7 +328,7 @@ export default {
       clickedBook: 0,
       achReq: 0,
       achRev: 0,
-      achVot: 0,
+      achVot: 0
     };
   },
 
@@ -331,9 +338,9 @@ export default {
     this.user.email = this.users[this.userLoggedIn].email;
     this.user.favTags = this.users[this.userLoggedIn].favTags;
     this.user.photo = this.users[this.userLoggedIn].photo;
-    this.achReq = this.achievementReq()
-    this.achRev = this.achievementRev()
-    this.achVot = this.achievementVot()
+    this.achReq = this.achievementReq();
+    this.achRev = this.achievementRev();
+    this.achVot = this.achievementVot();
     for (let i = 0; i < this.user.favTags.length; i++) {
       for (let j = 0; j < this.tags.length; j++) {
         if (this.user.favTags[i] == this.tags[j].tagId) {
@@ -347,67 +354,60 @@ export default {
   },
 
   methods: {
-    achievementReq(){
-      let numberReq = 0
-
-      for (let i = 0; i< this.requisitions.length; i++) {
-        
-        if(this.requisitions[i].userId == this.userLoggedIn){
-          numberReq++
-        }
-       
-      }
-      return numberReq
-    },
-    achievementRev(){
-      let numberRev = 0
-
-      for (let i = 0; i< this.reviews.length; i++) {
-        
-        if(this.reviews[i].userId == this.userLoggedIn){
-          numberRev++
-        }
-       
-      } console.log(numberRev)
-      return numberRev
-    },
-    achievementVot(){
-      let numberVot = 0
-
-      for (let i = 0; i< this.reviews.length; i++) {
-        
-        if(this.reviews[i].userId == this.userLoggedIn){
-          numberVot += this.reviews[i].upVote.length
-        }
-       
-      }
-      return numberVot
-    },
-
-
-    deliverBook(bookID, userID){
+    achievementReq() {
+      let numberReq = 0;
 
       for (let i = 0; i < this.requisitions.length; i++) {
-          if (this.requisitions[i].bookId == bookID &&
-              this.requisitions[i].userId == userID &&
-              this.requisitions[i].active == true)
-           {
-             
-             let currentDate = new Date();
-             let date = (currentDate.getDate() +
+        if (this.requisitions[i].userId == this.userLoggedIn) {
+          numberReq++;
+        }
+      }
+      return numberReq;
+    },
+    achievementRev() {
+      let numberRev = 0;
+
+      for (let i = 0; i < this.reviews.length; i++) {
+        if (this.reviews[i].userId == this.userLoggedIn) {
+          numberRev++;
+        }
+      }
+      console.log(numberRev);
+      return numberRev;
+    },
+    achievementVot() {
+      let numberVot = 0;
+
+      for (let i = 0; i < this.reviews.length; i++) {
+        if (this.reviews[i].userId == this.userLoggedIn) {
+          numberVot += this.reviews[i].upVote.length;
+        }
+      }
+      return numberVot;
+    },
+
+    deliverBook(bookID, userID) {
+      for (let i = 0; i < this.requisitions.length; i++) {
+        if (
+          this.requisitions[i].bookId == bookID &&
+          this.requisitions[i].userId == userID &&
+          this.requisitions[i].active == true
+        ) {
+          let currentDate = new Date();
+          let date =
+            currentDate.getDate() +
             "/" +
             (currentDate.getMonth() + 1) +
             "/" +
-            currentDate.getFullYear() + " " +
+            currentDate.getFullYear() +
+            " " +
             currentDate.getHours() +
             ":" +
-            currentDate.getMinutes())
-              let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
-              this.$store.dispatch("delivery_book", del);
-           }}
-
-
-
+            currentDate.getMinutes();
+          let del = [i, userID, 50, bookID, date]; //Saber a posição e pontos para o user
+          this.$store.dispatch("delivery_book", del);
+        }
+      }
     },
     editProfile() {
       if (this.clicked) {
@@ -421,7 +421,7 @@ export default {
           firstName: this.user.firstName,
           lastName: this.user.lastName,
           email: this.user.email,
-          photo: this.user.photo,
+          photo: this.user.photo
         });
 
         this.testes = [];
@@ -435,8 +435,10 @@ export default {
             console.log(this.user.favTags);
           }
         }
-        this.$store.dispatch("update_favtags", [this.userLoggedIn,this.user.favTags]);
-
+        this.$store.dispatch("update_favtags", [
+          this.userLoggedIn,
+          this.user.favTags
+        ]);
       } else {
         this.clicked = true;
         // this.users[this.userLoggedIn].firstName = this.user.firstName
@@ -452,9 +454,8 @@ export default {
           }
         }
       }
-      
     },
-     clickBook(index) {
+    clickBook(index) {
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === index) {
           this.$store.dispatch("open_book", i);

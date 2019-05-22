@@ -69,6 +69,7 @@
 
               <div class="row">
                 <button
+                
                   @click="requesition(pageBookId, loggedUser)"
                   :disabled="buttonActive == false"
                   class="btn buttonColor float-right"
