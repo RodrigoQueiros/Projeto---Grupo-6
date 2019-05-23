@@ -45,7 +45,6 @@ git clone https://github.com/RodrigoQueiros/Owl---PW1-Project.git
 ### NPM
 ```
 npm install
-npm install sweetalert2
 ```
 
 ### Compiles and hot-reloads for development
