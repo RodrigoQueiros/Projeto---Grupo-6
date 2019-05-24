@@ -29,10 +29,9 @@ var reviewSchema = new mongoose.Schema({
     const salt = 10;
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;
-     
     next();
 })
  */
-const Review = mongoose.model('Rebiew', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
  
 module.exports = Review;

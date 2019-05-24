@@ -1,25 +1,25 @@
 var mongoose = require('../Database/connection');
 const ObjectId = mongoose.Schema.Types.ObjectId
 
-var bookSuggestionSchema = new mongoose.Schema({
-  suggestionTitle: {
-    type: String
-  },
-  suggestionAuthor:  {
-    type: String
+var requisitionSchema = new mongoose.Schema({
+  bookId:  {
+    type: ObjectId
   } ,
-  suggestionCover: {
-    type: String
-  },
   userId: {
     type: ObjectId
   },
-  suggestionDate: {
-    type: Date
+  requisitionDate: {
+    type: String
   },
-  suggestNumber: {
+  deliveryDate: {
+    type: String
+  },
+  deliveryBookStatus: {
     type: Number
   },
+  active: {
+    type: Boolean
+  }
 });
 
 /*userSchema.pre("save", async function(next) {
@@ -30,6 +30,6 @@ var bookSuggestionSchema = new mongoose.Schema({
     next();
 })
  */
-const BookSuggestion = mongoose.model('BookSuggestion', bookSuggestionSchema);
+const Requisition = mongoose.model('Requisition',requisitionSchema);
  
-module.exports = BookSuggestion;
+module.exports = Requisition;

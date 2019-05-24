@@ -1,5 +1,5 @@
 //const connectL = require('./connect');
-const BookSugestion = require('../Models/bookSugestion.model.js')
+const BookSugestion = require('../Models/bookSuggestion.model.js')
 
 async function get(req, res) {
     try {

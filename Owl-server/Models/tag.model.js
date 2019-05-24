@@ -18,6 +18,6 @@ var tagSchema = new mongoose.Schema({
     next();
 })
  */
-const Tag = mongoose.model('Rebiew', reviewSchema);
+const Tag = mongoose.model('Tag', tagSchema);
  
 module.exports = Tag;

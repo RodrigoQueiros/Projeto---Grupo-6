@@ -4,6 +4,10 @@
   background-color: rgb(54, 54, 54) !important
 } */
 
+#title {
+    padding-left: 15px;
+  }
+
 
 .navbarOwl{
     background-color: #592316

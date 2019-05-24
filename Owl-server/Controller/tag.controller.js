@@ -1,5 +1,5 @@
 //const connectL = require('./connect');
-const Tag = require('../Models/review.model.js')
+const Tag = require('../Models/tag.model.js')
 
 async function get(req, res) {
     try {

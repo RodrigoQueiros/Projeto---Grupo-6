@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Catalog from './views/Catalog.vue'
-import Rankings2 from './views/Rankings2.vue'
+import Profile2 from './views/Profile2.vue'
 import Book from './views/Book.vue'
 import Rankings from './views/Rankings.vue'
 import Suggest from './views/Suggest.vue'
@@ -41,9 +41,9 @@ export default new Router({
       component: Catalog
     },
     {
-      path: '/rankings2',
-      name: 'rankings2',
-      component: Rankings2
+      path: '/profile2',
+      name: 'profile2',
+      component: Profile2
     },
     {
       path: '/book/:id',

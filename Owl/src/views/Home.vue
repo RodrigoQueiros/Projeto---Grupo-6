@@ -3,15 +3,18 @@
     <Header/>
 
     <header id="home" v-if="userLoggedIn == -1">
-      <div class="header" style="height:800px;">
-        <div class="col-6 col-md-6 ml-md-3" style="padding-top: 140px;">
+      <div class="row" style="height:600px;">
+        <div class="col-6 col-md-6 " style="padding-top: 200px;">
           <h1>Descubra o que o Owl tem para si!</h1>
-          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p>
+          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p> 
           <div>
-            <router-link class="nav-link" :to="{name: 'catalog'}">
+            <router-link  :to="{name: 'catalog'}">
               <button class="btn btn-owl">Ver catálogo</button>
             </router-link>
           </div>
+        </div>
+        <div class="col-6">
+          <img src="https://cdn.discordapp.com/attachments/373524098954821632/578234339976937492/books.png" style="padding-right: 100px; padding-top:30px"  alt="">
         </div>
       </div>
     </header>
@@ -33,9 +36,7 @@
             </router-link>
           </div>
         </div>
-        <br>
-        <br>
-        <br>
+        
       </div>
     </div>
 
@@ -124,15 +125,15 @@
   color: #1f1f1f;
 }
 
-.header {
-  /* The image used */
+/*.header {
+   The image used 
   background-image: url(https://i.imgur.com/jgBjRVJ.png);
   height: 45%;
 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+}*/
 
 .btn-owl {
   border: none;
