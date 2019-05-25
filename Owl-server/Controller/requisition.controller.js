@@ -27,5 +27,29 @@ async function post(req, res) {
     }
 }
 
+async function put(req, res) {
+    try {
+        console.log("edited")
+        Requistion.findOneAndUpdate(
+            req.params.id,
+            { $set: { "active" : false} },
+            { new: true },
+            (err, data) => {
+                if (err) {
+                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                }
+            }
+        )
+        //console.log(Book.find())
+        return res.send("edited")
+    }
 
-module.exports = { get, post }
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+
+module.exports = { get, post, put }
