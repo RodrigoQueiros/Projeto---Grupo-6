@@ -2,17 +2,15 @@
   <div class="home">
     <Header/>
     <div class="margin5 mt-4">
-      <div class="row">
-        <div class="col-12 col-md-12 boxTitle">
-          <h3>Perfil</h3>
+      <div class="col-12">
+        <div class="boxTitle">
+          <h3 id="title">Perfil</h3>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-9 col-md-9 boxContent">
+        <div class="boxContent alignLeft" id="margin">
           <div v-for="user in users" :key="user.userId">
             <div v-if="user.userId == userLoggedIn">
-              <div class="row" style="text-align:left">
-                <div class="col-12 col-md-6 col-lg-3">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 ">
                   <img
                     v-if="clicked == false"
                     :src="user.photo"
@@ -20,7 +18,7 @@
                     width="250"
                     alt
                     id="profilePhoto"
-                    class="mt-4 ml-2 mb-4"
+                      
                   >
                   <input
                     v-if="clicked"
@@ -29,8 +27,8 @@
                     v-model="user.photo"
                   >
                 </div>
-                <div class="col-12 col-md-6 col-lg-9">
-                  <h4 class="mt-4">Nome de Utilizador</h4>
+                <div class="col-12 col-lg-4 col-md-6">
+                  <h4 class="mt-4 mt-sm-0">Nome de Utilizador</h4>
                   <p v-if="clicked == false">{{user.firstName}} {{user.lastName}}</p>
                   <div class="row">
                     <input
@@ -59,195 +57,26 @@
                     <i class="fas fa-edit"></i> Editar perfil
                   </a>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-3 col-md-3 boxContent" v-if="clicked == false">
-          <h4 class="mt-4">Tags Favoritas</h4>
-          <ul>
-            <li class="text-left" v-for="teste in testes" :key="teste">{{teste}}</li>
-          </ul>
-        </div>
-        <div class="col-3 col-md-3 boxContent" v-if="clicked">
-          <h4 class="mt-4">Tags Favoritas</h4>
-          <div class="scrollbox">
-            <p v-for="(tag,index) in tags" :key="tag">
-              <input :id="index" type="checkbox" :value="index">
-              {{tag.tagDescription}}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="mt-4">
-        <div class="row">
-          <div class="col-12 col-md-12 boxTitle" id>
-            <h3>Requisicoes</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-12 boxContent">
-            <div v-for="requisition in requisitions" :key="requisition.requisitionId">
-              <div v-for="book in books" :key="book.bookId">
-                <div
-                  v-if="requisition.userId == userLoggedIn && requisition.active == true && requisition.bookId == book.bookId"
-                >
-                  <div class="row" style="text-align:left">
-                    <div class="col-12 col-md-2">
-                      <router-link
-                        v-on:mouseover.native="clickBook(book.bookId)"
-                        @click.native="addView(book.bookId)"
-                        :to="{ name: 'book', params:{id: clickedBook}}"
-                      >
-                        <img v-bind:src="book.cover" class="owlCovers mt-4 ml-3">
-                      </router-link>
-                    </div>
-                    <div class="col-12 col-md-10">
-                      <h4 class="mt-5">{{book.title}}</h4>
-                      <h5>de {{book.author}}</h5>
-                      <p class="mt-4">
-                        <b>Data de Requisição:</b>
-                        {{requisition.requisitionDate}}
+                <div class="col-12 col-md-4">
+                  <div v-if="clicked == false">
+                    <h4 class="mt-md-4 mt-sm-4">Tags Favoritas</h4>
+                    <ul>
+                      <li class="text-left" v-for="teste in testes" :key="teste">{{teste}}</li>
+                    </ul>
+                  </div>
+                  <div v-if="clicked">
+                    <h4 class="mt-md-4 mt-sm-4">Tags Favoritas</h4>
+                    <div class="scrollbox">
+                      <p v-for="(tag,index) in tags" :key="tag">
+                        <input :id="index" type="checkbox" :value="index">
+                        {{tag.tagDescription}}
                       </p>
-                      <a
-                        class="btn buttonColor"
-                        style="color:white"
-                        @click="deliverBook(book.bookId, userLoggedIn)"
-                      >Entregar</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="mt-4">
-        <div class="row">
-          <div class="col-12 col-md-12 boxTitle" id>
-            <h3>Historico Requisicoes</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-12 boxContent">
-            <table class="table mt-4" table-responsive>
-              <thead>
-                <tr>
-                  <th scope="col">Titulo</th>
-                  <th scope="col">Capa</th>
-                  <th scope="col">Autor</th>
-                  <th scope="col">Data de Requisicao</th>
-                  <th scope="col">Data de Entrega</th>
-                </tr>
-              </thead>
-              <tbody v-for="requisition in requisitions" :key="requisition.requisitionId">
-                <tr v-for="book in books" :key="book.bookId">
-                  <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
-                  >{{book.title}}</td>
-                  <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
-                  >
-                    <input type="button" @click="seeCover(book.cover)" value="+">
-                  </td>
-                  <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
-                  >{{book.author}}</td>
-                  <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
-                  >{{requisition.requisitionDate}}</td>
-                  <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
-                  >{{requisition.deliveryDate}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-6 m-auto">
-          <div class="row mt-4">
-            <div class="col-12 col-md-12 boxTitle" id>
-              <h3>Conquistas</h3>
-            </div>
-            <div class="col-12 col-md-12 boxContent pb-3">
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Fazer 1 requisição
-                      <i class="far fa-check-circle" style="color:green" v-if="achReq>0"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:aqua"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Fazer 5 requisição
-                      <i class="far fa-check-circle" style="color:green" v-if="achReq>4"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Fazer 5 comentarios
-                      <i class="far fa-check-circle" style="color:green" v-if="achRev>4"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Receber 20 upvotes
-                      <i class="far fa-check-circle" style="color:green" v-if="achVot>19"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <!-- See more here -->
-              <router-link :to="{name:'achievements'}">»» See more ««</router-link>
-            </div>
-          </div>
-        </div>
-        <div class="col-5 m-auto">
-          <!--
-      <div class="row mt-4">
-        <div class="col-12 col-md-12 boxTitle" id>
-            <h3>Notificações</h3>
-          </div>
-         <div class="col-12 col-md-12 boxContent">
-           </div>
-
-
-      </div>
-          -->
         </div>
       </div>
     </div>
@@ -255,11 +84,16 @@
   </div>
 </template>
 
-<style >
+<style scoped>
 .boxContent {
   background-color: #d9b97e;
   height: 260px;
   color: #592316;
+}
+
+#margin {
+  padding: 15px 15px 15px 15px;
+  
 }
 
 #profilePhoto {

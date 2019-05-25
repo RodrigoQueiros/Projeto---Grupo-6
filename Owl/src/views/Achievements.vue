@@ -170,8 +170,8 @@ export default {
         }
         
       }
-
-      if (number > n) {
+      
+      if (number >= n) {
         text = 100 + "%";
         percent = 100;
         console.log(percent);
