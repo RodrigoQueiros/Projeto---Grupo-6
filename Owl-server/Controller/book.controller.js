@@ -2,6 +2,7 @@
 const Book = require('../Models/book.model.js')
 //const Tag = require('../Models/tag.model.js')
 
+
 async function get(req, res) {
     const book = req.query
     try {
@@ -32,7 +33,7 @@ async function get(req, res) {
             }))
         } else if (book.id) {
             console.log("id")
-            return res.send(await Book.find({_id: book.id}))
+            return res.send(await Book.find({ _id: book.id }))
         }
         else {
             console.log("else")
@@ -57,4 +58,45 @@ async function post(req, res) {
 }
 
 
-module.exports = { get, post }
+async function put(req, res) {
+    // const book = req.query
+    try {
+        console.log("edited")
+        Book.findOneAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true },
+            (err, data) => {
+                if (err) {
+                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                }
+            }
+        )
+        //console.log(Book.find())
+        return res.send("edited")
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+async function del(req, res) {
+    const _id = req.params.id
+    try {
+        console.log(_id)
+        await Book.findByIdAndDelete(_id)
+        console.log("removed")
+        return res.send("removed")
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+module.exports = { get, post, put, del }
