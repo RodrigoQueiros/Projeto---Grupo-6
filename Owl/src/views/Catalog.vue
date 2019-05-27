@@ -63,9 +63,9 @@
                   </form>
                 </div> 
             <div class="row">
-              <div class="col-6 col-xl-3 col-lg-4" v-for="book in booksDB" :key="book.bookId">
+              <div class="col-6 col-xl-3 col-lg-4" v-for="book in filteredBooks" :key="book.bookId">
                 <router-link
-                  v-on:mouseover.native="clickBook(book.bookId)"
+                  v-on:mouseover.native="clickBook(book._id)"
                   @click.native="addView(book.bookId)"
                   :to="{ name: 'book', params:{id: clickedBook}}"
                 >
@@ -171,36 +171,39 @@ export default {
   },
   data: function() {
     return {
-      books: this.$store.state.books,
+      books: [],
       tags: this.$store.state.tags,
       publishers: [],
       authors: [],
-      filteredBooks: this.$store.state.books,
+      filteredBooks: [],
       authorFilter: "Todos",
       publisherFilter: "Todos",
       tagFilter: "Todos",
       clickedBook: 0,
-      orderTab: "",
-      booksDB: []
+      orderTab: ""
     };
   },
   created() {
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.publishers.indexOf(this.books[i].publisher) == -1) {
-        this.publishers.push(this.books[i].publisher);
-      }
-    }
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.authors.indexOf(this.books[i].author) == -1) {
-        this.authors.push(this.books[i].author);
-      }
-    }
+    //Axios mongodb
     axios
       .get("http://localhost:3000/books")
       .then(res => {
-        console.log(res.data);
-        this.booksDB = res.data;
-        console.log(this.booksDB);
+        this.books = res.data;
+        this.filteredBooks = res.data;
+        console.log(this.books);
+
+        for (let i = 0; i < this.books.length; i++) {
+          if (this.authors.indexOf(this.books[i].author) == -1) {
+            this.authors.push(this.books[i].author);
+          }
+        }
+
+        for (let i = 0; i < this.books.length; i++) {
+          console.log("for");
+          if (this.publishers.indexOf(this.books[i].publisher) == -1) {
+            this.publishers.push(this.books[i].publisher);
+          }
+        }
       })
       .catch(error => {
         console.log(error);
@@ -208,12 +211,14 @@ export default {
   },
   methods: {
     clickBook(index) {
-      for (let i = 0; i < this.books.length; i++) {
+      this.$store.dispatch("open_book", index);
+      this.clickedBook = index;
+      /*for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === index) {
           this.$store.dispatch("open_book", i);
           this.clickedBook = i;
         }
-      }
+      }*/
     },
 
     addView(id) {
