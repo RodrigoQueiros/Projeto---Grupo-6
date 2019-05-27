@@ -63,7 +63,7 @@
                   </form>
                 </div> 
             <div class="row">
-              <div class="col-6 col-xl-3 col-lg-4" v-for="book in filteredBooks" :key="book.bookId">
+              <div class="col-6 col-xl-3 col-lg-4" v-for="book in booksDB" :key="book.bookId">
                 <router-link
                   v-on:mouseover.native="clickBook(book.bookId)"
                   @click.native="addView(book.bookId)"
@@ -120,7 +120,6 @@
   padding-left: 15px;
 }
 
-
 #catalogOrder {
   padding-left: 460px;
 }
@@ -129,7 +128,6 @@
   padding: 15px 15px 15px 15px;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
-
 
 .box {
   margin-left: 5%;
@@ -159,12 +157,13 @@
     display: none;
   }
 }
-
 </style>
 
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
+
 export default {
   components: {
     Header,
@@ -181,7 +180,8 @@ export default {
       publisherFilter: "Todos",
       tagFilter: "Todos",
       clickedBook: 0,
-      orderTab: ""
+      orderTab: "",
+      booksDB: []
     };
   },
   created() {
@@ -195,6 +195,16 @@ export default {
         this.authors.push(this.books[i].author);
       }
     }
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        console.log(res.data);
+        this.booksDB = res.data;
+        console.log(this.booksDB);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
     clickBook(index) {
