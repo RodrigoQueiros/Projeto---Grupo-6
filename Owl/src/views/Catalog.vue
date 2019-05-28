@@ -9,7 +9,7 @@
           </div>
           <div class="boxContent alignLeft" id="margin">
             <label for="filterName">Por Nome:</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-model="titleFilter">
             <label for="filterAuthors" class ="mt-2">Por Autor:</label>
             <select class="form-control" id="filterAuthors" v-model="authorFilter">
               <option>Todos</option>
@@ -172,9 +172,10 @@ export default {
   data: function() {
     return {
       books: [],
-      tags: this.$store.state.tags,
+      tags: [],
       publishers: [],
       authors: [],
+      titleFilter: "",
       filteredBooks: [],
       authorFilter: "Todos",
       publisherFilter: "Todos",
@@ -184,12 +185,13 @@ export default {
     };
   },
   created() {
-    //Axios mongodb
+    //Axios mongodb books
     axios
       .get("http://localhost:3000/books")
       .then(res => {
         this.books = res.data;
         this.filteredBooks = res.data;
+        console.log("books:");
         console.log(this.books);
 
         for (let i = 0; i < this.books.length; i++) {
@@ -199,11 +201,22 @@ export default {
         }
 
         for (let i = 0; i < this.books.length; i++) {
-          console.log("for");
           if (this.publishers.indexOf(this.books[i].publisher) == -1) {
             this.publishers.push(this.books[i].publisher);
           }
         }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //Axios mongodb tags
+    axios
+      .get("http://localhost:3000/tags")
+      .then(res => {
+        this.tags = res.data;
+        console.log("tags:");
+        console.log(this.tags);
       })
       .catch(error => {
         console.log(error);
@@ -286,9 +299,33 @@ export default {
     filterBooks() {
       console.log(this.filteredBooks);
       this.filteredBooks = [];
+      let filterBookResult = false;
       let temp = [];
+      let temp2 = [];
 
-      this.filteredBooks = this.books.filter(
+      for (let i = 0; i < this.books.length; i++) {
+        let upperTitle = this.books[i].title.toUpperCase()
+        let upperFilter = this.titleFilter.toUpperCase()
+        console.log()
+        filterBookResult = upperTitle.includes(upperFilter);
+        if(filterBookResult){
+          temp2.push(this.books[i])
+        }
+      }
+      this.filteredBooks = temp2
+      console.log("depois:")
+      console.log(this.filteredBooks)
+
+      /* this.filteredBooks = this.books.filter(book => {
+        let filterBookResult = true;
+        if (this.titleFilter !== "") {
+          filterBookResult = book.title.includes(this.titleFilter);
+        }
+        console.log(filterBookResult)
+        if(filterBookResult)
+      });*/
+
+      this.filteredBooks = this.filteredBooks.filter(
         book =>
           book.author === this.authorFilter || this.authorFilter == "Todos"
       );
@@ -303,7 +340,7 @@ export default {
         for (let i = 0; i < this.filteredBooks.length; i++) {
           for (let j = 0; j < this.filteredBooks[i].idTag.length; j++) {
             for (let z = 0; z < this.tags.length; z++) {
-              if (this.filteredBooks[i].idTag[j] == this.tags[z].tagId) {
+              if (this.filteredBooks[i].idTag[j] == this.tags[z]._id) {
                 if (this.tags[z].tagDescription == this.tagFilter) {
                   temp.push(this.filteredBooks[i]);
                 }
@@ -316,6 +353,7 @@ export default {
       }
 
       console.log(this.filteredBooks);
+      console.log("searched title: " + this.titleFilter);
     }
   },
   computed: {}
