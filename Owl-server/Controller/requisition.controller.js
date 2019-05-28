@@ -2,8 +2,13 @@
 const Requistion = require('../Models/requisition.model.js')
 
 async function get(req, res) {
+    const id = req.query
     try {
-        return res.send(await Requistion.find())
+        if (id.userId) {
+            return res.send(await Requistion.find({userId: id.userId}))
+        } else {
+            return res.status(400).send({ error: `Could not get books: ${err}` })
+        }
     } catch (err) {
         return res.status(400).send({ error: `Could not get books: ${err}` })
     }
@@ -22,5 +27,29 @@ async function post(req, res) {
     }
 }
 
+async function put(req, res) {
+    try {
+        console.log("edited")
+        Requistion.findOneAndUpdate(
+            req.params.id,
+            { $set: { "active" : false} },
+            { new: true },
+            (err, data) => {
+                if (err) {
+                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                }
+            }
+        )
+        //console.log(Book.find())
+        return res.send("edited")
+    }
 
-module.exports = { get, post }
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+
+module.exports = { get, post, put }

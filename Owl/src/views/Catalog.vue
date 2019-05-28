@@ -65,7 +65,7 @@
             <div class="row">
               <div class="col-6 col-xl-3 col-lg-4" v-for="book in filteredBooks" :key="book.bookId">
                 <router-link
-                  v-on:mouseover.native="clickBook(book.bookId)"
+                  v-on:mouseover.native="clickBook(book._id)"
                   @click.native="addView(book.bookId)"
                   :to="{ name: 'book', params:{id: clickedBook}}"
                 >
@@ -120,7 +120,6 @@
   padding-left: 15px;
 }
 
-
 #catalogOrder {
   padding-left: 460px;
 }
@@ -129,7 +128,6 @@
   padding: 15px 15px 15px 15px;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
-
 
 .box {
   margin-left: 5%;
@@ -159,12 +157,13 @@
     display: none;
   }
 }
-
 </style>
 
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
+
 export default {
   components: {
     Header,
@@ -172,11 +171,11 @@ export default {
   },
   data: function() {
     return {
-      books: this.$store.state.books,
+      books: [],
       tags: this.$store.state.tags,
       publishers: [],
       authors: [],
-      filteredBooks: this.$store.state.books,
+      filteredBooks: [],
       authorFilter: "Todos",
       publisherFilter: "Todos",
       tagFilter: "Todos",
@@ -185,25 +184,41 @@ export default {
     };
   },
   created() {
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.publishers.indexOf(this.books[i].publisher) == -1) {
-        this.publishers.push(this.books[i].publisher);
-      }
-    }
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.authors.indexOf(this.books[i].author) == -1) {
-        this.authors.push(this.books[i].author);
-      }
-    }
+    //Axios mongodb
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+        this.filteredBooks = res.data;
+        console.log(this.books);
+
+        for (let i = 0; i < this.books.length; i++) {
+          if (this.authors.indexOf(this.books[i].author) == -1) {
+            this.authors.push(this.books[i].author);
+          }
+        }
+
+        for (let i = 0; i < this.books.length; i++) {
+          console.log("for");
+          if (this.publishers.indexOf(this.books[i].publisher) == -1) {
+            this.publishers.push(this.books[i].publisher);
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
     clickBook(index) {
-      for (let i = 0; i < this.books.length; i++) {
+      this.$store.dispatch("open_book", index);
+      this.clickedBook = index;
+      /*for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === index) {
           this.$store.dispatch("open_book", i);
           this.clickedBook = i;
         }
-      }
+      }*/
     },
 
     addView(id) {

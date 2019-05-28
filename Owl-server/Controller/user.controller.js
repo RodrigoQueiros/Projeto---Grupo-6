@@ -8,32 +8,6 @@ async function get(req, res) {
         return res.status(400).send({ error: `Could not get users: ${err}` })
     }
 }
-/*
-async function get(req, res) {
-    const { email } = req.query
-    console.log("teste")
-    try {
-        if (email) {
-            console.log("email")
-            const response = await User.findOne({ email })
-            if (response) {
-                return res.send(response)
-            } else {
-                return res.status(404).send({ error: "Email not found" })
-            }
-        } else {
-            console.log("no email")
-            try {
-                return res.send(await User.find())
-            } catch (err) {
-                return res.status(400).send({ error: err })
-            }
-        }
-
-    } catch (err) {
-        return res.status(400).send({ error: `Could not get users: ${err}` })
-    }
-}*/
 
 async function post(req, res) {
     try {
@@ -47,5 +21,44 @@ async function post(req, res) {
     }
 }
 
+async function put(req, res) {
+    try {
+        console.log("edited")
+        console.log(req.params.id)
+        User.findOneAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true },
+            (err, data) => {
+                if (err) {
+                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                }
+            }
+        )
+        return res.send("edited " + req.params.id)
+    }
 
-module.exports = { get, post }
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+async function del(req, res) {
+    const _id = req.params.id
+    try {
+        console.log(_id)
+        await User.findByIdAndDelete(_id)
+        console.log("removed")
+        return res.send("removed")
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+module.exports = { get, post , put, del}

@@ -23,4 +23,20 @@ async function post(req, res) {
 }
 
 
-module.exports = { get, post }
+async function del(req, res) {
+    const _id = req.params.id
+    try {
+        console.log(_id)
+        await BookSugestion.findByIdAndDelete(_id)
+        console.log("removed")
+        return res.send("removed")
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+module.exports = { get, post, del}
