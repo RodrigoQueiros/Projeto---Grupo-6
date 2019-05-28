@@ -10,7 +10,7 @@
           <div v-for="user in users" :key="user.userId">
             <div v-if="user.userId == userLoggedIn">
               <div class="row">
-                <div class="col-12 col-md-6 col-lg-4 ">
+                <div class="col-12 col-md-6 col-lg-3 ">
                   <img
                     v-if="clicked == false"
                     :src="user.photo"
@@ -27,7 +27,7 @@
                     v-model="user.photo"
                   >
                 </div>
-                <div class="col-12 col-lg-4 col-md-6">
+                <div class="col-12 col-lg-4 col-md-3">
                   <h4 class="mt-4 mt-sm-0">Nome de Utilizador</h4>
                   <p v-if="clicked == false">{{user.firstName}} {{user.lastName}}</p>
                   <div class="row">
@@ -57,11 +57,11 @@
                     <i class="fas fa-edit"></i> Editar perfil
                   </a>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-4  alignRight">
                   <div v-if="clicked == false">
-                    <h4 class="mt-md-4 mt-sm-4">Tags Favoritas</h4>
+                    <h4 class=" ">Tags Favoritas</h4>
                     <ul>
-                      <li class="text-left" v-for="teste in testes" :key="teste">{{teste}}</li>
+                      <li class="text-left " v-for="teste in testes" :key="teste">{{teste}}</li>
                     </ul>
                   </div>
                   <div v-if="clicked">

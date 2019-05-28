@@ -84,6 +84,7 @@ h4 {
 #logo {
   width: 171px;
   height: 94px;
+  padding-bottom: 10px;
 }
 
 #navbarNav {
