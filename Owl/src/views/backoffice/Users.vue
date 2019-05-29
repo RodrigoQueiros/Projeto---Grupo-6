@@ -8,7 +8,15 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-12 boxContent">
+        <div class="col-12 col-md-12 boxContent alignLeft">
+          <form action class="mt-4">
+            <label for="nameFilter" class="ml-2">Filtrar por nome de utilizador:</label>
+            <div class="form-inline">
+              <input type="text" class="form-control ml-2" id="nameFilter" v-model="nameFilter">
+              <button class="btn buttonColor ml-4" id="btnLogin" @click="filterUsersByName">Filtrar</button>
+            </div>
+          </form>
+
           <table class="table mt-4">
             <thead>
               <tr>
@@ -23,7 +31,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in users" :key="user.userId">
+              <tr v-for="user in filteredUsers" :key="user.userId">
                 <td>{{user.userId}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
@@ -31,22 +39,26 @@
                 <td>{{user.photo}}</td>
                 <td>{{user.type}}</td>
                 <td>
-                  <span v-if="user.ableToRequest == true">Sim </span>
-                  <span v-if="user.ableToRequest == false">Não </span>
+                  <span v-if="user.ableToRequest == true">Sim</span>
+                  <span v-if="user.ableToRequest == false">Não</span>
                   <button
                     v-if="user.ableToRequest == true"
                     type="button"
                     style="color:white"
                     @click="denyRequest(user.userId)"
                     class="btn btn-danger ml-2"
-                  ><i class="fas fa-ban"></i></button>
+                  >
+                    <i class="fas fa-ban"></i>
+                  </button>
                   <button
                     v-if="user.ableToRequest == false"
                     type="button"
                     style="color:white"
                     @click="letRequest(user.userId)"
                     class="btn btn-success ml-2"
-                  ><i class="fas fa-check"></i></button>
+                  >
+                    <i class="fas fa-check"></i>
+                  </button>
                 </td>
                 <td>
                   <button
@@ -87,6 +99,7 @@
 <script>
 import backOfficeNav from "@/components/backOfficeNav.vue";
 import swal from "sweetalert2";
+import axios from "axios";
 
 export default {
   components: {
@@ -94,11 +107,29 @@ export default {
   },
   data: function() {
     return {
-      users: this.$store.state.users
+      users: [],
+      filteredUsers: [],
+      nameFilter: "",
+      emailFilter: "",
+      username: ""
     };
   },
 
-  created() {},
+  created() {
+     axios
+       .get("http://localhost:3000/users")
+       .then(res => {
+         this.users = res.data;
+         this.filteredUsers = res.data;
+         console.log("users:");
+         console.log(this.users);
+       })
+       .catch(error => {
+         console.log(error);
+       });
+    
+     
+  },
 
   methods: {
     deleteUser(id) {
@@ -123,6 +154,7 @@ export default {
     },
 
     addAdmin(id) {
+      console.log(id)
       for (let i = 0; i < this.users.length; i++) {
         if (this.users[i].userId === id) {
           this.$store.dispatch("add_admin", i);
@@ -169,6 +201,24 @@ export default {
         }
       }
     },
+
+    filterUsersByName() {
+      this.filteredUsers = [];
+      let filterNameResult = false;
+
+      for (let i = 0; i < this.users.length; i++) {
+        this.username = this.users[i].firstName + " " + this.users[i].lastName;
+
+        let upperName = this.username.toUpperCase();
+        let upperFilterName = this.nameFilter.toUpperCase();
+
+        filterNameResult = upperName.includes(upperFilterName);
+
+        if (filterNameResult) {
+          this.filteredUsers.push(this.users[i]);
+        }
+      }
+    }
   }
 };
 </script>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from "axios"
 
 Vue.use(Vuex)
 
@@ -440,6 +441,7 @@ export default new Vuex.Store({
     },
 
     ADD_ADMIN(state, payload) {
+      
       state.users[payload].type = "admin"
     },
 
@@ -573,7 +575,18 @@ export default new Vuex.Store({
       context.commit("DELETE_USER", payload);
     },
     add_admin(context, payload) {
-      context.commit("ADD_ADMIN", payload);
+      axios
+       .put("http://localhost:3000/users/:id")
+       .then(res => {
+         
+        context.commit("ADD_ADMIN", payload);
+        
+         
+       })
+       .catch(error => {
+         console.log(error);
+     });
+      
     },
     delete_admin(context, payload) {
       context.commit("DELETE_ADMIN", payload);
