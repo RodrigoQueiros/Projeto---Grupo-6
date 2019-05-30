@@ -67,7 +67,7 @@
                 <router-link
                   v-on:mouseover.native="clickBook(book._id)"
                   @click.native="addView(book.bookId)"
-                  :to="{ name: 'book', params:{id: clickedBook}}"
+                  :to="{ name: 'book', params:{id: book._id}}"
                 >
                   <img class="owlCovers mt-3" v-bind:src="book.cover">
                 </router-link>
