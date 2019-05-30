@@ -20,7 +20,7 @@
                   type="button"
                   id="btnSubmit"
                   @click="addTag"
-                  class="btn btn-lg mt-3 mb-3"
+                  class="btn btn-lg mt-3 mb-3 buttonColor"
                 >Adicionar Tag</button>
               </div>
             </div>
@@ -36,6 +36,13 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-12 boxContent">
+          <form action class="mt-4 alignLeft">
+            <label for="tagFilter" class="ml-2">Filtrar por Tag:</label>
+            <div class="form-inline">
+              <input type="text" class="form-control ml-2" id="tagFilter" v-model="tagFilter">
+              <button class="btn buttonColor ml-4" id="btnLogin" @click="filterTags">Filtrar</button>
+            </div>
+          </form>
           <table class="table mt-4 table-responsive">
             <thead>
               <tr>
@@ -46,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="tag in tags" :key="tag.tagId">
+              <tr v-for="tag in filteredTags" :key="tag.tagId">
                 <td>{{tag.tagId}}</td>
                 <td v-if="editBool || tag.tagId != editID">{{tag.tagDescription}}</td>
                 <td v-if="editBool == false && tag.tagId == editID">
@@ -101,7 +108,9 @@ export default {
       },
       editBool: true,
       editID: 0,
-      created: false
+      created: false,
+      filteredTags: this.$store.state.tags,
+      tagFilter: "",
     };
   },
 
@@ -196,6 +205,23 @@ export default {
           title: "Tag adicionada com sucesso."
         });
         document.getElementById("formTags").reset();
+      }
+    },
+
+    filterTags() {
+      this.filteredTags = [];
+      let filterTagsResult = false;
+
+      for (let i = 0; i < this.tags.length; i++) {
+
+        let upperTag = this.tags[i].tagDescription.toUpperCase();
+        let upperFilterTag = this.tagFilter.toUpperCase();
+
+        filterTagsResult = upperTag.includes(upperFilterTag);
+
+        if (filterTagsResult) {
+          this.filteredTags.push(this.tags[i]);
+        }
       }
     }
   }

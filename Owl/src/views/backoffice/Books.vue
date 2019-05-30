@@ -61,7 +61,7 @@
                   type="button"
                   id="btnSubmit"
                   @click="addBook"
-                  class="btn btn-lg mt-3 mb-3"
+                  class="btn btn-lg buttonColor mt-3 mb-3"
                 >Adicionar Livro</button>
               </div>
             </div>
@@ -77,6 +77,13 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-12 boxContent">
+          <form action class="mt-4 alignLeft">
+            <label for="titleFilter" class="ml-2">Filtrar por titulo:</label>
+            <div class="form-inline">
+              <input type="text" class="form-control ml-2" id="titleFilter" v-model="titleFilter">
+              <button class="btn buttonColor ml-4" id="btnLogin" @click="filterBooks">Filtrar</button>
+            </div>
+          </form>
           <table class="table mt-4 table-responsive">
             <thead>
               <tr>
@@ -95,7 +102,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="book in books" :key="book.bookId">
+              <tr v-for="book in filteredBooks" :key="book.bookId">
                 <td>{{book.bookId}}</td>
                 <td v-if="editBool  || book.bookId != editID">{{book.title}}</td>
                 <td v-if="editBool == false && book.bookId == editID">
@@ -196,6 +203,8 @@ export default {
         launchDate: "",
         bookStatus: ""
       },
+      filteredBooks: this.$store.state.books,
+      titleFilter: "",
       // form: {
       //   title: "",
       //   cover: "",
@@ -335,6 +344,23 @@ export default {
         disponibility: "",
         bookStatus: ""
       });
+    },
+
+    filterBooks() {
+      this.filteredBooks = [];
+      let filterBooksResult = false;
+
+      for (let i = 0; i < this.books.length; i++) {
+
+        let upperTitle = this.books[i].title.toUpperCase();
+        let upperFilterTitle = this.titleFilter.toUpperCase();
+
+        filterBooksResult = upperTitle.includes(upperFilterTitle);
+
+        if (filterBooksResult) {
+          this.filteredBooks.push(this.books[i]);
+        }
+      }
     }
   },
 

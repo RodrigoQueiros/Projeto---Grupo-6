@@ -8,7 +8,7 @@
             <h3 id="filterTitle">Filtros</h3>
           </div>
           <div class="boxContent alignLeft" id="margin">
-            <label for="filterName">Por Nome:</label>
+            <label for="filterName">Por Titulo:</label>
             <input type="text" class="form-control" v-model="titleFilter">
             <label for="filterAuthors" class ="mt-2">Por Autor:</label>
             <select class="form-control" id="filterAuthors" v-model="authorFilter">

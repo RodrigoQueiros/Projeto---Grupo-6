@@ -107,16 +107,15 @@ export default {
   },
   data: function() {
     return {
-      users: [],
-      filteredUsers: [],
+      users: this.$store.state.users,
+      filteredUsers: this.$store.state.users,
       nameFilter: "",
-      emailFilter: "",
       username: ""
     };
   },
 
   created() {
-     axios
+     /*axios
        .get("http://localhost:3000/users")
        .then(res => {
          this.users = res.data;
@@ -126,7 +125,7 @@ export default {
        })
        .catch(error => {
          console.log(error);
-       });
+       });*/
     
      
   },
