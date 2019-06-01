@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-12 col-md-4 offset-md-4 boxContent">
           <div class="form-wrapper text-center">
-            <form class="form-signin">
+            <form class="form-signin col-6">
               <label for="inputFirstName" class="sr-only">Nome</label>
               <input
                 type="firstName"
@@ -26,7 +26,7 @@
                 id="inputLastName"
                 class="form-control"
                 placeholder="Apelido"
-                v-model="form.lastName"
+                v-model="lastName"
                 required
               >
               <label for="inputEmail" class="sr-only">Email address</label>
@@ -35,7 +35,7 @@
                 id="inputEmail"
                 class="form-control"
                 placeholder="Email"
-                v-model="form.email"
+                v-model="email"
                 required
               >
               <label for="inputPassword" class="sr-only">Password</label>
@@ -44,7 +44,7 @@
                 id="inputPassword"
                 class="form-control"
                 placeholder="Password"
-                v-model="form.password"
+                v-model="password"
                 required
               >
               <label for="inputPassword2" class="sr-only">Repita a Password</label>
@@ -53,7 +53,7 @@
                 id="inputPassword2"
                 class="form-control"
                 placeholder="Repita a Password"
-                v-model="form.password2"
+                v-model="confirmPassword"
                 required
               >
               
@@ -63,6 +63,7 @@
                 @click="signup"
                 type="submit"
               >Sign up</button>
+
             </form>
           </div>
         </div>
