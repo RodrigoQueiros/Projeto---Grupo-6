@@ -17,7 +17,7 @@
                 id="inputFirstName"
                 class="form-control"
                 placeholder="Nome próprio"
-                v-model="form.firstName"
+                v-model="firstName"
                 required
               >
               <label for="inputLastName" class="sr-only">Nome</label>
@@ -53,17 +53,16 @@
                 id="inputPassword2"
                 class="form-control"
                 placeholder="Repita a Password"
-                v-model="confirmPassword"
+                v-model="password2"
                 required
               >
-              
+
               <button
                 class="btn btn-lg btn-block"
                 id="btnSignup"
                 @click="signup"
                 type="submit"
               >Sign up</button>
-
             </form>
           </div>
         </div>
@@ -134,6 +133,7 @@ body {
 import Header from "@/components/Header.vue";
 import swal from "sweetalert2";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
 
 export default {
   name: "signup",
@@ -143,49 +143,61 @@ export default {
   },
   data: function() {
     return {
-      form: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        password2: ""
-      }
+      url: "http://localhost:3000/",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      password2: "",
+      err: false
     };
   },
   methods: {
-    signup() {
-      let user = {
-        userId: this.$store.getters.getLastId,
-        firstName: this.form.firstName,
-        lastName: this.form.lastName,
-        email: this.form.email,
-        password: this.form.password,
-        password2: this.form.password2
-      };
+    // signup() {
+    //   let user = {
+    //     userId: this.$store.getters.getLastId,
+    //     firstName: this.form.firstName,
+    //     lastName: this.form.lastName,
+    //     email: this.form.email,
+    //     password: this.form.password,
+    //     password2: this.form.password2
+    //   };
 
-      let strError = this.$store.getters.Signup(user);
+    //   let strError = this.$store.getters.Signup(user);
 
-      if (strError == "") {
-        this.$store.dispatch("add_user", {
-          userId: this.$store.getters.getLastId,
-          firstName: this.form.firstName,
-          lastName: this.form.lastName,
-          email: this.form.email,
-          password: this.form.password,
-          password2: this.form.password2,
-          photo: "https://i.imgur.com/6NIOn6z.jpg",
-          points: 0
+    //   if (strError == "") {
+    //     this.$store.dispatch("add_user", {
+    //       userId: this.$store.getters.getLastId,
+    //       firstName: this.form.firstName,
+    //       lastName: this.form.lastName,
+    //       email: this.form.email,
+    //       password: this.form.password,
+    //       password2: this.form.password2,
+    //       photo: "https://i.imgur.com/6NIOn6z.jpg",
+    //       points: 0
+    //     });
+    //     this.$router.push("/login");
+    //     swal({
+    //       type: "success",
+    //       title: "Registo efetuado com sucesso"
+    //     });
+    //   } else {
+    //     swal({
+    //       type: "error",
+    //       title: strError
+    //     });
+    //   }
+    // }
+    async signup() {
+        const response = await axios.post(this.url + "users", {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          confirmPassword: this.password2
         });
-        this.$router.push("/login");
-        swal({
-          type: "success",
-          title: "Registo efetuado com sucesso"
-        });
-      } else {
-        swal({
-          type: "error",
-          title: strError
-        });
+      if(response.data.error){
+        console.log(response.data.error)
       }
     }
   }

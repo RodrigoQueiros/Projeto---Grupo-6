@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    
     userLoggedin: -1,
 
     loggedIn: false,
