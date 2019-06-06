@@ -116,25 +116,26 @@ export default {
   },
 
   created() {
-    //  axios
-    //    .get("http://localhost:3000/users")
-    //    .then(res => {
-    //      this.users = res.data;
-    //      this.filteredUsers = res.data;
-    //      console.log("users:");
-    //      console.log(this.users);
-    //    })
-    //    .catch(error => {
-    //      console.log(error);
-    //    });
+      axios
+        .get("http://localhost:3000/users")
+        .then(res => {
+          this.users = res.data;
+          this.filteredUsers = res.data;
+          console.log("users:");
+          console.log(this.users);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        
     
      
   },
 
-  async mounted() {
-    this.filteredUsers = (await axios.get("http://localhost:3000/users")).data
-    console.log(this.filteredUsers)
-  },
+  // async mounted() {
+  //   this.filteredUsers = (await axios.get("http://localhost:3000/users")).data
+  //   console.log(this.filteredUsers)
+  // },
 
   methods: {
     deleteUser(id) {
@@ -178,7 +179,7 @@ export default {
       console.log(this.array[1])
       axios
       ///users/5ce3c32995fb1d45a4bb3f49
-       .put("http://localhost:3000/users/5ce3c32995fb1d45a4bb3f49", {
+       .put(this.array[1], {
         firstName: this.users[this.array[0]].firstName,
         lastName: this.users[this.array[0]].lastName,
         email: this.users[this.array[0]].email,
@@ -193,7 +194,7 @@ export default {
        .then(res => {
           // console.log("entrou axios")
           // this.users[payload[0]].type = "admin"
-          
+          location.reload()
           console.log(res)
          
        })
