@@ -65,6 +65,14 @@ template{
     background:#DACEB9;
 }
 
+.darkBrown {
+  background-color: #592316 !important
+}
+
+.white {
+  color: white !important
+}
+
 
 
 /* Basic styles */

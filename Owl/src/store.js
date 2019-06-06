@@ -452,6 +452,32 @@ export default new Vuex.Store({
     },
 
     ADD_ADMIN(state, payload) {
+      // console.log("entrou mutation")
+      // console.log(state.users)
+      //   axios
+      //    .put(payload[1], {
+      //     firstName: state.users[payload[0]].firstName,
+      //     lastName: state.users[payload[0]].lastName,
+      //     email: state.users[payload[0]].email,
+      //     password: state.users[payload[0]].password,
+      //     ableToRequest: state.users[payload[0]].ableToRequest,
+      //     type: "admin",
+      //     nRequisitionsNow: state.users[payload[0]].nRequisitionsNow,
+      //     photo: state.users[payload[0]].photo,
+      //     points: state.users[payload[0]].points,
+      //     favTags: state.users[payload[0]].favTags
+      //    })
+      //    .then(res => {
+      //       // console.log("entrou axios")
+      //       // state.users[payload[0]].type = "admin"
+
+      //       console.log(res)
+
+      //    })
+      //    .catch(error => {
+      //      console.log(error);
+      //  });
+
 
       state.users[payload].type = "admin"
     },
