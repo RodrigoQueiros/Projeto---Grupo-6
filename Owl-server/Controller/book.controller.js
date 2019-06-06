@@ -38,7 +38,7 @@ async function put(req, res) {
     // const book = req.query
     try {
         console.log("edited " + req.params.id )
-        Book.findOneAndUpdate(
+        Book.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true },

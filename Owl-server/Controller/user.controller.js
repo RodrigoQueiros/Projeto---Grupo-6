@@ -48,7 +48,7 @@ async function put(req, res) {
     try {
         console.log("edited")
         console.log(req.params.id)
-        User.findOneAndUpdate(
+        User.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true },
