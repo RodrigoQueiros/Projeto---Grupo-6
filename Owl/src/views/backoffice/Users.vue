@@ -73,7 +73,7 @@
                     v-if="user.type != 'admin'"
                     type="button"
                     style="color:white"
-                    @click="addAdmin(user.userId)"
+                    @click="addAdmin(user._id)"
                     class="btn btn-dark"
                   >Tornar Admin</button>
                   <button
@@ -110,22 +110,23 @@ export default {
       users: this.$store.state.users,
       filteredUsers: this.$store.state.users,
       nameFilter: "",
-      username: ""
+      username: "",
+      array : []
     };
   },
 
   created() {
-     /*axios
-       .get("http://localhost:3000/users")
-       .then(res => {
-         this.users = res.data;
-         this.filteredUsers = res.data;
-         console.log("users:");
-         console.log(this.users);
-       })
-       .catch(error => {
-         console.log(error);
-       });*/
+    //  axios
+    //    .get("http://localhost:3000/users")
+    //    .then(res => {
+    //      this.users = res.data;
+    //      this.filteredUsers = res.data;
+    //      console.log("users:");
+    //      console.log(this.users);
+    //    })
+    //    .catch(error => {
+    //      console.log(error);
+    //    });
     
      
   },
@@ -155,14 +156,45 @@ export default {
     addAdmin(id) {
       console.log(id)
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId === id) {
-          this.$store.dispatch("add_admin", i);
+        if (this.users[i]._id === id) {
+          let route = "http://localhost:3000/users/" + this.users[i]._id
+          console.log(i)
+         
+          this.array.push(i)
+          this.array.push(route)
+          // this.$store.dispatch("add_admin", array);
           swal({
             type: "success",
             title: "Admin adicionado com sucesso."
           });
         }
       }
+      console.log(this.users[this.array[0]].firstName)
+      console.log(this.array[1])
+      axios
+      ///users/5ce3c32995fb1d45a4bb3f49
+       .put("http://localhost:3000/users/5ce3c32995fb1d45a4bb3f49", {
+        firstName: this.users[this.array[0]].firstName,
+        lastName: this.users[this.array[0]].lastName,
+        email: this.users[this.array[0]].email,
+        password: this.users[this.array[0]].password,
+        ableToRequest: this.users[this.array[0]].ableToRequest,
+        type: "admin",
+        nRequisitionsNow: this.users[this.array[0]].nRequisitionsNow,
+        photo: this.users[this.array[0]].photo,
+        points: this.users[this.array[0]].points,
+        favTags: this.users[this.array[0]].favTags
+       })
+       .then(res => {
+          // console.log("entrou axios")
+          // this.users[payload[0]].type = "admin"
+          
+          console.log(res)
+         
+       })
+       .catch(error => {
+         console.log(error);
+     });
     },
 
     deleteAdmin(id) {
