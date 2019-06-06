@@ -65,6 +65,28 @@
         <li class="nav-item">
           <a v-if="userLoggedIn != -1" href @click="logout" class="nav-link a">Logout</a>
         </li>
+        <li v-if="userLoggedIn != -1">
+          <div class="dropdown">
+            <button
+              class="btn btn-info dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-bell"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div class="ml-2 mr-2" v-for="(notification,i) in notifications" :key="i">
+                <!-- Notifications here -->
+                <h6>{{notification}}</h6>
+
+                <div class="dropdown-divider"></div>
+              </div>
+            </div>
+          </div>
+        </li>
       </ul>
     </nav>
   </div>
@@ -104,7 +126,7 @@ h4 {
   #logo {
     width: 171px;
     height: 94px;
-    margin-left: auto
+    margin-left: auto;
   }
 }
 
@@ -127,7 +149,11 @@ export default {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
       users: this.$store.state.users,
       userName: "",
-      type: ""
+      type: "",
+      notifications: [],
+      reviews: this.$store.state.reviews,
+      requisitions: this.$store.state.requisitions,
+      books: this.$store.state.books
     };
   },
 
@@ -135,11 +161,89 @@ export default {
     if (localStorage.getItem("userLoggedIn") == null) {
       localStorage.setItem("userLoggedIn", -1);
     }
-
+    this.getNotifications();
     this.getUser();
     console.log(this.userName);
   },
   methods: {
+    getNotifications() {
+      this.requisitions.forEach(req => {
+        if (this.userLoggedIn == req.userId && req.active == true) {
+          let date1 = new Date(req.requisitionDate).getDate();
+          let today = new Date(
+            /*"Wed Jun 21 2019 20:29:40 GMT+0100 (Western European Summer Time)"*/
+          ).getDate();
+
+          if (date1 + 5 < today) {
+            //How late
+            let bookName = "";
+            let nDays = today - date1 - 5;
+
+            this.books.forEach(book => {
+              if (req.bookId == book.bookId) {
+                bookName = book.title;
+              }
+            });
+
+            this.notifications.push(
+              `A sua entrega do livro ${bookName} está em atraso ${nDays} dias.`
+            );
+          } else if (date1 + 2 >= today && date1 + 1 <= today) {
+            //How many days do deliver
+
+            let bookName = "";
+            let nDays = date1 + 3 - today;
+
+            this.books.forEach(book => {
+              if (req.bookId == book.bookId) {
+                bookName = book.title;
+              }
+            });
+
+            this.notifications.push(
+              `Faltam ${nDays} dias para acabar o tempo da requisição do livro ${bookName}.`
+            );
+            console.log(this.notifications);
+          }
+        }
+      });
+
+      this.reviews.forEach(rev => {
+        if (this.userLoggedIn == rev.userId) {
+          let notf = "";
+          let personName = "";
+          let bookName = "";
+
+          this.reviews.forEach(rev2 => {
+            
+            if (rev.bookId == rev2.bookId && rev2.userId != this.userLoggedIn) {
+
+              this.books.forEach(book => {
+                if (rev.bookId == book.bookId) {
+                  bookName = book.title;
+                }
+              });
+
+              this.users.forEach(user => {
+                
+                if (rev2.userId == user.userId) {
+                  console.log("Hey")
+                  personName = user.firstName;
+                  
+                }
+              });
+
+              notf = `${personName} tambem fez uma review ao livro ${bookName}.`;
+            }
+          });
+          if(notf){
+            this.notifications.push(notf)
+          }
+          
+        }
+        
+      });
+    },
     logout() {
       localStorage.setItem("userLoggedIn", -1);
       //this.$router.push("/")

@@ -107,8 +107,8 @@ export default {
   },
   data: function() {
     return {
-      users: this.$store.state.users,
-      filteredUsers: this.$store.state.users,
+      users: null,
+      filteredUsers: null,
       nameFilter: "",
       username: "",
       array : []
@@ -129,6 +129,11 @@ export default {
     //    });
     
      
+  },
+
+  async mounted() {
+    this.filteredUsers = (await axios.get("http://localhost:3000/users")).data
+    console.log(this.filteredUsers)
   },
 
   methods: {

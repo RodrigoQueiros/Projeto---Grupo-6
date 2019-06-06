@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+
     userLoggedin: -1,
 
     loggedIn: false,
@@ -48,7 +49,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 500,
-      favTags: [0,1]
+      favTags: [0, 1]
     },
     {
       userId: 2,
@@ -61,7 +62,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 100,
-      favTags: [0,1]
+      favTags: [0, 1]
     },
     {
       userId: 3,
@@ -74,7 +75,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 350,
-      favTags: [0,1]
+      favTags: [0, 1]
     },
     {
       userId: 4,
@@ -87,7 +88,7 @@ export default new Vuex.Store({
       nRequisitionsNow: 0,
       photo: "https://i.imgur.com/6NIOn6z.jpg",
       points: 300,
-      favTags: [0,1]
+      favTags: [0, 1]
     }
     ],
 
@@ -177,13 +178,13 @@ export default new Vuex.Store({
       bookStatus: "Good",
       description: "Nesta altura em que o Java se afirma em múltiplos ambientes de desenvolvimento e em que as interfaces por plug-in começam a ser descontinuadas nos browsers, surge esta obra com vários exemplos práticos, escrita de forma simples e acessível, destinada a todos aqueles que possuem conhecimentos básicos de programação em outras linguagens e queiram aprender Java.",
     },
-    
+
     ],
 
     reviews: [{
       reviewId: 0,
       bookId: 0,
-      userId: 1,
+      userId: 0,
       rating: 4,
       date: "2018-07-11",
       comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test.This is a review test test.",
@@ -193,7 +194,7 @@ export default new Vuex.Store({
     {
       reviewId: 1,
       bookId: 0,
-      userId: 0,
+      userId: 1,
       rating: 4,
       date: "2018-07-11",
       comment: "This is a review test test. This is a review test test. This is a review test test. This is a review test test. This is a review test test. ",
@@ -205,7 +206,7 @@ export default new Vuex.Store({
       requisitionId: 0,
       bookId: 2,
       userId: 0,
-      requisitionDate: "",
+      requisitionDate: "Wed Jun 15 2019 20:29:40 GMT+0100 (Western European Summer Time)",
       deliveryDate: "",
       deliveryBookStatus: "",
       active: true
@@ -214,11 +215,21 @@ export default new Vuex.Store({
       requisitionId: 1,
       bookId: 0,
       userId: 0,
-      requisitionDate: "",
+      requisitionDate: "Wed Jun 19 2019 20:29:40 GMT+0100 (Western European Summer Time)",
       deliveryDate: "",
       deliveryBookStatus: "",
       active: false
+    },
+    {
+      requisitionId: 1,
+      bookId: 0,
+      userId: 0,
+      requisitionDate: "Wed Jun 19 2019 20:29:40 GMT+0100 (Western European Summer Time)",
+      deliveryDate: "",
+      deliveryBookStatus: "",
+      active: true
     }],
+
 
     tags: [{
       tagId: 0,
@@ -242,16 +253,16 @@ export default new Vuex.Store({
       notificationId: 0,
       userId: 0,
       type: "bookAvailable",
-      bookId:3,
+      bookId: 3,
       show: false
     }],
     achievements: {
-      type1: [1,5,20,2,10,50,6,60,100,200,1000,5000],
-      text1: ["Fazer "," requisições"],
-      text2: ["Fazer "," reviews"],
-      text3: ["Fazer "," upvotes"],
-      text4: ["Atingir "," pontos"],
-    },    
+      type1: [1, 5, 20, 2, 10, 50, 6, 60, 100, 200, 1000, 5000],
+      text1: ["Fazer ", " requisições"],
+      text2: ["Fazer ", " reviews"],
+      text3: ["Fazer ", " upvotes"],
+      text4: ["Atingir ", " pontos"],
+    },
 
 
   },
@@ -364,16 +375,16 @@ export default new Vuex.Store({
         if (state.reviews[i].reviewId == payload[0]) {
           if (payload[2]) {
             state.reviews[i].upVote.push(payload[1]);
-            if(payload[3]==false){
+            if (payload[3] == false) {
               for (let j = 0; j < state.reviews[i].downVote.length; j++) {
 
                 if (state.reviews[i].downVote[j] == payload[1]) {
                   state.reviews[i].downVote.splice(j, 1);
                 }
-  
+
               }
             }
-            
+
           }
           else {
             for (let j = 0; j < state.reviews[i].upVote.length; j++) {
@@ -397,14 +408,14 @@ export default new Vuex.Store({
           if (payload[2]) {
             state.reviews[i].downVote.push(payload[1]);
 
-            if(payload[3]==false){
-              
+            if (payload[3] == false) {
+
               for (let j = 0; j < state.reviews[i].upVote.length; j++) {
 
                 if (state.reviews[i].upVote[j] == payload[1]) {
                   state.reviews[i].upVote.splice(j, 1);
                 }
-  
+
               }
             }
           }
@@ -429,19 +440,19 @@ export default new Vuex.Store({
     },
 
     DELETE_BOOK(state, payload) {
-      state.books.splice(payload,1)
+      state.books.splice(payload, 1)
     },
-    
+
     ADD_BOOK(state, payload) {
       state.books.push(payload)
     },
 
     DELETE_USER(state, payload) {
-      state.users.splice(payload,1)
+      state.users.splice(payload, 1)
     },
 
     ADD_ADMIN(state, payload) {
-      
+
       state.users[payload].type = "admin"
     },
 
@@ -487,7 +498,7 @@ export default new Vuex.Store({
     },
 
     DELETE_TAG(state, payload) {
-      state.tags.splice(payload,1)
+      state.tags.splice(payload, 1)
     },
 
     ADD_TAG(state, payload) {
@@ -495,11 +506,11 @@ export default new Vuex.Store({
     },
 
     ADD_VIEW(state, payload) {
-      state.books[payload].nViews +=1
+      state.books[payload].nViews += 1
     },
 
     DELETE_SUGGESTION(state, payload) {
-      state.bookSuggestions.splice(payload,1)
+      state.bookSuggestions.splice(payload, 1)
     },
     ADD_REQ(state, payload) {
       state.requisitions.push(payload[0])
@@ -526,7 +537,7 @@ export default new Vuex.Store({
     },
 
     //to do
-    UPDATE_FAVTAGS(state, payload){
+    UPDATE_FAVTAGS(state, payload) {
       state.users[payload[0]].favTags = payload[1]
     }
   },
@@ -576,17 +587,17 @@ export default new Vuex.Store({
     },
     add_admin(context, payload) {
       axios
-       .put("http://localhost:3000/users/:id")
-       .then(res => {
-         
-        context.commit("ADD_ADMIN", payload);
-        
-         
-       })
-       .catch(error => {
-         console.log(error);
-     });
-      
+        .put("http://localhost:3000/users/:id")
+        .then(res => {
+
+          context.commit("ADD_ADMIN", payload);
+
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
     },
     delete_admin(context, payload) {
       context.commit("DELETE_ADMIN", payload);
@@ -599,7 +610,7 @@ export default new Vuex.Store({
     },
     add_suggestion(context, payload) {
       context.commit("ADD_SUGGESTION", payload);
-    }, 
+    },
     add_suggestion_number(context, payload) {
       context.commit("ADD_SUGGESTION_NUMBER", payload);
     },
@@ -625,7 +636,7 @@ export default new Vuex.Store({
       context.commit("DELETE_SUGGESTION", payload);
     },
     //to do
-    update_favtags(context, payload){
+    update_favtags(context, payload) {
       context.commit("UPDATE_FAVTAGS", payload)
     }
   }
