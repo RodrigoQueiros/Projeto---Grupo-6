@@ -36,6 +36,29 @@ async function del(req, res) {
 
     }
 }
+async function put(req, res) {
+    // const book = req.query
+    try {
+        console.log("edited " + req.params.id )
+        Tag.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true },
+            (err, data) => {
+                if (err) {
+                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                }
+            }
+        )
+        //console.log(Book.find())
+        return res.send("edited")
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
 
 
-module.exports = { get, post, del }
+module.exports = { get, post, del, put }
