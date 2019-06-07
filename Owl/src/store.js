@@ -18,7 +18,7 @@ export default new Vuex.Store({
       cover: "",
       author: "",
       publisher: "",
-      tags: "",
+      tags: [],
       launchDate: "",
       description: "",
       disponibility: "",

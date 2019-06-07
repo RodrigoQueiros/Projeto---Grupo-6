@@ -101,7 +101,18 @@ export default {
   },
 
   created() {
-    
+    // console.log("entrou");
+    // axios
+    //   .get("http://localhost:3000/bookSuggestions")
+    //   .then(res => {
+    //     this.bookSuggestions = res.data;
+        
+    //     console.log("tags:");
+    //     console.log(this.tags);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   },
 
   methods: {
