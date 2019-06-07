@@ -612,18 +612,7 @@ export default new Vuex.Store({
       context.commit("DELETE_USER", payload);
     },
     add_admin(context, payload) {
-      axios
-        .put("http://localhost:3000/users/:id")
-        .then(res => {
-
-          context.commit("ADD_ADMIN", payload);
-
-
-        })
-        .catch(error => {
-          console.log(error);
-        });
-
+      context.commit("ADD_ADMIN", payload);
     },
     delete_admin(context, payload) {
       context.commit("DELETE_ADMIN", payload);
