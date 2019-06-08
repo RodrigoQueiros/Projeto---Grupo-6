@@ -101,6 +101,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
 export default {
   components: {
     Header,
@@ -141,11 +142,36 @@ export default {
   computed: {},
   beforeMount() {
     this.requisitions = this.$store.getters.requisitions;
-    this.books = this.$store.getters.books;
-    this.users = this.$store.getters.users;
+    //this.books = this.$store.getters.books;
+
+    //Axios mongodb books
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+        console.log("books:");
+        console.log(this.books);
+        this.filtredBooks = this.bookRank();  
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //this.users = this.$store.getters.users;
+       axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        console.log("users:");
+        console.log(this.users);
+        this.filtredUsers = this.userRank(); 
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     this.reviews = this.$store.getters.reviews;
-    this.filtredUsers = this.userRank();
-    this.filtredBooks = this.bookRank();
+    
   }
 };
 </script>

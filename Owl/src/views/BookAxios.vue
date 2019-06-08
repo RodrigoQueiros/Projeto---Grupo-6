@@ -132,7 +132,7 @@
       <div class="row boxContent">
         <div class="col-12 col-md-12" v-for="review in reviews" :key="review.reviewId">
           <!-- User Image-->
-          <template v-if="review.bookId == pageBookId">
+          <template>
             <div class="col-3">
               <img
                 v-bind:src="getInfoFromUser(review.userId).photo"
@@ -160,14 +160,14 @@
                 <i class="fas fa-star" style="color:lightgrey" v-if="review.rating < 5"></i></div>
               <!-- Review Info -->
               <div class="row mt-4">
-                <p v-if="verifyEdit==false || review.reviewId != editThatOne">{{review.comment}}</p>
-                <textarea name id cols="30" rows="10" v-if="verifyEdit== true && review.reviewId == editThatOne" v-model="review.comment"></textarea>
+                <p v-if="verifyEdit==false || review._id != editThatOne">{{review.comment}}</p>
+                <textarea name id cols="30" rows="10" v-if="verifyEdit== true && review._id == editThatOne" v-model="review.comment"></textarea>
               </div>
               <!-- Rating -->
               <div class="row">
                 <button v-if="loggedUser!=-1"
                   class="btn-success col-2 ml-2"
-                  @click="upVote(review.reviewId, loggedUser,clickedBook)"
+                  @click="upVote(review._id, loggedUser,clickedBook)"
                 >
                   <i class="fas fa-long-arrow-alt-up"></i>
                   {{review.upVote.length}}
@@ -175,18 +175,18 @@
                 <!-- upVote -->
                 <button v-if="loggedUser!=-1"
                   class="btn-danger col-2 ml-2"
-                  @click="downVote(review.reviewId, loggedUser,clickedBook)"
+                  @click="downVote(review._id, loggedUser,clickedBook)"
                 >
                   <i class="fas fa-long-arrow-alt-down"></i>
                   {{review.downVote.length}}
                 </button>  <!-- downVote -->  
 
                 
-                <button v-if="loggedUser == getInfoFromUser(review.userId).userId" class="btn-primary col-2 ml-2" @click="editReview(review.reviewId,review.comment)">
+                <button v-if="loggedUser == getInfoFromUser(review.userId)._id" class="btn-primary col-2 ml-2" @click="editReview(review._id,review.comment)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <!-- Edit -->
-                <button v-if="loggedUser == getInfoFromUser(review.userId).userId" class="btn-dark col-2 ml-2" @click="deleteReview(review.reviewId)">
+                <button v-if="loggedUser == getInfoFromUser(review.userId)._id" class="btn-dark col-2 ml-2" @click="deleteReview(review._id)">
                   <i class="fas fa-times"></i>
                 </button>
                 <!-- Trash -->
@@ -246,7 +246,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import swal from "sweetalert2"; 
+import swal from "sweetalert2";
 import axios from "axios";
 export default {
   //Fazer filtro de reviews com id do livro
@@ -273,58 +273,57 @@ export default {
     };
   },
   methods: {
-      notification(bookID, userID){
+    notification(bookID, userID) {
       //Do notifications here
       let notf = {
-      notificationId: this.$store.state.notifications.length,
-      userId: userID,
-      type: "bookAvailable",
-      bookId:bookID,
-      show: false
-      }
-      this.$store.dispatch("add_notification", notf );
-      console.log(notf)
-    },
-    calculateRating(){
-      let all = 0
-      
-      for (let i = 0; i < this.reviews.length; i++) {
-        if(this.reviews[i].bookId == this.pageBookId){
-          all += this.reviews[i].rating}
-        
-        
-      }
-
-      console.log("Rating total:" + all)
-      let total = Math.round(all/(this.reviews.length))
-      console.log("Rating total:" + total)
-      return total
-      
-    },
-    doReview(bookID, userID){
-      console.log(this.picked)
-      for (let i = 0; i < this.reviews.length; i++) {
-        
-        if(this.reviews[i].bookId == bookID && this.reviews[i].userId == userID ){
-          this.reviewCheck = 1
-        }
-        
-      }
-
-      if(this.picked == 0){
-        swal({
-              type: "error",
-              title: "Tem de classificar o livro para submeter a review."
-            });
-      }
-      else{
-        let currentDate = new Date()
-        let newR = {
-        reviewId: this.reviews.length,
-        bookId: bookID,
+        notificationId: this.$store.state.notifications.length,
         userId: userID,
-        rating: this.picked,
-        date: currentDate.getDate() +
+        type: "bookAvailable",
+        bookId: bookID,
+        show: false
+      };
+      this.$store.dispatch("add_notification", notf);
+      console.log(notf);
+    },
+    calculateRating() {
+      let all = 0;
+
+      for (let i = 0; i < this.reviews.length; i++) {
+        if (this.reviews[i].bookId == this.pageBookId) {
+          all += this.reviews[i].rating;
+        }
+      }
+
+      console.log("Rating total:" + all);
+      let total = Math.round(all / this.reviews.length);
+      console.log("Rating total:" + total);
+      return total;
+    },
+    doReview(bookID, userID) {
+      console.log(this.picked);
+      /*for (let i = 0; i < this.reviews.length; i++) {
+        if (
+          this.reviews[i].bookId == bookID &&
+          this.reviews[i].userId == userID
+        ) {
+          this.reviewCheck = 1;
+        }
+      }*/
+
+      if (this.picked == 0) {
+        swal({
+          type: "error",
+          title: "Tem de classificar o livro para submeter a review."
+        });
+      } else {
+        let currentDate = new Date();
+        let newR = {
+          reviewId: this.reviews.length,
+          bookId: bookID,
+          userId: userID,
+          rating: this.picked,
+          date:
+            currentDate.getDate() +
             "/" +
             (currentDate.getMonth() + 1) +
             "/" +
@@ -333,24 +332,49 @@ export default {
             currentDate.getHours() +
             ":" +
             currentDate.getMinutes(),
-        comment: this.reviewArea,
-        upVote: [],
-        downVote: []
-        }
-        console.table(newR)
-        this.$store.dispatch("do_review", newR );
+          comment: this.reviewArea,
+          upVote: [],
+          downVote: []
+        };
+        console.table(newR);
+        axios
+          .post("http://localhost:3000/reviews", newR)
+          .then(res => {
+            console.log("entrou");
+            console.log(res);
+            this.reviews.push(newR);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+        //this.$store.dispatch("do_review", newR);
         this.picked = 0;
         this.reviewArea = "";
+        this.reviewCheck = 1;
       }
     },
 
-    editReview(reviewID,comment) {
+    editReview(reviewID, comment) {
       if (this.verifyEdit == false) {
         this.verifyEdit = true;
-        this.editThatOne = reviewID
+        this.editThatOne = reviewID;
       } else {
         this.verifyEdit = false;
-        let rev = [reviewID,comment]
+        let rev = [reviewID, comment];
+        let route = "http://localhost:3000/reviews/" + reviewID
+
+        axios
+          .put(route, {
+           comment: comment
+          })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
         this.$store.dispatch("edit_review", rev);
       }
     },
@@ -418,7 +442,7 @@ export default {
       let a = true;
       let all = 0;
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId == userID && a == true) {
+        if (this.users[i]._id == userID && a == true) {
           all = this.users[i];
           a = false;
         }
@@ -428,7 +452,7 @@ export default {
     checkRequesition(bookID, userID) {
       console.log(userID);
       console.log();
-      this.bookReq = false
+      this.bookReq = false;
       if (userID != -1) {
         for (let i = 0; i < this.requisitions.length; i++) {
           if (
@@ -440,7 +464,7 @@ export default {
             this.bookReq = true;
             this.buttonActive = true;
             this.bookDeliver = true;
-          } else if (this.books[bookID].availability == false) {
+          } else if (this.book.availability == false) {
             this.buttonText = "Não disponivel";
             //show button sino
             //<i class="fas fa-bell"></i>
@@ -467,7 +491,7 @@ export default {
         //Devia ser true
         let currentDate = new Date();
         //Requisitar
-        
+
         let req = {
           requisitionId: this.$store.getters.getLastIdReq,
           bookId: bookID,
@@ -477,7 +501,8 @@ export default {
             "/" +
             (currentDate.getMonth() + 1) +
             "/" +
-            currentDate.getFullYear() + " " +
+            currentDate.getFullYear() +
+            " " +
             currentDate.getHours() +
             ":" +
             currentDate.getMinutes(),
@@ -485,51 +510,51 @@ export default {
           deliveryBookStatus: this.books[bookID].bookStatus,
           active: true
         };
-        let reqs = [req,bookID]
+        let reqs = [req, bookID];
         console.table(this.requisitions);
         this.$store.dispatch("add_req", reqs);
         console.table(this.requisitions);
         swal({
-              type: "success",
-              title: "Livro requisitado com sucesso."
-            });
+          type: "success",
+          title: "Livro requisitado com sucesso."
+        });
         console.log(req);
         this.checkRequesition(bookID, userID);
       } else {
-        
-
         for (let i = 0; i < this.requisitions.length; i++) {
-          if (this.requisitions[i].bookId == bookID &&
-              this.requisitions[i].userId == userID &&
-              this.requisitions[i].active == true)
-           {
-             /*if(this.requisitions.deliveryDate < currDate){
+          if (
+            this.requisitions[i].bookId == bookID &&
+            this.requisitions[i].userId == userID &&
+            this.requisitions[i].active == true
+          ) {
+            /*if(this.requisitions.deliveryDate < currDate){
                let del = [i,this.loggedUser,-100] //Saber a posição e pontos para o user
               this.$store.dispatch("delivery_book", del);
              }
              else
              {*/
-             let currentDate = new Date();
-             let date = (currentDate.getDate() +
-            "/" +
-            (currentDate.getMonth() + 1) +
-            "/" +
-            currentDate.getFullYear() + " " +
-            currentDate.getHours() +
-            ":" +
-            currentDate.getMinutes())
-              let del = [i,userID,50,bookID,date] //Saber a posição e pontos para o user
-              this.$store.dispatch("delivery_book", del);
-              swal({
+            let currentDate = new Date();
+            let date =
+              currentDate.getDate() +
+              "/" +
+              (currentDate.getMonth() + 1) +
+              "/" +
+              currentDate.getFullYear() +
+              " " +
+              currentDate.getHours() +
+              ":" +
+              currentDate.getMinutes();
+            let del = [i, userID, 50, bookID, date]; //Saber a posição e pontos para o user
+            this.$store.dispatch("delivery_book", del);
+            swal({
               type: "success",
               title: "Livro entregado com sucesso."
             });
-             //}
+            //}
             this.checkRequesition(bookID, userID);
-            console.table(this.users)
-            console.table(this.requisitions)
-            console.table(this.books)
-            
+            console.table(this.users);
+            console.table(this.requisitions);
+            console.table(this.books);
           }
         }
       }
@@ -541,14 +566,53 @@ export default {
   },
   computed: {},
   beforeMount() {
-    let route = "http://localhost:3000/books?id=" + this.$route.params.id
+    let route = "http://localhost:3000/books?id=" + this.$route.params.id;
+    let reviewRoute =
+      "http://localhost:3000/reviews?bookId=" + this.$route.params.id;
     //Axios mongodb
     axios
       .get(route)
       .then(res => {
-          console.log(res.data)
-          this.book = res.data
-          console.log(this.book)
+        console.log(res.data);
+        this.book = res.data;
+        console.log(this.book);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get(reviewRoute)
+      .then(res => {
+        console.log(res.data);
+        this.reviews = res.data;
+        console.log("reviews:");
+        console.log(this.reviews);
+        this.bookRating = this.calculateRating();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        console.log("teste");
+        console.log(res.data);
+        this.users = res.data;
+        console.log("users:");
+        console.log(this.users);
+
+        //checks if user already commented
+        for (let i = 0; i < this.reviews.length; i++) {
+          if (
+            this.reviews[i].bookId == this.clickedBook &&
+            this.reviews[i].userId == this.loggedUser
+          ) {
+            console.log("already review");
+            this.reviewCheck = 1;
+          }
+        }
       })
       .catch(error => {
         console.log(error);
@@ -556,17 +620,15 @@ export default {
 
     this.loggedUser = localStorage.getItem("userLoggedIn");
     this.clickedBook = this.$route.params.id;
-    
     this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
-    this.pageBookId = this.books[this.clickedBook].bookId
-    this.users = this.$store.getters.users;
-    this.reviews = this.$store.getters.reviews;
-    
+    this.pageBookId = this.$route.params.id;
+    //this.users = this.$store.getters.users;
+    //this.reviews = this.$store.getters.reviews;
+
     console.log(this.requisitions.length);
     console.log(this.requisitions);
     this.checkRequesition(this.clickedBook, this.loggedUser);
-    this.bookRating = this.calculateRating()
   }
 };
 </script>
