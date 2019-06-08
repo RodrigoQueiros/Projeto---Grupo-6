@@ -4,14 +4,14 @@
 
     <header id="home" v-if="userLoggedIn == -1">
       <div class="row marginSides" style="height:600px;">
-        <!-- <div id="showMobile" class="col-12">
-            <img
+        <div id="showMobile" class="col-12">
+          <img
             src="https://cdn.discordapp.com/attachments/373524098954821632/578234339976937492/books.png"
             style=" padding-top:30px"
-            id="y"
+            id="mobileSize"
           >
-        </div> -->
-        <div class="col-12 col-md-6 " style="padding-top: 200px;">
+        </div>
+        <div class="col-12" id="showMobile">
           <h2>Descubra o que o Owl tem para si!</h2>
           <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p>
           <div>
@@ -20,12 +20,19 @@
             </router-link>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6" style="padding-top: 200px;" id="showPC">
+          <h2>Descubra o que o Owl tem para si!</h2>
+          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p>
+          <div>
+            <router-link :to="{name: 'catalog'}">
+              <button class="btn btn-owl">Ver catálogo</button>
+            </router-link>
+          </div>
+        </div>
+        <div class="col-6" id="showPC">
           <img
             src="https://cdn.discordapp.com/attachments/373524098954821632/578234339976937492/books.png"
             style=" padding-top:30px"
-            id="y"
-            alt
           >
         </div>
       </div>
@@ -42,7 +49,7 @@
           <br>
           <div class="row">
             <div
-              class="col-6 col-xl-3 col-lg-4"
+              class="col-12 col-sm-6 col-xl-3 col-lg-4"
               v-for="book in recommended.slice(0,4)"
               :key="book.bookId"
             >
@@ -67,7 +74,7 @@
         <div class="boxContent" id="margin">
           <div class="row">
             <div
-              class="col-6 col-xl-3 col-lg-4"
+              class="col-12 col-sm-6 col-xl-3 col-lg-4"
               v-for="book in mostViews.slice(0,4)"
               :key="book.bookId"
             >
@@ -153,8 +160,8 @@
   margin-right: 5%;
 }
 
-.marginBot{
-    margin-bottom: 5%
+.marginBot {
+  margin-bottom: 5%;
 }
 
 /*.header {
@@ -179,6 +186,30 @@
   color: white;
   font-family: "Libre Franklin", sans-serif;
   margin: 0 auto;
+}
+
+#mobileSize {
+  height: 350px;
+  width: 350px;
+}
+
+@media screen and (max-width: 1350px) {
+  #showPC {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1350px) {
+  #showMobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #mobileSize {
+    height: 275px;
+    width: 275px;
+  }
 }
 </style>
 
