@@ -46,7 +46,6 @@
           <table class="table mt-4 table-responsive">
             <thead>
               <tr>
-                <th scope="col">Id</th>
                 <th scope="col">Tag</th>
                 <th scope="col">Ações</th>
                 <th scope="col"></th>
@@ -54,16 +53,15 @@
             </thead>
             <tbody>
               <tr v-for="tag in filteredTags" :key="tag.tagId">
-                <td>{{tag.tagId}}</td>
-                <td v-if="editBool || tag.tagId != editID">{{tag.tagDescription}}</td>
-                <td v-if="editBool == false && tag.tagId == editID">
+                <td v-if="editBool || tag._id != editID">{{tag.tagDescription}}</td>
+                <td v-if="editBool == false && tag._id == editID">
                   <input type="text" class="form-control editInput" v-model="edit.tagDescription">
                 </td>
                 <td>
                   <button
                     type="button"
                     style="color:white"
-                    @click="editTag(tag.tagId)"
+                    @click="editTag(tag._id)"
                     class="btn btn-dark"
                   >
                     <i class="fas fa-edit"></i>
@@ -73,7 +71,7 @@
                   <button
                     type="button"
                     style="color:white"
-                    @click="deleteTag(tag.tagId)"
+                    @click="deleteTag(tag._id)"
                     class="btn btn-danger"
                   >
                     <i class="fas fa-trash-alt"></i>
@@ -94,6 +92,7 @@
 <script>
 import backOfficeNav from "@/components/backOfficeNav.vue";
 import swal from "sweetalert2";
+import axios from "axios";
 
 export default {
   components: {
@@ -101,7 +100,8 @@ export default {
   },
   data: function() {
     return {
-      tags: this.$store.state.tags,
+      tags: [],
+      //tags: this.$store.state.tags,
       tag: "",
       edit: {
         tagDescription: ""
@@ -109,18 +109,34 @@ export default {
       editBool: true,
       editID: 0,
       created: false,
-      filteredTags: this.$store.state.tags,
-      tagFilter: "",
+      filteredTags: [],
+      //filteredTags: this.$store.state.tags,
+      tagFilter: ""
     };
+  },
+
+  created() {
+    console.log("entrou");
+    axios
+      .get("http://localhost:3000/tags")
+      .then(res => {
+        this.tags = res.data;
+        this.filteredTags = res.data;
+        console.log("tags:");
+        console.log(this.tags);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
 
   methods: {
     editTag(id) {
       let a = false;
-      let b = false
+      let b = false;
       let storeEditId = 0;
       for (let i = 0; i < this.tags.length; i++) {
-        if (this.tags[i].tagId === id) {
+        if (this.tags[i]._id === id) {
           if (this.created == false) {
             this.edit.tagDescription = this.tags[i].tagDescription;
             this.created = true;
@@ -130,13 +146,15 @@ export default {
             this.edit.tagDescription = this.tags[i].tagDescription;
             this.editBool = false;
           } else {
-            b = true
-            console.log("d")
+            b = true;
+            console.log("d");
             storeEditId = i;
             for (let j = 0; j < this.tags.length; j++) {
-              
               console.log(this.edit.tagDescription);
-              if (this.tags[j].tagDescription === this.edit.tagDescription && j != i) {
+              if (
+                this.tags[j].tagDescription === this.edit.tagDescription &&
+                j != i
+              ) {
                 a = true;
               }
             }
@@ -148,12 +166,25 @@ export default {
           type: "error",
           title: "Tag já existente."
         });
-      } else if(b){
+      } else if (b) {
         this.editBool = true;
-        this.$store.dispatch("edit_tag", {
+        let route = "http://localhost:3000/tags/" + this.tags[storeEditId]._id;
+        console.log(this.tags[storeEditId]._id);
+        axios
+          .put(route, {
+            tagDescription: this.edit.tagDescription
+          })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        this.tags[storeEditId].tagDescription = this.edit.tagDescription;
+        /*this.$store.dispatch("edit_tag", {
           tagId: storeEditId,
           tagDescription: this.edit.tagDescription
-        });
+        });*/
         swal({
           type: "success",
           title: "Tag editada com sucesso."
@@ -173,8 +204,19 @@ export default {
       }).then(result => {
         if (result.value) {
           for (let i = 0; i < this.tags.length; i++) {
-            if (this.tags[i].tagId === id) {
-              this.$store.dispatch("delete_tag", i);
+            if (this.tags[i]._id === id) {
+              let route = "http://localhost:3000/tags/" + this.tags[i]._id;
+              console.log("entrou");
+              axios
+                .delete(route)
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+              this.tags.splice(i, 1);
+              //this.$store.dispatch("delete_tag", i);
               swal("Deleted!", "Tag has been deleted.", "success");
             }
           }
@@ -196,10 +238,27 @@ export default {
         });
         document.getElementById("formTags").reset();
       } else {
-        this.$store.dispatch("add_tag", {
+        axios
+          .post("http://localhost:3000/tags", {
+            tagDescription: this.tag,
+            
+          })
+          .then(res => {
+            console.log("entrou");
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+        this.tags.push({
+          tagId: null,
+          tagDescription: this.tag
+        })
+        /*this.$store.dispatch("add_tag", {
           tagId: this.$store.getters.getLastIdTags,
           tagDescription: this.tag
-        });
+        });*/
         swal({
           type: "success",
           title: "Tag adicionada com sucesso."
@@ -213,7 +272,6 @@ export default {
       let filterTagsResult = false;
 
       for (let i = 0; i < this.tags.length; i++) {
-
         let upperTag = this.tags[i].tagDescription.toUpperCase();
         let upperFilterTag = this.tagFilter.toUpperCase();
 
