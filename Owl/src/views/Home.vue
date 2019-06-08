@@ -154,6 +154,7 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
 //import Mainbar from '@/components/Mainbar.vue'
 export default {
   name: "home",
@@ -166,7 +167,7 @@ export default {
     return {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
       users: this.$store.state.users,
-      books: this.$store.state.books,
+      books: [],
       recommended: [],
       mostViews: [],
       userTags: [],
@@ -174,21 +175,26 @@ export default {
     };
   },
   created() {
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+        this.mostViews = this.books.sort(function orderByViews(a, b) {
+          if (a.nViews > b.nViews) return -1;
+          if (a.nViews < b.nViews) return 1;
+          else return 0;
+        });
 
-    //this.users = await axios.get('/user'); //await axios.get('/user?ID=12345');
+        //this.mostViews.splice(4,this.mostViews.length-1)
+
+        console.log(this.mostViews);
+        console.log(this.books);
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     console.log("userLoggedIn: " + this.userLoggedIn);
-
-    this.mostViews = this.books.sort(function orderByViews(a, b) {
-      if (a.nViews > b.nViews) return -1;
-      if (a.nViews < b.nViews) return 1;
-      else return 0;
-    });
-
-    //this.mostViews.splice(4,this.mostViews.length-1)
-
-    console.log(this.mostViews);
-    console.log(this.books);
 
     this.userTags = this.users[this.userLoggedIn].favTags;
 
