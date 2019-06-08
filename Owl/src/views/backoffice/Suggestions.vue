@@ -43,7 +43,7 @@
                   <button
                     type="button"
                     style="color:white"
-                    @click="confirmSuggestion(bookSuggestion.suggestionId)"
+                    @click="confirmSuggestion(bookSuggestion._id)"
                     class="btn btn-success"
                   >
                     <i class="fas fa-check"></i>
@@ -52,7 +52,7 @@
                 <td>
                   <button
                     type="button"
-                    @click="addSuggestion(bookSuggestion.suggestionId)"
+                    @click="addSuggestion(bookSuggestion._id)"
                     style="color:white"
                     class="btn btn-dark"
                   >
@@ -63,7 +63,7 @@
                   <button
                     type="button"
                     style="color:white"
-                    @click="deleteSuggestion(bookSuggestion.suggestionId)"
+                    @click="deleteSuggestion(bookSuggestion._id)"
                     class="btn btn-danger"
                   >
                     <i class="fas fa-trash-alt"></i>
@@ -84,6 +84,7 @@
 <script>
 import backOfficeNav from "@/components/backOfficeNav.vue";
 import swal from "sweetalert2";
+import axios from "axios";
 
 export default {
   components: {
@@ -91,9 +92,12 @@ export default {
   },
   data: function() {
     return {
-      bookSuggestions: this.$store.state.bookSuggestions,
-      users: this.$store.state.users,
-      books: this.$store.state.books,
+      //bookSuggestions: this.$store.state.bookSuggestions,
+      //users: this.$store.state.users,
+      //books: this.$store.state.books,
+      bookSuggestions: [],
+      users: [],
+      books: [],
       form: this.$store.state.form,
       username: "",
       tempSuggestions: []
@@ -101,18 +105,38 @@ export default {
   },
 
   created() {
-    // console.log("entrou");
-    // axios
-    //   .get("http://localhost:3000/bookSuggestions")
-    //   .then(res => {
-    //     this.bookSuggestions = res.data;
-        
-    //     console.log("tags:");
-    //     console.log(this.tags);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    axios
+      .get("http://localhost:3000/bookSuggestions")
+      .then(res => {
+        this.bookSuggestions = res.data;
+        console.log("tags:");
+        console.log(this.tags);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+        console.log("books:");
+        console.log(this.books);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        console.log("users:");
+        console.log(this.users);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
 
   methods: {
@@ -136,8 +160,21 @@ export default {
       }).then(result => {
         if (result.value) {
           for (let i = 0; i < this.bookSuggestions.length; i++) {
-            if (this.bookSuggestions[i].suggestionId === id) {
-              this.$store.dispatch("delete_suggestion", i);
+            if (this.bookSuggestions[i]._id === id) {
+              let route =
+                "http://localhost:3000/bookSuggestions/" +
+                this.bookSuggestions[i]._id;
+
+              axios
+                .delete(route)
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+              this.bookSuggestions.splice(i, 1);
+              //this.$store.dispatch("delete_suggestion", i);
               swal("Deleted!", "Suggestion has been deleted.", "success");
             }
           }
@@ -148,7 +185,7 @@ export default {
     confirmSuggestion(id) {
       let bookExists = false;
       for (let i = 0; i < this.bookSuggestions.length; i++) {
-        if (this.bookSuggestions[i].suggestionId === id) {
+        if (this.bookSuggestions[i]._id === id) {
           for (let j = 0; j < this.books.length; j++) {
             if (
               this.bookSuggestions[i].suggestionTitle == this.books[j].title
@@ -174,8 +211,21 @@ export default {
           }).then(result => {
             if (result.value) {
               for (let i = 0; i < this.bookSuggestions.length; i++) {
-                if (this.bookSuggestions[i].suggestionId === id) {
-                  this.$store.dispatch("delete_suggestion", i);
+                if (this.bookSuggestions[i]._id === id) {
+                  let route =
+                    "http://localhost:3000/bookSuggestions/" +
+                    this.bookSuggestions[i]._id;
+
+                  axios
+                    .delete(route)
+                    .then(res => {
+                      console.log(res);
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
+                  this.bookSuggestions.splice(i, 1);
+                  //this.$store.dispatch("delete_suggestion", i);
                   swal("Deleted!", "Suggestion has been deleted.", "success");
                 }
               }
@@ -192,7 +242,7 @@ export default {
 
     addSuggestion(id) {
       for (let i = 0; i < this.bookSuggestions.length; i++) {
-        if (this.bookSuggestions[i].suggestionId === id) {
+        if (this.bookSuggestions[i]._id === id) {
           this.form.title = this.bookSuggestions[i].suggestionTitle;
           this.form.cover = this.bookSuggestions[i].suggestionCover;
           this.form.author = this.bookSuggestions[i].suggestionAuthor;

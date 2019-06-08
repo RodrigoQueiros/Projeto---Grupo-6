@@ -354,7 +354,7 @@ export default {
           for (let i = 0; i < this.books.length; i++) {
             if (this.books[i]._id === id) {
               let route = "http://localhost:3000/books/" + this.books[i]._id;
-              console.log("entrou");
+          
               axios
                 .delete(route)
                 .then(res => {
