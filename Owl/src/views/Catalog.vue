@@ -5,65 +5,80 @@
       <div class="row">
         <div class="col-12 col-lg-3 col-md-12">
           <div class="boxTitle">
-            <h3 id="filterTitle">Filtros</h3>
+            <div class="row">
+              <div class="col-2">
+                <h3 id="filterTitle">Filtros</h3>
+              </div>
+              <div class="ml-auto mr-4 mt-1">
+                <a v-b-toggle.collapse-1 id="collapse">
+                  <i class="fas fa-chevron-down fa-lg"></i>
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="boxContent alignLeft" id="margin">
-            <label for="filterName">Por Titulo:</label>
-            <input type="text" class="form-control" v-model="titleFilter">
-            <label for="filterAuthors" class ="mt-2">Por Autor:</label>
-            <select class="form-control" id="filterAuthors" v-model="authorFilter">
-              <option>Todos</option>
-              <option v-for="(author, index) in authors" :key="index">{{author}}</option>
-            </select>
+          <b-collapse visible id="collapse-1">
+            <div class="boxContent alignLeft" id="margin">
+              <label for="filterName">Por Titulo:</label>
+              <input type="text" class="form-control" v-model="titleFilter">
+              <label for="filterAuthors" class="mt-2">Por Autor:</label>
+              <select class="form-control" id="filterAuthors" v-model="authorFilter">
+                <option>Todos</option>
+                <option v-for="(author, index) in authors" :key="index">{{author}}</option>
+              </select>
 
-            <label for="filterPublisher" class ="mt-2">Por Editora:</label>
-            <select class="form-control" id="filterPublisher" v-model="publisherFilter">
-              <option>Todos</option>
-              <option v-for="(publisher, index) in publishers" :key="index">{{publisher}}</option>
-            </select>
+              <label for="filterPublisher" class="mt-2">Por Editora:</label>
+              <select class="form-control" id="filterPublisher" v-model="publisherFilter">
+                <option>Todos</option>
+                <option v-for="(publisher, index) in publishers" :key="index">{{publisher}}</option>
+              </select>
 
-            <label for="filterTag" class="mt-2">Por Tag:</label>
-            <select class="form-control" id="filterTag" v-model="tagFilter">
-              <option>Todos</option>
-              <option v-for="(tag, index) in tags" :key="index">{{tag.tagDescription}}</option>
-            </select>
-            <br>
-            <button class="btn btn-lg btn-block buttonColor" id="btnLogin" @click="filterBooks">Filtrar</button>
-          </div>
+              <label for="filterTag" class="mt-2">Por Tag:</label>
+              <select class="form-control" id="filterTag" v-model="tagFilter">
+                <option>Todos</option>
+                <option v-for="(tag, index) in tags" :key="index">{{tag.tagDescription}}</option>
+              </select>
+              <br>
+              <button
+                class="btn btn-lg btn-block buttonColor"
+                id="btnLogin"
+                @click="filterBooks"
+              >Filtrar</button>
+            </div>
+          </b-collapse>
         </div>
-        <div class="col-12 col-lg-9 mt-4 mt-lg-0 ">
+        <div class="col-12 col-lg-9 mt-4 mt-lg-0">
           <div class="boxTitle">
             <div class="row">
               <div class="col-2">
                 <h3 id="catalogTitle">Catalogo</h3>
               </div>
-                <div class=" ml-auto" id="ordenarPC">
-                  <form class="form-inline">
-                    <label> Ordenar por:</label>
-                    <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4 " >
-                      <option>Mais Populares</option>
-                      <option>Menos Populares</option>
-                      <option>Alfabetico (Por Titulo)</option>
-                      <option>Alfabetico (Por Autor)</option>
-                    </select>
-                  </form>
-                </div> 
+              <div class="ml-auto" id="ordenarPC">
+                <form class="form-inline">
+                  <label>Ordenar por:</label>
+                  <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4">
+                    <option>Mais Populares</option>
+                    <option>Menos Populares</option>
+                    <option>Alfabetico (Por Titulo)</option>
+                    <option>Alfabetico (Por Autor)</option>
+                  </select>
+                </form>
               </div>
             </div>
+          </div>
           <div class="boxContent" id="margin">
-            <div class=" ml-auto" id="ordenarMobile">
-                  <form class="form-inline">
-                    <label> Ordenar por:</label>
-                    <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4" >
-                      <option>Mais Populares</option>
-                      <option>Menos Populares</option>
-                      <option>Alfabetico (Por Titulo)</option>
-                      <option>Alfabetico (Por Autor)</option>
-                    </select>
-                  </form>
-                </div> 
+            <div class="ml-auto" id="ordenarMobile">
+              <form class="form-inline">
+                <label>Ordenar por:</label>
+                <select v-on:change="sortBooks" v-model="orderTab" class="form-control ml-2 mr-4">
+                  <option>Mais Populares</option>
+                  <option>Menos Populares</option>
+                  <option>Alfabetico (Por Titulo)</option>
+                  <option>Alfabetico (Por Autor)</option>
+                </select>
+              </form>
+            </div>
             <div class="row">
-              <div class="col-6 col-xl-3 col-lg-4" v-for="book in filteredBooks" :key="book.bookId">
+              <div class="col-6 col-sm-4 col-xl-3" v-for="book in filteredBooks" :key="book.bookId">
                 <router-link
                   v-on:mouseover.native="clickBook(book._id)"
                   @click.native="addView(book.bookId)"
@@ -144,6 +159,11 @@
 .owlCovers:hover {
   /* border-color: #592316; */
   opacity: 0.8;
+}
+
+#collapse {
+  /* background-color: #bf6e26 !important; */
+  color: white
 }
 
 @media screen and (max-width: 576px) {
@@ -304,17 +324,17 @@ export default {
       let temp2 = [];
 
       for (let i = 0; i < this.books.length; i++) {
-        let upperTitle = this.books[i].title.toUpperCase()
-        let upperFilter = this.titleFilter.toUpperCase()
-        console.log()
+        let upperTitle = this.books[i].title.toUpperCase();
+        let upperFilter = this.titleFilter.toUpperCase();
+        console.log();
         filterBookResult = upperTitle.includes(upperFilter);
-        if(filterBookResult){
-          temp2.push(this.books[i])
+        if (filterBookResult) {
+          temp2.push(this.books[i]);
         }
       }
-      this.filteredBooks = temp2
-      console.log("depois:")
-      console.log(this.filteredBooks)
+      this.filteredBooks = temp2;
+      console.log("depois:");
+      console.log(this.filteredBooks);
 
       /* this.filteredBooks = this.books.filter(book => {
         let filterBookResult = true;
