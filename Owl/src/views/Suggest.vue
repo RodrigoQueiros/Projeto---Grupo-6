@@ -58,6 +58,7 @@
 import Header from "@/components/Header.vue";
 import swal from "sweetalert2";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -69,11 +70,25 @@ export default {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
       form: {
         title: "Foi Sem Querer Que Te Quis",
-        cover: "https://img.wook.pt/images/programacao-em-python-ernesto-costa/MXwxNzA0MzMzNXwxMjY2NzI1MnwxNDQ4MjM2ODAwMDAw/502x",
+        cover:
+          "https://img.wook.pt/images/programacao-em-python-ernesto-costa/MXwxNzA0MzMzNXwxMjY2NzI1MnwxNDQ4MjM2ODAwMDAw/502x",
         author: "Ernesto Costa"
       },
-      bookSuggestions: this.$store.state.bookSuggestions
+      bookSuggestions: []
     };
+  },
+
+  created() {
+    axios
+      .get("http://localhost:3000/bookSuggestions")
+      .then(res => {
+        console.log(res.data);
+        this.bookSuggestions = res.data;
+        console.log(this.bookSuggestions);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
 
   methods: {
@@ -82,39 +97,62 @@ export default {
       for (let i = 0; i < this.bookSuggestions.length; i++) {
         if (this.bookSuggestions[i].suggestionTitle == this.form.title) {
           suggestionExists = true;
-          this.$store.dispatch(
+          let route = "http://localhost:3000/bookSuggestions/" + this.bookSuggestions[i]._id
+          axios
+            .put(route)
+            .then(res => {
+              swal({
+                type: "success",
+                title: "Livro sugerido com sucesso."
+              });
+            })
+            .catch(error => {
+              console.log(error);
+            });
+
+          /*this.$store.dispatch(
             "add_suggestion_number",
             this.bookSuggestions[i].suggestionId
-          );
-          swal({
-            type: "success",
-            title: "Livro sugerido com sucesso."
-          });
-          
+          );*/
+
           document.getElementById("formSugestion").reset();
         }
       }
       console.log(suggestionExists);
       if (suggestionExists == false) {
         console.log("entrou");
-        
-        swal({
-          type: "success",
-          title: "Livro sugerido com sucesso."
-        });
-        this.$store.dispatch("add_suggestion", {
-            suggestionId: this.$store.getters.getLastIdSuggestions,
+
+        axios
+          .post("http://localhost:3000/bookSuggestions", {
             suggestionTitle: this.form.title,
             suggestionAuthor: this.form.author,
             suggestionCover: this.form.cover,
             userId: this.userLoggedIn,
             suggestionDate: new Date().toLocaleString(),
             suggestNumber: 1
+          })
+          .then(res => {
+            console.log(res);
+            console.log("posted");
+            swal({
+              type: "success",
+              title: "Livro sugerido com sucesso."
+            });
+          })
+          .catch(error => {
+            console.log(error);
           });
+        /*this.$store.dispatch("add_suggestion", {
+          suggestionId: this.$store.getters.getLastIdSuggestions,
+          suggestionTitle: this.form.title,
+          suggestionAuthor: this.form.author,
+          suggestionCover: this.form.cover,
+          userId: this.userLoggedIn,
+          suggestionDate: new Date().toLocaleString(),
+          suggestNumber: 1
+        });*/
         document.getElementById("formSugestion").reset();
-      }
-      else {
-        
+      } else {
       }
     }
   }

@@ -3,98 +3,68 @@
     <Header/>
 
     <header id="home" v-if="userLoggedIn == -1">
-      <div class="row marginSides" style="height:600px;">
-        <div id="showMobile" class="col-12">
-          <img
-            src="https://cdn.discordapp.com/attachments/373524098954821632/578234339976937492/books.png"
-            style=" padding-top:30px"
-            id="mobileSize"
-          >
-        </div>
-        <div class="col-12" id="showMobile">
-          <h2>Descubra o que o Owl tem para si!</h2>
-          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p>
+      <div class="row" style="height:600px;">
+        <div class="col-6 col-md-6 " style="padding-top: 200px;">
+          <h1>Descubra o que o Owl tem para si!</h1>
+          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p> 
           <div>
-            <router-link :to="{name: 'catalog'}">
+            <router-link  :to="{name: 'catalog'}">
               <button class="btn btn-owl">Ver catálogo</button>
             </router-link>
           </div>
         </div>
-        <div class="col-12 col-md-6" style="padding-top: 200px;" id="showPC">
-          <h2>Descubra o que o Owl tem para si!</h2>
-          <p>Owl fornece uma vasta libraria, veja o nosso catálogo!</p>
-          <div>
-            <router-link :to="{name: 'catalog'}">
-              <button class="btn btn-owl">Ver catálogo</button>
-            </router-link>
-          </div>
-        </div>
-        <div class="col-6" id="showPC">
-          <img
-            src="https://cdn.discordapp.com/attachments/373524098954821632/578234339976937492/books.png"
-            style=" padding-top:30px"
-          >
+        <div class="col-6">
+          <img src="https://cdn.discordapp.com/attachments/373524098954821632/578234339976937492/books.png" style="padding-right: 100px; padding-top:30px"  alt="">
         </div>
       </div>
     </header>
 
-    <div class="marginSides mt-4" v-if="userLoggedIn != -1">
-      <div class="col-12">
-        <div class="boxTitle">
-          <h3 id="title">Recomendados</h3>
-        </div>
-        <div class="boxContent" id="margin">
-          <br>
-          <h4 v-if="recommended.length == 0">Não existem livros recomendados.</h4>
-          <br>
-          <div class="row">
-            <div
-              class="col-12 col-sm-6 col-xl-3 col-lg-4"
-              v-for="book in recommended.slice(0,4)"
-              :key="book.bookId"
+    <div v-if="userLoggedIn != -1">
+      <div class id="recBar">
+        <h3 id="recommended">Recomendados</h3>
+      </div>
+      <div class id>
+        <br>
+        <div class="row">
+          <div class="col-6 col-md-3" v-for="book in recommended.slice(0,4)" :key="book.bookId">
+            <router-link
+              v-on:mouseover.native="clickBook(book.bookId)"
+              @click.native="addView(book.bookId)"
+              :to="{ name: 'book', params:{id: clickedBook}}"
             >
-              <router-link
-                v-on:mouseover.native="clickBook(book._id)"
-                @click.native="addView(book.bookId)"
-                :to="{ name: 'book', params:{id: book._id}}"
-              >
-                <img class="owlCoversTop mt-3 mb-3" v-bind:src="book.cover">
-              </router-link>
-            </div>
+              <img class="owlBigCovers mt-3" v-bind:src="book.cover">
+            </router-link>
           </div>
         </div>
+        
       </div>
     </div>
 
-    <div class="margin5 mt-4">
-      <div class="col-12">
-        <div class="boxTitle">
-          <h3 id="title">Mais Populares</h3>
-        </div>
-        <div class="boxContent" id="margin">
-          <div class="row">
-            <div
-              class="col-12 col-sm-6 col-xl-3 col-lg-4"
-              v-for="book in mostViews.slice(0,4)"
-              :key="book.bookId"
-            >
-              <router-link
-                v-on:mouseover.native="clickBook(book._id)"
-                @click.native="addView(book.bookId)"
-                :to="{ name: 'book', params:{id: book._id}}"
-              >
-                <img class="owlCoversTop mt-4 mb-4" v-bind:src="book.cover">
-              </router-link>
-            </div>
-          </div>
+    <div class id="landingBar">
+      <h3 id="owlTitle">Mais Populares</h3>
+    </div>
+    <div class id="catalogContents">
+      <br>
+      <div class="row">
+        <div class="col-6 col-md-3" v-for="book in mostViews.slice(0,4)" :key="book.bookId">
+          <router-link
+            v-on:mouseover.native="clickBook(book.bookId)"
+            @click.native="addView(book.bookId)"
+            :to="{ name: 'book', params:{id: clickedBook}}"
+          >
+            <img class="owlBigCovers mt-3" v-bind:src="book.cover">
+          </router-link>
         </div>
       </div>
+      <br>
+      <br>
+      <br>
     </div>
 
     <Footer/>
   </div>
 </template>
-<style scoped>
+<style>
 #topBooks {
   background-color: #d9b97e;
 
@@ -103,8 +73,8 @@
 }
 
 .owlCoversTop {
-  height: 250px;
-  width: 190px;
+  height: 200px;
+  width: 150px;
   box-sizing: border-box;
   border: 3px solid white;
   border-radius: 5px;
@@ -155,15 +125,6 @@
   color: #1f1f1f;
 }
 
-.marginSides {
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-.marginBot {
-  margin-bottom: 5%;
-}
-
 /*.header {
    The image used 
   background-image: url(https://i.imgur.com/jgBjRVJ.png);
@@ -186,30 +147,6 @@
   color: white;
   font-family: "Libre Franklin", sans-serif;
   margin: 0 auto;
-}
-
-#mobileSize {
-  height: 350px;
-  width: 350px;
-}
-
-@media screen and (max-width: 1350px) {
-  #showPC {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 1350px) {
-  #showMobile {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  #mobileSize {
-    height: 275px;
-    width: 275px;
-  }
 }
 </style>
 

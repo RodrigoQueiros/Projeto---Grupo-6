@@ -17,10 +17,10 @@
             </div>
           </form>
 
-          <table class="table mt-4">
+          <table class="table mt-4 table-responsive">
             <thead>
               <tr>
-                <th scope="col">Id</th>
+                <!-- <th scope="col">Id</th> -->
                 <th scope="col">Nome Próprio</th>
                 <th scope="col">Último Nome</th>
                 <th scope="col">Email</th>
@@ -32,7 +32,7 @@
             </thead>
             <tbody>
               <tr v-for="user in filteredUsers" :key="user.userId">
-                <td>{{user.userId}}</td>
+                <!-- <td>{{user._id}}</td> -->
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
@@ -45,7 +45,7 @@
                     v-if="user.ableToRequest == true"
                     type="button"
                     style="color:white"
-                    @click="denyRequest(user.userId)"
+                    @click="denyRequest(user._id)"
                     class="btn btn-danger ml-2"
                   >
                     <i class="fas fa-ban"></i>
@@ -54,7 +54,7 @@
                     v-if="user.ableToRequest == false"
                     type="button"
                     style="color:white"
-                    @click="letRequest(user.userId)"
+                    @click="letRequest(user._id)"
                     class="btn btn-success ml-2"
                   >
                     <i class="fas fa-check"></i>
@@ -64,7 +64,7 @@
                   <button
                     type="button"
                     style="color:white"
-                    @click="deleteUser(user.userId)"
+                    @click="deleteUser(user._id)"
                     class="btn btn-danger mr-2"
                   >
                     <i class="fas fa-trash-alt"></i>
@@ -73,14 +73,14 @@
                     v-if="user.type != 'admin'"
                     type="button"
                     style="color:white"
-                    @click="addAdmin(user.userId)"
+                    @click="addAdmin(user._id)"
                     class="btn btn-dark"
                   >Tornar Admin</button>
                   <button
                     v-if="user.type == 'admin'"
                     type="button"
                     style="color:white"
-                    @click="deleteAdmin(user.userId)"
+                    @click="deleteAdmin(user._id)"
                     class="btn btn-dark"
                   >Retirar Admin</button>
                 </td>
@@ -115,25 +115,23 @@ export default {
   },
 
   created() {
-     /*axios
-       .get("http://localhost:3000/users")
-       .then(res => {
-         this.users = res.data;
-         this.filteredUsers = res.data;
-         console.log("users:");
-         console.log(this.users);
-       })
-       .catch(error => {
-         console.log(error);
-       });*/
-    
-     
+    axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        this.filteredUsers = res.data;
+        console.log("users:");
+        console.log(this.users);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
 
-  async mounted() {
-    this.filteredUsers = (await axios.get("http://localhost:3000/users")).data
-    console.log(this.filteredUsers)
-  },
+  // async mounted() {
+  //   this.filteredUsers = (await axios.get("http://localhost:3000/users")).data
+  //   console.log(this.filteredUsers)
+  // },
 
   methods: {
     deleteUser(id) {
@@ -148,8 +146,19 @@ export default {
       }).then(result => {
         if (result.value) {
           for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].userId === id) {
-              this.$store.dispatch("delete_user", i);
+            if (this.users[i]._id === id) {
+              let route = "http://localhost:3000/users/" + this.users[i]._id;
+
+              axios
+                .delete(route)
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+              this.users.splice(i, 1);
+              //this.$store.dispatch("delete_user", i);
               swal("Deleted!", "User has been deleted.", "success");
             }
           }
@@ -158,10 +167,23 @@ export default {
     },
 
     addAdmin(id) {
-      console.log(id)
+      console.log(id);
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId === id) {
-          this.$store.dispatch("add_admin", i);
+        if (this.users[i]._id === id) {
+          let route = "http://localhost:3000/users/" + this.users[i]._id;
+
+          axios
+            .put(route, {
+              type: "admin"
+            })
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          this.users[i].type = "admin";
+          //this.$store.dispatch("add_admin", i);
           swal({
             type: "success",
             title: "Admin adicionado com sucesso."
@@ -172,20 +194,47 @@ export default {
 
     deleteAdmin(id) {
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId === id) {
-          this.$store.dispatch("delete_admin", i);
+        if (this.users[i]._id === id) {
+          let route = "http://localhost:3000/users/" + this.users[i]._id;
+
+          axios
+            .put(route, {
+              type: "user"
+            })
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          this.users[i].type = "user";
+          //this.$store.dispatch("delete_admin", i);
           swal({
             type: "success",
             title: "Admin retirado com sucesso."
           });
         }
       }
+      //location.reload();
     },
 
     letRequest(id) {
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId === id) {
-          this.$store.dispatch("let_request", i);
+        if (this.users[i]._id === id) {
+          let route = "http://localhost:3000/users/" + this.users[i]._id;
+
+          axios
+            .put(route, {
+              ableToRequest: true
+            })
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          this.users[i].ableToRequest = true;
+          //this.$store.dispatch("let_request", i);
           swal({
             type: "success",
             title: "O utilizador já pode requisitar."
@@ -196,8 +245,21 @@ export default {
 
     denyRequest(id) {
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId === id) {
-          this.$store.dispatch("deny_request", i);
+        if (this.users[i]._id === id) {
+          let route = "http://localhost:3000/users/" + this.users[i]._id;
+
+          axios
+            .put(route, {
+              ableToRequest: false
+            })
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          this.users[i].ableToRequest = false;
+          //this.$store.dispatch("deny_request", i);
           swal({
             type: "success",
             title: "O utilizador esta proibido de requisitar."

@@ -30,7 +30,7 @@ async function post(req, res) {
 async function put(req, res) {
     try {
         console.log("edited")
-        Requistion.findOneAndUpdate(
+        Requistion.findByIdAndUpdate(
             req.params.id,
             { $set: { "active" : false} },
             { new: true },

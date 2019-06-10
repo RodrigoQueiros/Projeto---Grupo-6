@@ -10,7 +10,7 @@ import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
 import Profile from './views/Profile.vue'
 import Achievements from './views/Achievements.vue'
-
+import Home2 from './views/Home2.vue'
 import Users from './views/backoffice/Users.vue'
 import Books from './views/backoffice/Books.vue'
 import Tags from './views/backoffice/Tags.vue'
@@ -24,6 +24,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/home2',
+      name: 'home2',
+      component: Home2
     },
     {
       path: '/login',

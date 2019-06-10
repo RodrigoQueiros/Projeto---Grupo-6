@@ -6,6 +6,13 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
+
+import { CollapsePlugin } from 'bootstrap-vue'
+Vue.use(CollapsePlugin)
+
 new Vue({
   router,
   store,

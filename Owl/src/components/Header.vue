@@ -23,6 +23,8 @@
       </router-link>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarNav">
+      <b-navbar-toggle target="nav-collapse" class="ml-auto" id="white"><i class="fas fa-bars"></i></b-navbar-toggle>
+      <b-collapse id="nav-collapse" class="alignLeft" is-nav>
       <ul class="navbar-nav alignLeft">
         <li class="nav-item">
           <router-link class="nav-link a" :to="{name: 'home'}" color="white">Home</router-link>
@@ -48,7 +50,7 @@
         <li class="nav-item" v-if="userLoggedIn != -1 && type == 'admin'" id="mobile">
           <router-link class="nav-link a" :to="{name:'users'}">
             <i style="color:white" class="fas fa-cog"></i>
-            Definições
+            Back Office
           </router-link>
         </li>
         <li class="nav-item">
@@ -65,18 +67,18 @@
         <li class="nav-item">
           <a v-if="userLoggedIn != -1" href @click="logout" class="nav-link a">Logout</a>
         </li>
-        <li v-if="userLoggedIn != -1">
+        <li class="nav-item" v-if="userLoggedIn != -1">
           <div class="dropdown">
-            <button
-              class="btn btn-info dropdown-toggle"
-              type="button"
+            <a
+              class="btn dropdown-toggle darkBrown a"
+              
               id="dropdownMenuButton"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
               <i class="fas fa-bell"></i>
-            </button>
+            </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <div class="ml-2 mr-2" v-for="(notification,i) in notifications" :key="i">
                 <!-- Notifications here -->
@@ -88,6 +90,7 @@
           </div>
         </li>
       </ul>
+      </b-collapse>
     </nav>
   </div>
 </template>

@@ -39,4 +39,29 @@ async function del(req, res) {
 }
 
 
-module.exports = { get, post, del}
+async function put(req, res) {
+    try {
+        console.log("edited")
+        BookSugestion.findByIdAndUpdate(
+            req.params.id,
+            { $inc: { "suggestNumber" : 1} },
+            { new: true },
+            (err, data) => {
+                if (err) {
+                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                }
+            }
+        )
+        //console.log(Book.find())
+        return res.send("edited")
+    }
+
+    catch (err) {
+        return res.status(400).send({ error: `Could not remove books: ${err}` })
+
+    }
+}
+
+
+
+module.exports = { get, post, del, put}
