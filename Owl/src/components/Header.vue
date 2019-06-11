@@ -50,7 +50,7 @@
         <li class="nav-item" v-if="userLoggedIn != -1 && type == 'admin'" id="mobile">
           <router-link class="nav-link a" :to="{name:'users'}">
             <i style="color:white" class="fas fa-cog"></i>
-            Definições
+            Back Office
           </router-link>
         </li>
         <li class="nav-item">
