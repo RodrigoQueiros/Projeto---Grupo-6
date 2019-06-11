@@ -392,6 +392,7 @@ export default {
       let checkUp = true;
       let reviewUpvotes = [];
       let reviewDownvotes = [];
+      let route = "http://localhost:3000/reviews/" + reviewID;
 
       for (let i = 0; i < this.reviews.length; i++) {
         if (this.reviews[i]._id == reviewID) {
@@ -415,10 +416,33 @@ export default {
         for (let i = 0; i < this.reviews.length; i++) {
           if (this.reviews[i]._id == reviewID) {
             reviewUpvotes.push(this.loggedUser);
+
+            axios
+              .put(route, {
+                upVote: reviewUpvotes
+              })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+
             if (checkUp == false) {
               for (let j = 0; j < reviewDownvotes.length; j++) {
                 if (reviewDownvotes[j] == this.loggedUser) {
                   reviewDownvotes.splice(j, 1);
+
+                  axios
+                    .put(route, {
+                      downVote: reviewDownvotes
+                    })
+                    .then(res => {
+                      console.log(res);
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
                 }
               }
             }
@@ -431,8 +455,19 @@ export default {
       } else {
         for (let i = 0; i < this.reviews.length; i++) {
           for (let j = 0; j < reviewUpvotes.length; j++) {
-            if (this.reviews[i].upVote[j] == this.loggedUser) {
-              reviewUpvotes.upVote.splice(j, 1);
+            if (reviewUpvotes[j] == this.loggedUser) {
+              reviewUpvotes.splice(j, 1);
+
+              axios
+                .put(route, {
+                  upVote: reviewUpvotes
+                })
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(error => {
+                  console.log(error);
+                });
               console.log(reviewUpvotes);
               console.log(reviewDownvotes);
             }
@@ -447,6 +482,7 @@ export default {
       let checkDown = true;
       let reviewUpvotes = [];
       let reviewDownvotes = [];
+      let route = "http://localhost:3000/reviews/" + reviewID;
 
       for (let i = 0; i < this.reviews.length; i++) {
         if (this.reviews[i]._id == reviewID) {
@@ -469,10 +505,31 @@ export default {
         for (let i = 0; i < this.reviews.length; i++) {
           if (this.reviews[i]._id == reviewID) {
             reviewDownvotes.push(this.loggedUser);
+            axios
+              .put(route, {
+                downVote: reviewDownvotes
+              })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+
             if (checkDown == false) {
               for (let j = 0; j < reviewUpvotes.length; j++) {
                 if (reviewUpvotes[j] == this.loggedUser) {
                   reviewUpvotes.splice(j, 1);
+                  axios
+                    .put(route, {
+                      upVote: reviewUpvotes
+                    })
+                    .then(res => {
+                      console.log(res);
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
                 }
               }
             }
@@ -485,41 +542,22 @@ export default {
         for (let j = 0; j < reviewDownvotes.length; j++) {
           if (reviewDownvotes[j] == this.loggedUser) {
             reviewDownvotes.splice(j, 1);
+            axios
+              .put(route, {
+                downVote: reviewDownvotes
+              })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(error => {
+                console.log(error);
+              });
           }
         }
         console.log(reviewUpvotes);
         console.log(reviewDownvotes);
         this.$store.dispatch("down_vote", [reviewID, userID, false, checkDown]);
       }
-
-      /*  for (let i = 0; i < state.reviews.length; i++) {
-
-        if (state.reviews[i].reviewId == payload[0]) {
-          if (payload[2]) {
-            state.reviews[i].downVote.push(payload[1]);
-
-            if (payload[3] == false) {
-
-              for (let j = 0; j < state.reviews[i].upVote.length; j++) {
-
-                if (state.reviews[i].upVote[j] == payload[1]) {
-                  state.reviews[i].upVote.splice(j, 1);
-                }
-
-              }
-            }
-          }
-          else {
-            for (let j = 0; j < state.reviews[i].downVote.length; j++) {
-
-              if (state.reviews[i].downVote[j] == payload[1]) {
-                state.reviews[i].downVote.splice(j, 1);
-              }
-
-            }
-          }
-        }
-      }*/
     },
 
     getInfoFromUser(userID) {
