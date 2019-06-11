@@ -362,11 +362,11 @@ export default {
       } else {
         this.verifyEdit = false;
         let rev = [reviewID, comment];
-        let route = "http://localhost:3000/reviews/" + reviewID
+        let route = "http://localhost:3000/reviews/" + reviewID;
 
         axios
           .put(route, {
-           comment: comment
+            comment: comment
           })
           .then(res => {
             console.log(res);
@@ -390,9 +390,14 @@ export default {
     upVote(reviewID, userID, bookID) {
       let verify = true;
       let checkUp = true;
+      let reviewUpvotes = [];
+      let reviewDownvotes = [];
 
       for (let i = 0; i < this.reviews.length; i++) {
-        if (this.reviews[i].reviewId == reviewID) {
+        if (this.reviews[i]._id == reviewID) {
+          reviewUpvotes = this.reviews[i].upVote;
+          reviewDownvotes = this.reviews[i].downVote;
+
           for (let j = 0; j < this.reviews[i].upVote.length; j++) {
             if (this.reviews[i].upVote[j] == userID) {
               verify = false;
@@ -407,17 +412,46 @@ export default {
       }
 
       if (verify == true) {
+        for (let i = 0; i < this.reviews.length; i++) {
+          if (this.reviews[i]._id == reviewID) {
+            reviewUpvotes.push(this.loggedUser);
+            if (checkUp == false) {
+              for (let j = 0; j < reviewDownvotes.length; j++) {
+                if (reviewDownvotes[j] == this.loggedUser) {
+                  reviewDownvotes.splice(j, 1);
+                }
+              }
+            }
+          }
+        }
+
+        console.log(reviewUpvotes);
+        console.log(reviewDownvotes);
         this.$store.dispatch("up_vote", [reviewID, userID, true, checkUp]);
       } else {
+        for (let i = 0; i < this.reviews.length; i++) {
+          for (let j = 0; j < reviewUpvotes.length; j++) {
+            if (this.reviews[i].upVote[j] == this.loggedUser) {
+              reviewUpvotes.upVote.splice(j, 1);
+              console.log(reviewUpvotes);
+              console.log(reviewDownvotes);
+            }
+          }
+        }
+
         this.$store.dispatch("up_vote", [reviewID, userID, false, checkUp]);
       }
     },
     downVote(reviewID, userID, bookID) {
       let verify = true;
       let checkDown = true;
+      let reviewUpvotes = [];
+      let reviewDownvotes = [];
 
       for (let i = 0; i < this.reviews.length; i++) {
-        if (this.reviews[i].reviewId == reviewID) {
+        if (this.reviews[i]._id == reviewID) {
+          reviewUpvotes = this.reviews[i].upVote;
+          reviewDownvotes = this.reviews[i].downVote;
           for (let j = 0; j < this.reviews[i].downVote.length; j++) {
             if (this.reviews[i].downVote[j] == userID) {
               verify = false;
@@ -432,10 +466,60 @@ export default {
       }
 
       if (verify == true) {
+        for (let i = 0; i < this.reviews.length; i++) {
+          if (this.reviews[i]._id == reviewID) {
+            reviewDownvotes.push(this.loggedUser);
+            if (checkDown == false) {
+              for (let j = 0; j < reviewUpvotes.length; j++) {
+                if (reviewUpvotes[j] == this.loggedUser) {
+                  reviewUpvotes.splice(j, 1);
+                }
+              }
+            }
+          }
+        }
+        console.log(reviewUpvotes);
+        console.log(reviewDownvotes);
         this.$store.dispatch("down_vote", [reviewID, userID, true, checkDown]);
       } else {
+        for (let j = 0; j < reviewDownvotes.length; j++) {
+          if (reviewDownvotes[j] == this.loggedUser) {
+            reviewDownvotes.splice(j, 1);
+          }
+        }
+        console.log(reviewUpvotes);
+        console.log(reviewDownvotes);
         this.$store.dispatch("down_vote", [reviewID, userID, false, checkDown]);
       }
+
+      /*  for (let i = 0; i < state.reviews.length; i++) {
+
+        if (state.reviews[i].reviewId == payload[0]) {
+          if (payload[2]) {
+            state.reviews[i].downVote.push(payload[1]);
+
+            if (payload[3] == false) {
+
+              for (let j = 0; j < state.reviews[i].upVote.length; j++) {
+
+                if (state.reviews[i].upVote[j] == payload[1]) {
+                  state.reviews[i].upVote.splice(j, 1);
+                }
+
+              }
+            }
+          }
+          else {
+            for (let j = 0; j < state.reviews[i].downVote.length; j++) {
+
+              if (state.reviews[i].downVote[j] == payload[1]) {
+                state.reviews[i].downVote.splice(j, 1);
+              }
+
+            }
+          }
+        }
+      }*/
     },
 
     getInfoFromUser(userID) {
