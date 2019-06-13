@@ -81,6 +81,8 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import swal from "sweetalert2";
+import axios from "axios";
+
 export default {
   data: function() {
     return {
@@ -152,7 +154,7 @@ export default {
             number++;
           }
         }
-        console.log("Entrou em " + a + " com " + number)
+        //console.log("Entrou em " + a + " com " + number)
       } else if (a >= 6 && a < 9) {
         //Upvotes
         for (let i = 0; i < this.reviews.length; i++) {
@@ -192,16 +194,63 @@ export default {
       return [number, percent, text];
     }
   },
-  beforeMount() {
+  created() {
     this.userLoggedIn = localStorage.getItem("userLoggedIn");
-    this.clickedBook = this.$route.params.id;
 
-    this.requisitions = this.$store.getters.requisitions;
+    console.log(this.userLoggedIn)
+    /* this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
     this.users = this.$store.getters.users;
     this.reviews = this.$store.getters.reviews;
+   
+    console.table(this.reviews); */
+
     this.achievements = this.$store.state.achievements;
-    console.table(this.reviews);
+
+    axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        console.log("users:");
+        console.log(this.users);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+        console.log("books:");
+        console.log(this.books);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    /* axios
+      .get("http://localhost:3000/reviews")
+      .then(res => {
+        this.reviews = res.data;
+        console.log("reviews:");
+        console.log(this.reviews);
+      })
+      .catch(error => {
+        console.log(error);
+      }); */
+
+    console.log(this.userLoggedIn)
+    axios
+      .get("http://localhost:3000/requisitions?id=" + this.userLoggedIn)
+      .then(res => {
+        this.requisitions = res.data;
+        console.log("requisitions:");
+        console.log(this.requisitions);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>

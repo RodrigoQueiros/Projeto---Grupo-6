@@ -44,9 +44,12 @@
           <h3 id="title">Recomendados</h3>
         </div>
         <div class="boxContent" id="margin">
-          <br>
-          <h4 v-if="recommended.length == 0">Não existem livros recomendados.</h4>
-          <br>
+          <div v-if="recommended.length == 0">
+            <br>
+            <h4>Não existem livros recomendados.</h4>
+            <br>
+          </div>
+
           <div class="row">
             <div
               class="col-12 col-sm-6 col-xl-3 col-lg-4"
@@ -58,7 +61,7 @@
                 @click.native="addView(book.bookId)"
                 :to="{ name: 'book', params:{id: book._id}}"
               >
-                <img class="owlCoversTop mt-3 mb-3" v-bind:src="book.cover">
+                <img class="owlCoversTop mt-4 mb-4" v-bind:src="book.cover">
               </router-link>
             </div>
           </div>
@@ -229,7 +232,7 @@ export default {
   data: function() {
     return {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
-      users: this.$store.state.users,
+      users: [],
       books: [],
       recommended: [],
       mostViews: [],
@@ -239,6 +242,24 @@ export default {
   },
   created() {
     axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        console.log("users:");
+        console.log(this.users);
+
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id == this.userLoggedIn) {
+            this.userTags = this.users[i].favTags;
+          }
+        }
+        console.log(this.userTags);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
       .get("http://localhost:3000/books")
       .then(res => {
         this.books = res.data;
@@ -247,6 +268,24 @@ export default {
           if (a.nViews < b.nViews) return 1;
           else return 0;
         });
+
+        for (let i = 0; i < this.books.length; i++) {
+          for (let j = 0; j < this.books[i].idTag.length; j++) {
+            for (let z = 0; z < this.userTags.length; z++) {
+              if (this.recommended.length >= 4) {
+                break;
+              }
+
+              if (this.books[i].idTag[j] == this.userTags[z]) {
+                this.recommended.push(this.books[i]);
+
+                if (this.recommended[i] == this.recommended[i + 1]) {
+                  this.recommended.splice(i + 1, 1);
+                }
+              }
+            }
+          }
+        }
 
         //this.mostViews.splice(4,this.mostViews.length-1)
 
@@ -259,25 +298,7 @@ export default {
 
     console.log("userLoggedIn: " + this.userLoggedIn);
 
-    this.userTags = this.users[this.userLoggedIn].favTags;
-
-    for (let i = 0; i < this.books.length; i++) {
-      for (let j = 0; j < this.books[i].idTag.length; j++) {
-        for (let z = 0; z < this.userTags.length; z++) {
-          if (this.recommended.length >= 4) {
-            break;
-          }
-
-          if (this.books[i].idTag[j] == this.userTags[z]) {
-            this.recommended.push(this.books[i]);
-
-            if (this.recommended[i] == this.recommended[i + 1]) {
-              this.recommended.splice(i + 1, 1);
-            }
-          }
-        }
-      }
-    }
+    //this.userTags = this.users[this.userLoggedIn].favTags;
   },
   methods: {
     getTop2() {
