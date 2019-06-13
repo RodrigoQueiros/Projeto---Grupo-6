@@ -194,7 +194,7 @@ export default {
           lastName: this.lastName,
           email: this.email,
           password: this.password,
-          confirmPassword: this.password2
+          //confirmPassword: this.password2
         });
       if(response.data.error){
         console.log(response.data.error)

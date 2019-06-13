@@ -92,6 +92,8 @@ body {
 import Header from "@/components/Header.vue";
 import swal from "sweetalert2";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
+import AuthenticationService from "../services/authenticate.js";
 
 export default {
   name: "login",
@@ -104,12 +106,13 @@ export default {
       form: {
         email: "",
         password: ""
-      }
+      },
+      url: "http://localhost:3000/",
     };
   },
   methods: {
-    login() {
-      let user = {
+    async login() {
+      /* let user = {
         email: this.form.email,
         password: this.form.password
       };
@@ -126,6 +129,20 @@ export default {
           type: "error",
           title: "Os seus dados estão incorretos."
         });
+      } */
+
+      try {
+        const response = await axios.post(this.url + "users",{
+          email: this.email,
+          password: this.password
+        });
+        console.log(response.data.token);
+        this.$store.dispatch("setToken", response.data.token);
+        this.$store.dispatch("login", response.data.user);
+        this.success = true;
+      } catch (error) {
+        this.error =
+          !!error.response.data.error == true ? error.response.data.error : "";
       }
     }
   }
