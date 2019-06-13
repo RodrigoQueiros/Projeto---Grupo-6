@@ -9,8 +9,8 @@
       </div>
       <div class="row">
         <div class="col-9 col-md-9 boxContent">
-          <div v-for="user in users" :key="user.userId">
-            <div v-if="user.userId == userLoggedIn">
+          <div v-for="user in users" :key="user._id">
+            <div v-if="user._id == userLoggedIn">
               <div class="row" style="text-align:left">
                 <div class="col-12 col-md-6 col-lg-3">
                   <img
@@ -67,13 +67,13 @@
         <div class="col-3 col-md-3 boxContent" v-if="clicked == false">
           <h4 class="mt-4">Tags Favoritas</h4>
           <ul>
-            <li class="text-left" v-for="teste in testes" :key="teste">{{teste}}</li>
+            <li class="text-left" v-for="(teste, i) in testes2" :key="i">{{teste}}</li>
           </ul>
         </div>
         <div class="col-3 col-md-3 boxContent" v-if="clicked">
           <h4 class="mt-4">Tags Favoritas</h4>
           <div class="scrollbox">
-            <p v-for="(tag,index) in tags" :key="tag">
+            <p v-for="(tag,index) in tags" :key="index">
               <input :id="index" type="checkbox" :value="index">
               {{tag.tagDescription}}
             </p>
@@ -167,89 +167,6 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-6 m-auto">
-          <div class="row mt-4">
-            <div class="col-12 col-md-12 boxTitle" id>
-              <h3>Conquistas</h3>
-            </div>
-            <div class="col-12 col-md-12 boxContent pb-3">
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Fazer 1 requisição
-                      <i class="far fa-check-circle" style="color:green" v-if="achReq>0"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:aqua"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Fazer 5 requisição
-                      <i class="far fa-check-circle" style="color:green" v-if="achReq>4"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Fazer 5 comentarios
-                      <i class="far fa-check-circle" style="color:green" v-if="achRev>4"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-3" style="background-color:white">
-                <div class="row">
-                  <div class="col-3">
-                    <i class="fas fa-star-half-alt mt-4 pb-3" style="font-size:60px;color:peru"></i>
-                  </div>
-                  <div class="col-8">
-                    <h4 class="mt-5">
-                      Receber 20 upvotes
-                      <i class="far fa-check-circle" style="color:green" v-if="achVot>19"></i>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <!-- See more here -->
-              <router-link :to="{name:'achievements'}">»» See more ««</router-link>
-            </div>
-          </div>
-        </div>
-        <div class="col-5 m-auto">
-          <!--
-      <div class="row mt-4">
-        <div class="col-12 col-md-12 boxTitle" id>
-            <h3>Notificações</h3>
-          </div>
-         <div class="col-12 col-md-12 boxContent">
-           </div>
-
-
-      </div>
-          -->
-        </div>
-      </div>
     </div>
     <Footer/>
   </div>
@@ -303,6 +220,8 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import swal from "sweetalert2";
+import axios from "axios";
+
 export default {
   components: {
     Header,
@@ -310,11 +229,11 @@ export default {
   },
   data: function() {
     return {
-      users: this.$store.state.users,
+      users: [],
       userLoggedIn: localStorage.getItem("userLoggedIn"),
-      requisitions: this.$store.state.requisitions,
-      books: this.$store.state.books,
-      reviews: this.$store.state.reviews,
+      requisitions: [],
+      books: [],
+      //reviews: this.$store.state.reviews,
       clicked: false,
       user: {
         firstName: "",
@@ -323,69 +242,80 @@ export default {
         favTags: [],
         photo: ""
       },
-      tags: this.$store.state.tags,
+      tags: [],
       testes: [],
+      testes2: [],
       clickedBook: 0,
-      achReq: 0,
-      achRev: 0,
-      achVot: 0
+      
     };
   },
 
   created() {
-    this.user.firstName = this.users[this.userLoggedIn].firstName;
-    this.user.lastName = this.users[this.userLoggedIn].lastName;
-    this.user.email = this.users[this.userLoggedIn].email;
-    this.user.favTags = this.users[this.userLoggedIn].favTags;
-    this.user.photo = this.users[this.userLoggedIn].photo;
-    this.achReq = this.achievementReq();
-    this.achRev = this.achievementRev();
-    this.achVot = this.achievementVot();
-    for (let i = 0; i < this.user.favTags.length; i++) {
-      for (let j = 0; j < this.tags.length; j++) {
-        if (this.user.favTags[i] == this.tags[j].tagId) {
-          this.testes.push(this.tags[i].tagDescription);
+    axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        console.log("users:");
+        console.log(this.users);
+
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id == this.userLoggedIn) {
+            this.testes = this.users[i].favTags;
+            console.log(this.testes);
+          }
         }
-      }
-    }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:3000/tags")
+      .then(res => {
+        this.tags = res.data;
+        console.log("tags:");
+        console.log(this.tags);
+        for (let i = 0; i < this.tags.length; i++) {
+          for (let j = 0; j < this.testes.length; j++) {
+            if (this.tags[i]._id == this.testes[j]) {
+              this.testes2.push(this.tags[i].tagDescription);
+            }
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+        console.log("books:");
+        console.log(this.books);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    console.log(this.userLoggedIn);
+
+    axios
+      .get("http://localhost:3000/requisitions?userId=" + this.userLoggedIn)
+      .then(res => {
+        this.requisitions = res.data;
+        console.log("requisitions:");
+        console.log(this.requisitions);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
+
   updated() {
     this.checkCheckboxes();
   },
 
   methods: {
-    achievementReq() {
-      let numberReq = 0;
-
-      for (let i = 0; i < this.requisitions.length; i++) {
-        if (this.requisitions[i].userId == this.userLoggedIn) {
-          numberReq++;
-        }
-      }
-      return numberReq;
-    },
-    achievementRev() {
-      let numberRev = 0;
-
-      for (let i = 0; i < this.reviews.length; i++) {
-        if (this.reviews[i].userId == this.userLoggedIn) {
-          numberRev++;
-        }
-      }
-      console.log(numberRev);
-      return numberRev;
-    },
-    achievementVot() {
-      let numberVot = 0;
-
-      for (let i = 0; i < this.reviews.length; i++) {
-        if (this.reviews[i].userId == this.userLoggedIn) {
-          numberVot += this.reviews[i].upVote.length;
-        }
-      }
-      return numberVot;
-    },
-
     deliverBook(bookID, userID) {
       for (let i = 0; i < this.requisitions.length; i++) {
         if (
@@ -409,36 +339,80 @@ export default {
         }
       }
     },
+
     editProfile() {
       if (this.clicked) {
         this.clicked = false;
-        this.user.firstName = this.users[this.userLoggedIn].firstName;
-        this.user.lastName = this.users[this.userLoggedIn].lastName;
-        this.user.email = this.users[this.userLoggedIn].email;
-        this.user.photo = this.users[this.userLoggedIn].photo;
-        this.$store.dispatch("edit_profile", {
-          userId: this.userLoggedIn,
-          firstName: this.user.firstName,
-          lastName: this.user.lastName,
-          email: this.user.email,
-          photo: this.user.photo
-        });
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id == this.userLoggedIn) {
+            this.user.firstName = this.users[i].firstName;
+            this.user.lastName = this.users[i].lastName;
+            this.user.email = this.users[i].email;
+            this.user.photo = this.users[i].photo;
+
+            let route = "http://localhost:3000/users/" + this.users[i]._id;
+
+            axios
+              .put(route, {
+                firstName: this.user.firstName,
+                lastName: this.user.lastName,
+                email: this.user.email,
+                photo: this.user.photo
+              })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          }
+        }
 
         this.testes = [];
+        this.testes2 = [];
         this.user.favTags = [];
         for (let i = 0; i < this.tags.length; i++) {
           console.log("entrou no for do coiso");
           if (document.getElementById(i.toString()).checked) {
             console.log("entrou no if do coiso");
             this.testes.push(this.tags[i].tagDescription);
-            this.user.favTags.push(this.tags[i].tagId);
+            this.user.favTags.push(this.tags[i]._id);
             console.log(this.user.favTags);
           }
         }
-        this.$store.dispatch("update_favtags", [
-          this.userLoggedIn,
-          this.user.favTags
-        ]);
+
+        let route = "http://localhost:3000/users/" + this.userLoggedIn;
+
+        axios
+          .put(route, {
+            favTags: this.user.favTags
+          })
+          .then(res => {
+            console.log("entrou edit tags");
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id == this.userLoggedIn) {
+            this.testes = this.user.favTags;
+          }
+        }
+
+        for (let i = 0; i < this.tags.length; i++) {
+          for (let j = 0; j < this.testes.length; j++) {
+            if (this.tags[i]._id == this.testes[j]) {
+              this.testes2.push(this.tags[i].tagDescription);
+            }
+          }
+        }
+
+        // this.$store.dispatch("update_favtags", [
+        //   this.userLoggedIn,
+        //   this.user.favTags
+        // ]);
       } else {
         this.clicked = true;
         // this.users[this.userLoggedIn].firstName = this.user.firstName
@@ -446,15 +420,21 @@ export default {
         // this.users[this.userLoggedIn].email = this.user.email
       }
     },
+
     checkCheckboxes() {
-      for (let i = 0; i < this.tags.length; i++) {
-        for (let j = 0; j < this.user.favTags.length; j++) {
-          if (i == this.user.favTags[j]) {
-            document.getElementById(i.toString()).checked = true;
+      if (this.clicked) {
+        this.user.favTags = this.testes2;
+        console.log(this.user.favTags);
+        for (let i = 0; i < this.tags.length; i++) {
+          for (let j = 0; j < this.user.favTags.length; j++) {
+            if (this.tags[i].tagDescription == this.user.favTags[j]) {
+              document.getElementById(i.toString()).checked = true;
+            }
           }
         }
       }
     },
+
     clickBook(index) {
       for (let i = 0; i < this.books.length; i++) {
         if (this.books[i].bookId === index) {
