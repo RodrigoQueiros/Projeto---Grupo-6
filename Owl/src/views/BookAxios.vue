@@ -269,7 +269,8 @@ export default {
       bookRating: 0,
       reviewCheck: 0,
       pageBookId: 0,
-      book: null
+      book: null,
+      userLoggedIn: localStorage.getItem("userLoggedIn")
     };
   },
   methods: {
@@ -573,7 +574,7 @@ export default {
     },
     checkRequesition(bookID, userID) {
       console.log(userID);
-      console.log();
+      console.log("^teste");
       this.bookReq = false;
       if (userID != -1) {
         for (let i = 0; i < this.requisitions.length; i++) {
@@ -615,7 +616,7 @@ export default {
         //Requisitar
 
         let req = {
-          requisitionId: this.$store.getters.getLastIdReq,
+          //requisitionId: this.$store.getters.getLastIdReq,
           bookId: bookID,
           userId: userID,
           requisitionDate:
@@ -629,19 +630,30 @@ export default {
             ":" +
             currentDate.getMinutes(),
           deliveryDate: "",
-          deliveryBookStatus: this.books[bookID].bookStatus,
+          deliveryBookStatus: this.book.bookStatus,
           active: true
         };
         let reqs = [req, bookID];
         console.table(this.requisitions);
-        this.$store.dispatch("add_req", reqs);
+        axios
+          .post("http://localhost:3000/requisitions", req)
+          .then(res => {
+            console.log("entrou");
+            console.log(res);
+            this.requisitions.push(req);
+            this.checkRequesition(this.clickedBook, this.loggedUser);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        //this.$store.dispatch("add_req", reqs);
         console.table(this.requisitions);
         swal({
           type: "success",
           title: "Livro requisitado com sucesso."
         });
         console.log(req);
-        this.checkRequesition(bookID, userID);
+        
       } else {
         for (let i = 0; i < this.requisitions.length; i++) {
           if (
@@ -667,13 +679,29 @@ export default {
               ":" +
               currentDate.getMinutes();
             let del = [i, userID, 50, bookID, date]; //Saber a posição e pontos para o user
-            this.$store.dispatch("delivery_book", del);
+            console.log("antes de entregar : " + this.requisitions[i]._id);
+            axios
+              .put(
+                "http://localhost:3000/requisitions/" +
+                  this.requisitions[i]._id,
+                {
+                  deliveryDate: date
+                }
+              )
+              .then(res => {
+                console.log(res);
+                this.checkRequesition(this.clickedBook, this.loggedUser);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+            //this.$store.dispatch("delivery_book", del);
             swal({
               type: "success",
               title: "Livro entregado com sucesso."
             });
             //}
-            this.checkRequesition(bookID, userID);
+            
             console.table(this.users);
             console.table(this.requisitions);
             console.table(this.books);
@@ -691,6 +719,9 @@ export default {
     let route = "http://localhost:3000/books?id=" + this.$route.params.id;
     let reviewRoute =
       "http://localhost:3000/reviews?bookId=" + this.$route.params.id;
+
+    let requistionRoute =
+      "http://localhost:3000/requisitions?userId=" + this.userLoggedIn;
     //Axios mongodb
     axios
       .get(route)
@@ -740,9 +771,21 @@ export default {
         console.log(error);
       });
 
+    axios
+      .get(requistionRoute)
+      .then(res => {
+        console.log("reqs:");
+        console.log(res.data);
+        this.requisitions = res.data;
+        this.checkRequesition(this.clickedBook, this.loggedUser);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     this.loggedUser = localStorage.getItem("userLoggedIn");
     this.clickedBook = this.$route.params.id;
-    this.requisitions = this.$store.getters.requisitions;
+    //this.requisitions = this.$store.getters.requisitions;
     this.books = this.$store.getters.books;
     this.pageBookId = this.$route.params.id;
     //this.users = this.$store.getters.users;

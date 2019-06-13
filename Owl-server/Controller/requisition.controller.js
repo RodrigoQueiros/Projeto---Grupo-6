@@ -29,10 +29,10 @@ async function post(req, res) {
 
 async function put(req, res) {
     try {
-        console.log("edited")
+        console.log(req.body)
         Requistion.findByIdAndUpdate(
             req.params.id,
-            { $set: { "active" : false} },
+            { $set: { "active" : false, deliveryDate: req.body.deliveryDate}, },
             { new: true },
             (err, data) => {
                 if (err) {
