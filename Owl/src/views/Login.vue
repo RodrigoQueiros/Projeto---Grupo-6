@@ -108,6 +108,7 @@ export default {
         password: ""
       },
       url: "http://localhost:3000/",
+      success: 0
     };
   },
   methods: {
@@ -132,17 +133,28 @@ export default {
       } */
 
       try {
-        const response = await axios.post(this.url + "users",{
-          email: this.email,
-          password: this.password
+        const response = await axios.post(this.url + "users/login", {
+          email: this.form.email,
+          password: this.form.password
         });
-        console.log(response.data.token);
-        this.$store.dispatch("setToken", response.data.token);
-        this.$store.dispatch("login", response.data.user);
-        this.success = true;
+        console.log(response.data);
+        //this.$store.dispatch("setToken", response.data.token);
+        //this.$store.dispatch("login", response.data.user);
+        swal({
+          type: "success",
+          title: "Login efetuado com sucesso."
+        });
+
+        localStorage.setItem("userLoggedIn",response.data.user._id );
+        this.$router.push("/")
       } catch (error) {
         this.error =
           !!error.response.data.error == true ? error.response.data.error : "";
+
+        swal({
+          type: "error",
+          title: "Os seus dados estão incorretos."
+        });
       }
     }
   }

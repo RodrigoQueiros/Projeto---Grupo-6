@@ -40,7 +40,7 @@ async function register(req, res) {
 async function validate(req, res) {
     try {
         const { email, password } = req.body
-        console.log(email)
+        console.log(req.body.email)
         console.log("entrou")
 
         const user = await User.findOne({ email: email }).lean()
@@ -57,6 +57,7 @@ async function validate(req, res) {
             return res.status(403).send({ error: "Password invalid" })
         }
         res.status(200).send({ Yey: "U got it", user, token: jwtSignUser(user) })
+        console.log("logged in")
         
 
     }
@@ -68,8 +69,16 @@ async function validate(req, res) {
 }
 
 async function get(req, res) {
+    const user = req.query
+
     try {
-        return res.send(await User.find().lean())
+        if(user.id){
+            return res.send(await User.find({_id: user.id}))
+        }
+        else{
+            return res.send(await User.find().lean())
+        }
+       
     } catch (err) {
         return res.status(400).send({ error: `Could not get users: ${err}` })
     }

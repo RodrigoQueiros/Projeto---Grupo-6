@@ -189,15 +189,35 @@ export default {
     //   }
     // }
     async signup() {
+      let hasEmail = this.email.includes("@")
+      let emailCheck = this.email.indexOf("@")
+      let emailCheckAfter = this.email[emailCheck+1]
+      console.log(this.password.length)
+      if (this.password == this.password2 && this.password.length > 0 && hasEmail && emailCheckAfter) {
         const response = await axios.post(this.url + "users", {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
-          password: this.password,
+          password: this.password
           //confirmPassword: this.password2
         });
-      if(response.data.error){
-        console.log(response.data.error)
+        swal({
+          type: "success",
+          title: "Registo efetuado com sucesso"
+        });
+
+        if (response.data.error) {
+          console.log(response.data.error);
+          swal({
+            type: "error",
+            title: "Ocorreu um erro, tente mais tarde"
+          });
+        }
+      } else if(hasEmail && emailCheckAfter) {
+        swal({
+          type: "error",
+          title: "As passwords não sao iguais!"
+        });
       }
     }
   }

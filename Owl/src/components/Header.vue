@@ -146,6 +146,8 @@ h4 {
 
 
 <script>
+import axios from "axios";
+
 export default {
   data: function() {
     return {
@@ -164,8 +166,24 @@ export default {
     if (localStorage.getItem("userLoggedIn") == null) {
       localStorage.setItem("userLoggedIn", -1);
     }
+
+    if (localStorage.getItem("userLoggedIn") != -1) {
+      let route = "http://localhost:3000/users?id=" + this.userLoggedIn;
+      axios
+        .get(route)
+        .then(res => {
+          console.log("user:")
+          console.log(res.data);
+          this.userName = res.data[0].firstName;
+          this.type = res.data[0].type;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+
     this.getNotifications();
-    this.getUser();
+    //this.getUser();
     console.log(this.userName);
   },
   methods: {
@@ -173,9 +191,8 @@ export default {
       this.requisitions.forEach(req => {
         if (this.userLoggedIn == req.userId && req.active == true) {
           let date1 = new Date(req.requisitionDate).getDate();
-          let today = new Date(
-            /*"Wed Jun 21 2019 20:29:40 GMT+0100 (Western European Summer Time)"*/
-          ).getDate();
+          let today = new Date().getDate();
+          /*"Wed Jun 21 2019 20:29:40 GMT+0100 (Western European Summer Time)"*/
 
           if (date1 + 5 < today) {
             //How late
@@ -218,9 +235,7 @@ export default {
           let bookName = "";
 
           this.reviews.forEach(rev2 => {
-            
             if (rev.bookId == rev2.bookId && rev2.userId != this.userLoggedIn) {
-
               this.books.forEach(book => {
                 if (rev.bookId == book.bookId) {
                   bookName = book.title;
@@ -228,23 +243,19 @@ export default {
               });
 
               this.users.forEach(user => {
-                
                 if (rev2.userId == user.userId) {
-                  console.log("Hey")
+                  console.log("Hey");
                   personName = user.firstName;
-                  
                 }
               });
 
               notf = `${personName} tambem fez uma review ao livro ${bookName}.`;
             }
           });
-          if(notf){
-            this.notifications.push(notf)
+          if (notf) {
+            this.notifications.push(notf);
           }
-          
         }
-        
       });
     },
     logout() {
