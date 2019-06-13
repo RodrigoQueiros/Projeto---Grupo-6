@@ -211,8 +211,7 @@ export default {
       .then(res => {
         this.books = res.data;
         this.filteredBooks = res.data;
-        console.log("books:");
-        console.log(this.books);
+        
 
         for (let i = 0; i < this.books.length; i++) {
           if (this.authors.indexOf(this.books[i].author) == -1) {
@@ -235,8 +234,7 @@ export default {
       .get("http://localhost:3000/tags")
       .then(res => {
         this.tags = res.data;
-        console.log("tags:");
-        console.log(this.tags);
+        
       })
       .catch(error => {
         console.log(error);

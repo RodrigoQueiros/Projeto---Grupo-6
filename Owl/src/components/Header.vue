@@ -152,55 +152,48 @@ export default {
   data: function() {
     return {
       userLoggedIn: localStorage.getItem("userLoggedIn"),
-      users: this.$store.state.users,
+      users: [],
       userName: "",
       type: "",
       notifications: [],
-      reviews: this.$store.state.reviews,
-      requisitions: this.$store.state.requisitions,
-      books: this.$store.state.books
+      reviews: [],
+      requisitions: [],
+      books: []
     };
   },
 
   created() {
-    if (localStorage.getItem("userLoggedIn") == null) {
-      localStorage.setItem("userLoggedIn", -1);
-    }
 
-    if (localStorage.getItem("userLoggedIn") != -1) {
-      let route = "http://localhost:3000/users?id=" + this.userLoggedIn;
+    axios
+      .get("http://localhost:3000/users")
+      .then(res => {
+        this.users = res.data;
+        this.getUser()
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+
+    /* if (this.userLoggedIn != -1) {
       axios
-        .get(route)
-        .then(res => {
-          console.log("user:")
-          console.log(res.data);
-          this.userName = res.data[0].firstName;
-          this.type = res.data[0].type;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+      .get("http://localhost:3000/requisitions?userId=" + this.userLoggedIn)
+      .then(res => {
+        this.requisitions = res.data;
 
-    this.getNotifications();
-    //this.getUser();
-    console.log(this.userName);
-  },
-  methods: {
-    getNotifications() {
-      this.requisitions.forEach(req => {
+        this.requisitions.forEach(req => {
+       
         if (this.userLoggedIn == req.userId && req.active == true) {
           let date1 = new Date(req.requisitionDate).getDate();
           let today = new Date().getDate();
-          /*"Wed Jun 21 2019 20:29:40 GMT+0100 (Western European Summer Time)"*/
-
+          "Wed Jun 21 2019 20:29:40 GMT+0100 (Western European Summer Time)"
           if (date1 + 5 < today) {
             //How late
             let bookName = "";
             let nDays = today - date1 - 5;
 
             this.books.forEach(book => {
-              if (req.bookId == book.bookId) {
+              if (req.bookId == book._id) {
                 bookName = book.title;
               }
             });
@@ -215,7 +208,109 @@ export default {
             let nDays = date1 + 3 - today;
 
             this.books.forEach(book => {
-              if (req.bookId == book.bookId) {
+              if (req.bookId == book._id) {
+                bookName = book.title;
+              }
+            });
+
+            this.notifications.push(
+              `Faltam ${nDays} dias para acabar o tempo da requisição do livro ${bookName}.`
+            );
+            console.log(this.notifications);
+          }
+        }
+      });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+    
+
+    axios
+      .get("http://localhost:3000/reviews")
+      .then(res => {
+        this.reviews = res.data;
+
+        this.reviews.forEach(rev => {
+        if (this.userLoggedIn == rev.userId) {
+          let notf = "";
+          let personName = "";
+          let bookName = "";
+
+          this.reviews.forEach(rev2 => {
+            if (rev.bookId == rev2.bookId && rev2.userId != this.userLoggedIn) {
+              this.books.forEach(book => {
+                if (rev.bookId == book._id) {
+                  bookName = book.title;
+                }
+              });
+
+              this.users.forEach(user => {
+                if (rev2.userId == user._id) {
+                  console.log("Hey");
+                  personName = user.firstName;
+                }
+              });
+
+              notf = `${personName} tambem fez uma review ao livro ${bookName}.`;
+            }
+          });
+          if (notf) {
+            this.notifications.push(notf);
+          }
+        }
+      });
+      })
+      .catch(error => {
+        console.log(error);
+      }); 
+
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+      })
+      .catch(error => {
+        console.log(error);
+      }); */
+
+
+    //this.getNotifications();
+    
+    
+  },
+  methods: {
+    getNotifications() {
+      /* console.log("oi")
+      this.requisitions.forEach(req => {
+       
+        if (this.userLoggedIn == req.userId && req.active == true) {
+          let date1 = new Date(req.requisitionDate).getDate();
+          let today = new Date().getDate();
+          "Wed Jun 21 2019 20:29:40 GMT+0100 (Western European Summer Time)"
+          if (date1 + 5 < today) {
+            //How late
+            let bookName = "";
+            let nDays = today - date1 - 5;
+
+            this.books.forEach(book => {
+              if (req.bookId == book._id) {
+                bookName = book.title;
+              }
+            });
+
+            this.notifications.push(
+              `A sua entrega do livro ${bookName} está em atraso ${nDays} dias.`
+            );
+          } else if (date1 + 2 >= today && date1 + 1 <= today) {
+            //How many days do deliver
+
+            let bookName = "";
+            let nDays = date1 + 3 - today;
+
+            this.books.forEach(book => {
+              if (req.bookId == book._id) {
                 bookName = book.title;
               }
             });
@@ -237,13 +332,13 @@ export default {
           this.reviews.forEach(rev2 => {
             if (rev.bookId == rev2.bookId && rev2.userId != this.userLoggedIn) {
               this.books.forEach(book => {
-                if (rev.bookId == book.bookId) {
+                if (rev.bookId == book._id) {
                   bookName = book.title;
                 }
               });
 
               this.users.forEach(user => {
-                if (rev2.userId == user.userId) {
+                if (rev2.userId == user._id) {
                   console.log("Hey");
                   personName = user.firstName;
                 }
@@ -256,8 +351,9 @@ export default {
             this.notifications.push(notf);
           }
         }
-      });
+      }) */
     },
+
     logout() {
       localStorage.setItem("userLoggedIn", -1);
       //this.$router.push("/")
@@ -266,7 +362,7 @@ export default {
 
     getUser() {
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].userId == this.userLoggedIn) {
+        if (this.users[i]._id == this.userLoggedIn) {
           this.userName =
             this.users[i].firstName + " " + this.users[i].lastName[0] + ".";
           this.type = this.users[i].type;

@@ -64,7 +64,7 @@ export default {
     } 
 
     this.userName = this.getUser()
-    console.log(this.userName)
+   
     
            
   },

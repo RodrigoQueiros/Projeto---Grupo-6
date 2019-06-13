@@ -166,7 +166,7 @@ export default {
       } else if (a >= 9) {
         //Pontos
         for (let i = 0; i < this.users.length; i++) {
-          if (this.users[i].userId == this.userLoggedIn) {
+          if (this.users[i]._id == this.userLoggedIn) {
             number = this.users[i].points;
           }
         }
@@ -229,7 +229,7 @@ export default {
         console.log(error);
       });
 
-    /* axios
+    axios
       .get("http://localhost:3000/reviews")
       .then(res => {
         this.reviews = res.data;
@@ -238,11 +238,11 @@ export default {
       })
       .catch(error => {
         console.log(error);
-      }); */
+      }); 
 
     console.log(this.userLoggedIn)
     axios
-      .get("http://localhost:3000/requisitions?id=" + this.userLoggedIn)
+      .get("http://localhost:3000/requisitions?userId=" + this.userLoggedIn)
       .then(res => {
         this.requisitions = res.data;
         console.log("requisitions:");
