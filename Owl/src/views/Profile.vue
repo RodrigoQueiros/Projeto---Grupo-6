@@ -91,7 +91,7 @@
             <div v-for="requisition in requisitions" :key="requisition.requisitionId">
               <div v-for="book in books" :key="book.bookId">
                 <div
-                  v-if="requisition.userId == userLoggedIn && requisition.active == true && requisition.bookId == book.bookId"
+                  v-if="requisition.userId == userLoggedIn && requisition.active == true && requisition.bookId == book._id"
                 >
                   <div class="row" style="text-align:left">
                     <div class="col-12 col-md-2">
@@ -145,21 +145,21 @@
               <tbody v-for="requisition in requisitions" :key="requisition.requisitionId">
                 <tr v-for="book in books" :key="book.bookId">
                   <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book._id"
                   >{{book.title}}</td>
                   <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book._id"
                   >
                     <input type="button" @click="seeCover(book.cover)" value="+">
                   </td>
                   <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book._id"
                   >{{book.author}}</td>
                   <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book._id"
                   >{{requisition.requisitionDate}}</td>
                   <td
-                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book.bookId"
+                    v-if="requisition.userId == userLoggedIn && requisition.active == false && requisition.bookId == book._id"
                   >{{requisition.deliveryDate}}</td>
                 </tr>
               </tbody>
