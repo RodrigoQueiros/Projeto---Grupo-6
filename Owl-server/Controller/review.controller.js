@@ -9,7 +9,7 @@ async function get(req, res) {
             console.log("true")
             return res.send(await Review.find({bookId: id.bookId}))
         } else {
-            return res.status(400).send({ error: `Could not get reviews: id not defined` })
+            return res.status(400).send({ error: `Could not get reviews: ${err}` })
         }
         
     } catch (err) {
@@ -39,7 +39,7 @@ async function del(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not remove review: ${err}` })
 
     }
 }
@@ -55,7 +55,7 @@ async function put(req, res) {
             { new: true },
             (err, data) => {
                 if (err) {
-                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                    return res.status(400).send({ error: `Could not edit review: ${err}` })
                 }
             }
         )
@@ -64,7 +64,7 @@ async function put(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not edit review: ${err}` })
 
     }
 }

@@ -7,10 +7,10 @@ async function get(req, res) {
         if (id.userId) {
             return res.send(await Requistion.find({userId: id.userId}))
         } else {
-            return res.status(400).send({ error: `Could not get books: ${err}` })
+            return res.status(400).send({ error: `Could not get requisitions: ${err}` })
         }
     } catch (err) {
-        return res.status(400).send({ error: `Could not get books: ${err}` })
+        return res.status(400).send({ error: `Could not get requisitions: ${err}` })
     }
 }
 
@@ -22,7 +22,7 @@ async function post(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not create books: ${err}` })
+        return res.status(400).send({ error: `Could not make requisition: ${err}` })
 
     }
 }
@@ -36,16 +36,18 @@ async function put(req, res) {
             { new: true },
             (err, data) => {
                 if (err) {
-                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                    return res.status(400).send({ error: `Could not update requisition status: ${err}` })
+                } else{
+                    return res.send("edited")
                 }
             }
         )
         //console.log(Book.find())
-        return res.send("edited")
+       
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not update requisition status: ${err}` })
 
     }
 }

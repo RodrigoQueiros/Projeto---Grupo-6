@@ -33,7 +33,7 @@ async function del(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not remove bookSuggestion: ${err}` })
 
     }
 }
@@ -48,7 +48,7 @@ async function put(req, res) {
             { new: true },
             (err, data) => {
                 if (err) {
-                    return res.status(400).send({ error: `Could not edit book: ${err}` })
+                    return res.status(400).send({ error: `Could not increment suggestNumber: ${err}` })
                 }
             }
         )
@@ -57,7 +57,7 @@ async function put(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not increment suggestNumber: ${err}` })
 
     }
 }

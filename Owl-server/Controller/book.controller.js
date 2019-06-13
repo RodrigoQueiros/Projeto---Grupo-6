@@ -17,7 +17,7 @@ async function get(req, res) {
 
 
     } catch (err) {
-        return res.status(400).send({ error: `Could not get books: ${err}` })
+        return res.status(400).send({ error: `Could not get book(s): ${err}` })
     }
 }
 
@@ -28,7 +28,7 @@ async function post(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not create books: ${err}` })
+        return res.status(400).send({ error: `Could not create book: ${err}` })
 
     }
 }
@@ -53,7 +53,7 @@ async function put(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not edit book: ${err}` })
 
     }
 }
@@ -69,7 +69,7 @@ async function del(req, res) {
     }
 
     catch (err) {
-        return res.status(400).send({ error: `Could not remove books: ${err}` })
+        return res.status(400).send({ error: `Could not remove book: ${err}` })
 
     }
 }
