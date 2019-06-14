@@ -171,7 +171,7 @@
   </div>
 </template>
 
-<style >
+<style>
 .boxContent {
   background-color: #d9b97e;
   height: 260px;

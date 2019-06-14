@@ -65,7 +65,9 @@
                   @click="requesition(pageBookId, loggedUser)"
                   :disabled="buttonActive == false"
                   class="btn buttonColor float-right"
+                  v-if="this.loggedUser != -1"
                 >{{buttonText}}</button>
+
                 <button
                   class="btn-primary rounded"
                   v-if="this.buttonActive==false"
