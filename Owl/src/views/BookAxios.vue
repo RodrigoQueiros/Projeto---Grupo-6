@@ -50,7 +50,6 @@
               <div class="row mt-4">
                 <h4 class="alignLeft bookInforHeaders">
                   <b>Editora:</b>
-
                   {{book[0].publisher}}
                 </h4>
               </div>
@@ -393,11 +392,22 @@ export default {
           .then(res => {
             console.log("entrou");
             console.log(res);
-            this.reviews.push(newR);
+            axios
+              .get("http://localhost:3000/reviews?bookId=" + this.$route.params.id)
+              .then(res => {
+               
+                this.reviews = res.data;
+              })
+              .catch(error => {
+                console.log(error);
+              });
           })
           .catch(error => {
             console.log(error);
           });
+
+        this.reviews.push(newR);
+        
 
         //this.$store.dispatch("do_review", newR);
         this.picked = 0;
@@ -454,13 +464,13 @@ export default {
                   console.log(error);
                 });
               this.reviews.splice(i, 1);
+              this.reviewCheck = 0
               //this.$store.dispatch("delete_book", i);
               swal("Deleted!", "Review has been deleted.", "success");
             }
           }
         }
       });
-      
     },
 
     upVote(reviewID, userID, bookID) {

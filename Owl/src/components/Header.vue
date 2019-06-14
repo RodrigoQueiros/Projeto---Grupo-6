@@ -174,6 +174,15 @@ export default {
         console.log(error);
       });
 
+    axios
+      .get("http://localhost:3000/books")
+      .then(res => {
+        this.books = res.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
 
     if (this.userLoggedIn != -1) {
       axios
@@ -259,6 +268,7 @@ export default {
           if (notf) {
             this.notifications.push(notf);
           }
+           console.log(this.notifications);
         }
       });
       })
@@ -266,14 +276,7 @@ export default {
         console.log(error);
       }); 
 
-    axios
-      .get("http://localhost:3000/books")
-      .then(res => {
-        this.books = res.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    
 
 
     //this.getNotifications();
