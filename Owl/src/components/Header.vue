@@ -165,7 +165,7 @@ export default {
   created() {
 
     axios
-      .get("http://localhost:3000/users")
+      .get("https://owl-server-pw2.herokuapp.com/users")
       .then(res => {
         this.users = res.data;
         this.getUser()
@@ -175,7 +175,7 @@ export default {
       });
 
     axios
-      .get("http://localhost:3000/books")
+      .get("https://owl-server-pw2.herokuapp.com/books")
       .then(res => {
         this.books = res.data;
       })
@@ -186,7 +186,7 @@ export default {
 
     if (this.userLoggedIn != -1) {
       axios
-      .get("http://localhost:3000/requisitions?userId=" + this.userLoggedIn)
+      .get("https://owl-server-pw2.herokuapp.com/requisitions?userId=" + this.userLoggedIn)
       .then(res => {
         this.requisitions = res.data;
 
@@ -237,7 +237,7 @@ export default {
     
 
     axios
-      .get("http://localhost:3000/reviews")
+      .get("https://owl-server-pw2.herokuapp.com/reviews")
       .then(res => {
         this.reviews = res.data;
 
