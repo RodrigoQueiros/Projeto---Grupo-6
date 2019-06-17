@@ -23,73 +23,74 @@
       </router-link>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarNav">
-      <b-navbar-toggle target="nav-collapse" class="ml-auto" id="white"><i class="fas fa-bars"></i></b-navbar-toggle>
+      <b-navbar-toggle target="nav-collapse" class="ml-auto" id="white">
+        <i class="fas fa-bars"></i>
+      </b-navbar-toggle>
       <b-collapse id="nav-collapse" class="alignLeft" is-nav>
-      <ul class="navbar-nav alignLeft">
-        <li class="nav-item">
-          <router-link class="nav-link a" :to="{name: 'home'}" color="white">Home</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link a" :to="{name: 'catalog'}">Catalogo</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link a" :to="{name: 'rankings'}">Rankings</router-link>
-        </li>
-        <li class="nav-item" v-if="userLoggedIn != -1">
-          <router-link class="nav-link a" :to="{name: 'suggest'}">Sugerir Livro</router-link>
-        </li>
-        <li class="nav-item" v-if="userLoggedIn != -1">
-          <router-link class="nav-link a" :to="{name:'achievements'}">Conquistas</router-link>
-        </li>
-        <li class="nav-item" v-if="userLoggedIn != -1">
-          <router-link class="nav-link a" :to="{name:'profile'}" id="mobile">
-            <i class="fas fa-user"></i>
-            {{userName}}
-          </router-link>
-        </li>
-        <li class="nav-item" v-if="userLoggedIn != -1 && type == 'admin'" id="mobile">
-          <router-link class="nav-link a" :to="{name:'users'}">
-            <i style="color:white" class="fas fa-cog"></i>
-            Back Office
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            v-if="userLoggedIn == -1"
-            class="nav-link a"
-            id="right"
-            :to="{name: 'login'}"
-          >LogIn</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link v-if="userLoggedIn == -1" class="nav-link a" :to="{name: 'signup'}">SignUp</router-link>
-        </li>
-        <li class="nav-item">
-          <a v-if="userLoggedIn != -1" href @click="logout" class="nav-link a">Logout</a>
-        </li>
-        <li class="nav-item" v-if="userLoggedIn != -1">
-          <div class="dropdown">
-            <a
-              class="btn dropdown-toggle darkBrown a"
-              
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="fas fa-bell"></i>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <div class="ml-2 mr-2" v-for="(notification,i) in notifications" :key="i">
-                <!-- Notifications here -->
-                <h6>{{notification}}</h6>
+        <ul class="navbar-nav alignLeft">
+          <li class="nav-item">
+            <router-link class="nav-link a" :to="{name: 'home'}" color="white">Home</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link a" :to="{name: 'catalog'}">Catalogo</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link a" :to="{name: 'rankings'}">Rankings</router-link>
+          </li>
+          <li class="nav-item" v-if="userLoggedIn != -1">
+            <router-link class="nav-link a" :to="{name: 'suggest'}">Sugerir Livro</router-link>
+          </li>
+          <li class="nav-item" v-if="userLoggedIn != -1">
+            <router-link class="nav-link a" :to="{name:'achievements'}">Conquistas</router-link>
+          </li>
+          <li class="nav-item" v-if="userLoggedIn != -1">
+            <router-link class="nav-link a" :to="{name:'profile'}" id="mobile">
+              <i class="fas fa-user"></i>
+              {{userName}}
+            </router-link>
+          </li>
+          <li class="nav-item" v-if="userLoggedIn != -1 && type == 'admin'" id="mobile">
+            <router-link class="nav-link a" :to="{name:'users'}">
+              <i style="color:white" class="fas fa-cog"></i>
+              Back Office
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link
+              v-if="userLoggedIn == -1"
+              class="nav-link a"
+              id="right"
+              :to="{name: 'login'}"
+            >LogIn</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link v-if="userLoggedIn == -1" class="nav-link a" :to="{name: 'signup'}">SignUp</router-link>
+          </li>
+          <li class="nav-item">
+            <a v-if="userLoggedIn != -1" href @click="logout" class="nav-link a">Logout</a>
+          </li>
+          <li class="nav-item" v-if="userLoggedIn != -1">
+            <div class="dropdown">
+              <a
+                class="btn dropdown-toggle darkBrown a"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="ml-2 mr-2" v-for="(notification,i) in notifications" :key="i">
+                  <!-- Notifications here -->
+                  <h6>{{notification}}</h6>
 
-                <div class="dropdown-divider"></div>
+                  <div class="dropdown-divider"></div>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
       </b-collapse>
     </nav>
   </div>
@@ -163,12 +164,11 @@ export default {
   },
 
   created() {
-
     axios
       .get("https://owl-server-pw2.herokuapp.com/users")
       .then(res => {
         this.users = res.data;
-        this.getUser()
+        this.getUser();
       })
       .catch(error => {
         console.log(error);
@@ -183,58 +183,64 @@ export default {
         console.log(error);
       });
 
+    //this.getNotifications();
+  },
+  mounted() {
+    console.log("hey");
+    console.log(this.users);
 
-    if (this.userLoggedIn != -1) {
-      axios
-      .get("https://owl-server-pw2.herokuapp.com/requisitions?userId=" + this.userLoggedIn)
+    console.log("entrei");
+
+    axios
+      .get(
+        "https://owl-server-pw2.herokuapp.com/requisitions?userId=" +
+          this.userLoggedIn
+      )
       .then(res => {
         this.requisitions = res.data;
 
         this.requisitions.forEach(req => {
-       
-        if (this.userLoggedIn == req.userId && req.active == true) {
-          let date1 = new Date(req.requisitionDate).getDate();
-          let today = new Date().getDate();
-         
-          if (date1 + 5 < today) {
-            //How late
-            let bookName = "";
-            let nDays = today - date1 - 5;
+          if (this.userLoggedIn == req.userId && req.active == true) {
+            let date1 = new Date(req.requisitionDate).getDate();
+            let today = new Date().getDate();
 
-            this.books.forEach(book => {
-              if (req.bookId == book._id) {
-                bookName = book.title;
-              }
-            });
+            if (date1 + 5 < today) {
+              //How late
+              let bookName = "";
+              let nDays = today - date1 - 5;
 
-            this.notifications.push(
-              `A sua entrega do livro ${bookName} está em atraso ${nDays} dias.`
-            );
-          } else if (date1 + 2 >= today && date1 + 1 <= today) {
-            //How many days do deliver
+              this.books.forEach(book => {
+                if (req.bookId == book._id) {
+                  bookName = book.title;
+                }
+              });
 
-            let bookName = "";
-            let nDays = date1 + 3 - today;
+              this.notifications.push(
+                `A sua entrega do livro ${bookName} está em atraso ${nDays} dias.`
+              );
+            } else if (date1 + 2 >= today && date1 + 1 <= today) {
+              //How many days do deliver
 
-            this.books.forEach(book => {
-              if (req.bookId == book._id) {
-                bookName = book.title;
-              }
-            });
+              let bookName = "";
+              let nDays = date1 + 3 - today;
 
-            this.notifications.push(
-              `Faltam ${nDays} dias para acabar o tempo da requisição do livro ${bookName}.`
-            );
-            console.log(this.notifications);
+              this.books.forEach(book => {
+                if (req.bookId == book._id) {
+                  bookName = book.title;
+                }
+              });
+
+              this.notifications.push(
+                `Faltam ${nDays} dias para acabar o tempo da requisição do livro ${bookName}.`
+              );
+              console.log(this.notifications);
+            }
           }
-        }
-      });
+        });
       })
       .catch(error => {
         console.log(error);
       });
-    }
-    
 
     axios
       .get("https://owl-server-pw2.herokuapp.com/reviews")
@@ -242,46 +248,42 @@ export default {
         this.reviews = res.data;
 
         this.reviews.forEach(rev => {
-        if (this.userLoggedIn == rev.userId) {
-          let notf = "";
-          let personName = "";
-          let bookName = "";
+          if (this.userLoggedIn == rev.userId) {
+            let notf = "";
+            let personName = "";
+            let bookName = "";
 
-          this.reviews.forEach(rev2 => {
-            if (rev.bookId == rev2.bookId && rev2.userId != this.userLoggedIn) {
-              this.books.forEach(book => {
-                if (rev.bookId == book._id) {
-                  bookName = book.title;
-                }
-              });
+            this.reviews.forEach(rev2 => {
+              if (
+                rev.bookId == rev2.bookId &&
+                rev2.userId != this.userLoggedIn
+              ) {
+                this.books.forEach(book => {
+                  if (rev.bookId == book._id) {
+                    bookName = book.title;
+                  }
+                });
 
-              this.users.forEach(user => {
-                if (rev2.userId == user._id) {
-                  console.log("Hey");
-                  personName = user.firstName;
-                }
-              });
+                this.users.forEach(user => {
+                  if (rev2.userId == user._id) {
+                    console.log("Hey");
+                    personName = user.firstName;
+                  }
+                });
 
-              notf = `${personName} tambem fez uma review ao livro ${bookName}.`;
+                notf = `${personName} tambem fez uma review ao livro ${bookName}.`;
+              }
+            });
+            if (notf) {
+              this.notifications.push(notf);
             }
-          });
-          if (notf) {
-            this.notifications.push(notf);
+            console.log(this.notifications);
           }
-           console.log(this.notifications);
-        }
-      });
+        });
       })
       .catch(error => {
         console.log(error);
-      }); 
-
-    
-
-
-    //this.getNotifications();
-    
-    
+      });
   },
   methods: {
     getNotifications() {
