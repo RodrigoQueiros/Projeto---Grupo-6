@@ -87,9 +87,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Rankings page and Notifications
 ![Ranking and Notifications](Owl/src/assets/print4.png)
 
-### Rankings page and Notifications
-![Ranking and Notifications](Owl/src/assets/print4.png)
-
 ### Perfil page
 ![Perfil](Owl/src/assets/print5.png)
 
